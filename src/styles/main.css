@@ -1,0 +1,111 @@
+.input-leading {
+  position: absolute;
+  top: 50%;
+  left: 4.5%;
+  margin-top: 1px;
+  color: #4d5875 !important;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.signin-section {
+  height: 100vh;
+}
+
+.main-login-logo {
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 24px;
+  left: -130px;
+  height: 2rem;
+  margin: 0 auto;
+  justify-content: center;
+  text-align: center;
+}
+
+.main-login-logo:hover,
+.main-login-logo:focus {
+  color: var(--primary-bg-color);
+}
+
+.login-side-image {
+  height: calc(100% - 32px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-side-image img {
+  width: 450px;
+}
+
+/* Override CSS */
+
+.app-sidebar {
+  background-color: var(--primary-bg-color) !important;
+}
+
+.main-sidebar-header {
+  background-color: var(--primary-bg-color) !important;
+  border-bottom: 0px !important;
+}
+
+.main-sidemenu {
+  margin-top: 68px;
+  height: 90%;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+}
+
+.main-logo {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 1.2rem !important;
+  margin: 0 auto;
+  justify-content: center;
+  text-align: center;
+}
+
+.side-menu .slide .side-menu__item.active {
+  background-color: #fff !important;
+  border-right: 0px solid var(--primary-bg-color) !important;
+  margin: 0px 5px;
+  border-radius: 6px;
+}
+
+.side-menu .slide .side-menu__item.active .side-menu__icon {
+  color: var(--primary-bg-color) !important;
+}
+
+.side-menu .slide .side-menu__item.active .side-menu__label {
+  color: var(--primary-bg-color) !important;
+  font-weight: 600;
+}
+
+.app.sidebar-mini.sidenav-toggled-open .side-menu .slide .side-menu__item.active {
+  margin: 0px 5px;
+  border-radius: 6px;
+}
+
+.side-menu__label {
+  color: #fff !important;
+}
+
+.side-menu__item:hover .side-menu__icon,
+.side-menu__item:hover .side-menu__label,
+.side-menu__item:hover .angle {
+  color: #fff !important;
+  fill: #fff !important;
+  font-weight: 600 !important;
+}
+
+.table-primary th,
+.table-primary td,
+.table-primary thead th,
+.table-primary tbody + tbody {
+  border-color: #cfd4de !important;
+}

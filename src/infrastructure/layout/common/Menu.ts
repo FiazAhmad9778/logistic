@@ -1,0 +1,91 @@
+import {
+  HomeIcon,
+  UserIcon,
+  UserPrivilegeIcon,
+  ManageDriverIcon,
+  ManageRouteIcon,
+  OrderIcon,
+  OrderStatusIcon,
+  ProjectAndProfileIcon,
+  RouteAssignmentIcon,
+} from '@/components/Icon';
+
+export const MENUITEMS = [
+  {
+    Items: [
+      {
+        path: ``,
+        icon: HomeIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Dashboard',
+      },
+      {
+        path: `users`,
+        icon: UserIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Company User',
+      },
+      {
+        path: `user-privileges`,
+        icon: UserPrivilegeIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'User Privileges',
+      },
+
+      {
+        path: `drivers`,
+        icon: ManageDriverIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Driver Management',
+      },
+      {
+        path: `order-list`,
+        icon: OrderIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Order Management',
+      },
+      {
+        path: `order-status-list`,
+        icon: OrderStatusIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Order Status',
+      },
+      {
+        path: `profile-and-profile-list`,
+        icon: ProjectAndProfileIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Profile Management',
+      },
+      {
+        path: `route-list`,
+        icon: ManageRouteIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Route List',
+      },
+      {
+        path: `route-assignment-list`,
+        icon: RouteAssignmentIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Route Assignment',
+      },
+    ],
+  },
+];

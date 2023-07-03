@@ -1,0 +1,11 @@
+node_modules/
+dist/
+src/assets
+.prettierrc.js
+.eslintrc.js
+env.d.ts
+.eslintrc.cjs
+prettierrc.cjs
+commitlint.config.cjs
+postcss.config.cjs
+tailwind.config.cjs

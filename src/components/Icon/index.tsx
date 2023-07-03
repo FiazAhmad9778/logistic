@@ -1,0 +1,9 @@
+export { HomeIcon } from './Sidebar/Home';
+export { UserPrivilegeIcon } from './Sidebar/UserPrivilegeIcon';
+export { ManageDriverIcon } from './Sidebar/ManageDriverIcon';
+export { OrderIcon } from './Sidebar/OrderIcon';
+export { OrderStatusIcon } from './Sidebar/OrderStatusIcon';
+export { ProjectAndProfileIcon } from './Sidebar/ProjectAndProfileIcon';
+export { RouteAssignmentIcon } from './Sidebar/RouteAssignmentIcon';
+export { UserIcon } from './Sidebar/UserIcon';
+export { ManageRouteIcon } from './Sidebar/ManageRouteIcon';
