@@ -37,6 +37,9 @@ const Login = () => {
 
   return (
     <React.Fragment>
+      <h4>Welcome Back</h4>
+      <p className="mb-5">Please enter your email and password</p>
+      <p className="mb-5">{"Enter your email and we'll send you instructions to reset your password"}</p>
       <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
         <Form.Input
           label="Email"
@@ -44,17 +47,22 @@ const Login = () => {
           placeholder="Please enter your email"
           leading={<i className="far fa-envelope"></i>}
         />
-        <Form.Input
-          type="password"
-          label="Password"
-          name="password"
-          placeholder="Please enter your password"
-          leading={<i className="fa fa-unlock"></i>}
-        />
+        <div className="position-relative">
+          <Form.Input
+            type="password"
+            label="Password"
+            name="password"
+            placeholder="Please enter your password"
+            leading={<i className="fa fa-unlock"></i>}
+          />
+          <Link to="/auth/forget-password" className="text-primary tx-medium position-absolute top-0 end-0">
+            Forget Password?
+          </Link>
+        </div>
         <div className="d-flex justify-content-between align-items-center">
           <Form.Checkbox label="Remember me" name="remember" />
-          <Link to="#" className="text-primary tx-medium">
-            Forget Password?
+          <Link to="/auth/reset-password" className="text-primary tx-medium">
+            Reset Password?
           </Link>
         </div>
         <Button className="btn-block mt-3" type="submit">

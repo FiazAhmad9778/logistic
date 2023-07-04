@@ -11,6 +11,8 @@ import OrderManagement from '@/views/OrderManagement';
 import OrderStatusManagement from '@/views/OrderStatusManagement';
 import UserPrivileges from '@/views/UserPrivileges';
 import AuthLayout from '../layout/AuthLayout';
+import ResetPassword from '@/views/Auth/ResetPassword';
+import ForgotPassword from '@/views/Auth/ForgetPassword';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -78,12 +80,23 @@ export const routes: RoutePathDefinition[] = [
       },
       {
         path: 'auth',
+        title: 'AUTH',
         element: <AuthLayout />,
         children: [
           {
             path: 'login',
-            title: 'AUTH',
+            title: 'LOGIN',
             element: <Login />,
+          },
+          {
+            path: 'reset-password',
+            title: 'RESET',
+            element: <ResetPassword />,
+          },
+          {
+            path: 'forget-password',
+            title: 'FORGOT',
+            element: <ForgotPassword />,
           },
         ],
       },

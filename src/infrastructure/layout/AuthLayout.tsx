@@ -18,8 +18,6 @@ const AuthLayout = () => {
           <Col md={6} className="p-0">
             <div className="bg-gray d-flex justify-content-center align-items-center h-100">
               <div className="w-50">
-                <h4>Welcome Back</h4>
-                <p className="mb-5">Please enter your email and password</p>
                 <Outlet />
               </div>
             </div>
