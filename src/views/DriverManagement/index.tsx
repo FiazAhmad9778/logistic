@@ -19,13 +19,23 @@ const DriverManagement = () => {
         <Breadcrumb
           breadcrumbPath={breadcrumbPath}
           button={
-            <Button
-              btnType="btn-outline-primary"
-              icon={<i className="fa fa fa-plus"></i>}
-              onClick={() => navigate('/drivers/create-driver')}
-            >
-              {'New Record'}
-            </Button>
+            <>
+              <Button
+                className="me-2"
+                btnType="btn-outline-primary"
+                icon={<i className="fa fa fa-plus"></i>}
+                onClick={() => navigate('/drivers/bulk-upload-driver')}
+              >
+                {'Bulk Upload Driver'}
+              </Button>
+              <Button
+                btnType="btn-outline-primary"
+                icon={<i className="fa fa fa-plus"></i>}
+                onClick={() => navigate('/drivers/create-driver')}
+              >
+                {'New Record'}
+              </Button>
+            </>
           }
         />
       </Col>

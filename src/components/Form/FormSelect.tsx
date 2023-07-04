@@ -102,20 +102,22 @@ export const FormSelect = <
                     borderColor:
                       errors[name] && typeof selectProps['value'] !== 'object'
                         ? '#f34343 !important'
+                        : isFocused
+                        ? '#06808b !important'
                         : '#ededf5 !important',
                     backgroundColor: '#fff',
                     backgroundClip: 'padding-box',
                     borderRadius: '5px',
                     transition: 'border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out',
-                    boxShadow: isFocused ? '0 0 0px 2px #38cab3 !important' : '',
+                    boxShadow: isFocused ? 'none' : '',
                     '&:hover': {
-                      boxShadow: '0 0 0px 2px #38cab3 !important',
+                      borderColor: '0 0 0px 2px #38cab3 !important',
                     },
                   };
                 },
                 indicatorsContainer: (provided) => ({
                   ...provided,
-                  height: '33px',
+                  height: '35.4px',
                   padding: '0 0px 0px 4px',
                 }),
                 valueContainer: (provided) => ({

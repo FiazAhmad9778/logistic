@@ -13,6 +13,7 @@ import UserPrivileges from '@/views/UserPrivileges';
 import AuthLayout from '../layout/AuthLayout';
 import ResetPassword from '@/views/Auth/ResetPassword';
 import ForgotPassword from '@/views/Auth/ForgetPassword';
+import UploadDriver from '@/views/DriverManagement/UploadDriver';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -55,6 +56,11 @@ export const routes: RoutePathDefinition[] = [
             path: 'drivers/create-driver',
             title: 'CREATE DRIVER',
             element: <AddDriver />,
+          },
+          {
+            path: 'drivers/bulk-upload-driver',
+            title: 'UPLOAD DRIVER',
+            element: <UploadDriver />,
           },
           {
             path: 'order-list',
