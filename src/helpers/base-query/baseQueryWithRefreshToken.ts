@@ -8,12 +8,11 @@ import { Mutex } from 'async-mutex';
 const mutex = new Mutex();
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL;
-console.log(baseUrl);
 const baseQuery = fetchBaseQuery({
-  credentials: 'include',
+  // credentials: 'include',
   baseUrl: baseUrl + '/api',
   prepareHeaders: (headers, { getState, endpoint }) => {
-    const token = (getState() as RootState).auth.token;
+    const token = (getState() as RootState).auth.accessToken;
 
     if (token && endpoint !== 'login') {
       headers.set('Authorization', `Bearer ${token}`);

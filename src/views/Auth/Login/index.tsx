@@ -11,8 +11,8 @@ import { LoginPayload } from '@/infrastructure/store/api/auth/auth-types';
 const Login = () => {
   const useFormReturn = useForm({
     defaultValues: {
-      username: 'info@kmcmaggroup.com',
-      password: 'Love2eat!',
+      email: '',
+      password: '',
     },
   });
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const Login = () => {
       <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
         <Form.Input
           label="Email"
-          name="username"
+          name="email"
           placeholder="Please enter your email"
           leading={<i className="far fa-envelope"></i>}
         />

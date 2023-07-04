@@ -10,38 +10,32 @@ type AuthState = LoginResponse & {
 const initialState: AuthState = {
   isAuthenticating: false,
   isAuthenticated: false,
-  token: '',
-  roles: [],
-  user: {
-    claims: [],
-    email: '',
-    firstName: '',
-    id: '',
-    isLocked: false,
-    isVerified: false,
-    lastName: '',
-    phoneNumber: '',
-    profilePicture: '',
-    role: '',
-  },
+  accessToken: '',
+  refreshToken: '',
+  email: '',
+  name: '',
+  userId: 0,
 };
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     setAuth: (state, action: PayloadAction<LoginResponse>) => {
-      if (action.payload.token) {
-        state.token = action.payload.token;
-        state.roles = action.payload.roles;
-        state.user = action.payload.user;
+      if (action.payload.accessToken) {
+        state.accessToken = action.payload.accessToken;
+        state.refreshToken = action.payload.refreshToken;
+        state.email = action.payload.email;
+        state.name = action.payload.name;
+        state.userId = action.payload.userId;
         state.isAuthenticated = true;
       }
     },
     clearAuth: (state) => {
-      state.token = initialState.token;
-      state.roles = initialState.roles;
-      state.user = initialState.user;
+      state.accessToken = initialState.accessToken;
+      state.refreshToken = initialState.refreshToken;
+      state.email = initialState.email;
+      state.name = initialState.name;
+      state.userId = initialState.userId;
       state.isAuthenticated = false;
     },
 

@@ -1,15 +1,6 @@
 export interface GenericResponseType<T> {
   errors: [];
   message: string;
-  originalException: {
-    data: Record<string, string>;
-    hResult: number;
-    helpLink: string;
-    innerException: string;
-    message: string;
-    source: string;
-    stackTrace: string;
-  };
   success: true;
   data: T;
 }

@@ -2,15 +2,19 @@ import { Navbar, Dropdown } from 'react-bootstrap';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Link, useNavigate } from 'react-router-dom';
 import { IMAGES } from '@/assets/images';
+import { useAppDispatch } from '@/infrastructure/store/store-hooks';
+import { clearAuth } from '@/infrastructure/store/features/auth/auth-slice';
 
 export default function Header() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const openCloseSidebar = () => {
     document.querySelector('body')?.classList.toggle('sidenav-toggled');
   };
 
   const handleLogout = () => {
+    dispatch(clearAuth());
     const path = `/auth/login`;
     navigate(path);
   };
