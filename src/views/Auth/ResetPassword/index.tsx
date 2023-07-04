@@ -1,14 +1,34 @@
 import React from 'react';
 import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import Form from '@/components/Form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '@/components/Button';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { ResetPasswordResolver } from 'src/form-resolver/auth-resolver';
+import { useChangePasswordMutation } from '@/infrastructure/store/api/auth/auth-api';
+import { HandleNotification } from '@/components/Toast';
 
 const ResetPassword = () => {
-  const useFormReturn = useForm();
+  const useFormReturn = useForm({
+    resolver: yupResolver(ResetPasswordResolver),
+  });
+  const navigate = useNavigate();
+
+  // const [saveNewPassword] = useResetPasswordMutation();
+  const [saveNewPassword, state] = useChangePasswordMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (e) => {
-    console.log(e);
+    const payload = {
+      currentPassword: e.currentPassword,
+      newPassword: e.newPassword,
+    };
+    await saveNewPassword(payload)
+      .unwrap()
+      .then((res) => {
+        HandleNotification(res.message, res.success);
+        navigate('/auth/login');
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -18,26 +38,26 @@ const ResetPassword = () => {
       <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
         <Form.Input
           type="password"
-          label="Old Password"
-          name="oldPassword"
-          placeholder="Please enter your password"
+          label="Current Password"
+          name="currentPassword"
+          placeholder="Please enter your current password"
           leading={<i className="fa fa-unlock"></i>}
         />
         <Form.Input
           type="password"
           label="New Password"
           name="newPassword"
-          placeholder="Please enter your password"
+          placeholder="Please enter new password"
           leading={<i className="fa fa-unlock"></i>}
         />
         <Form.Input
           type="password"
           label="Confirm Password"
           name="confirmPassword"
-          placeholder="Please enter your password"
+          placeholder="Please enter confirm password"
           leading={<i className="fa fa-unlock"></i>}
         />
-        <Button className="btn-block mt-3" type="submit">
+        <Button className="btn-block mt-3" type="submit" isLoading={state.isLoading}>
           Reset Password
         </Button>
         <div className="d-flex justify-content-center mt-4">

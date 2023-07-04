@@ -1,6 +1,6 @@
 import { LoginResponse } from '@/infrastructure/store/api/auth/auth-types';
 import { clearAuth, setAuth } from '@/infrastructure/store/features/auth/auth-slice';
-import { RootState } from '@/infrastructure/store/store';
+import { RootState, store } from '@/infrastructure/store/store';
 import { BaseQueryFn, FetchArgs, fetchBaseQuery, FetchBaseQueryError } from '@reduxjs/toolkit/dist/query';
 import { Mutex } from 'async-mutex';
 
@@ -42,6 +42,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<string | FetchArgs, unknown, FetchB
               credentials: 'include',
               url: '/auth/refresh-token',
               method: 'POST',
+              body: { refreshToken: store.getState().auth.refreshToken },
             },
             api,
             extraOptions,

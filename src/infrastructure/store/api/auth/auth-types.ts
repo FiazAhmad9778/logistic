@@ -10,3 +10,15 @@ export interface LoginResponse {
   name: string;
   userId: number;
 }
+export interface ForgotPasswordPayload {
+  email: string;
+  host: string;
+}
+export interface ResetPasswordPayload {
+  token: string;
+  password: string;
+}
+export interface ChangePasswordPayload {
+  currentPassword: string;
+  newPassword: string;
+}

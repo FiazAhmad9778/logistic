@@ -1,5 +1,6 @@
 import { FCC } from '@/helpers/FCC';
 import { classNames } from '@/helpers/classNames';
+import { BeatLoader } from 'react-spinners';
 
 type buttonDefaultProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 type buttonTypes =
@@ -21,14 +22,18 @@ interface IProps extends buttonDefaultProps {
   btnSize?: buttonSize;
   isLoading?: boolean;
   className?: string;
+  loading?: boolean;
 }
 
-const Button: FCC<IProps> = ({ icon, btnType = 'btn-primary', btnSize, className, children, ...rest }) => {
+const Button: FCC<IProps> = ({ icon, btnType = 'btn-primary', btnSize, className, loading, children, ...rest }) => {
   return (
     <button className={classNames('btn px-4', btnType, btnSize, className)} {...rest}>
       <span className={classNames('d-flex justify-content-center align-items-center gap-2', icon && '')}>
         {icon && <span>{icon}</span>}
         {children}
+        {loading && (
+          <BeatLoader color="#fff" loading={loading} size={12} aria-label="Loading Spinner" data-testid="loader" />
+        )}
       </span>
     </button>
   );

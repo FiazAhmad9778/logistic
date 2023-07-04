@@ -2,14 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit/src/createAction';
 import { createSlice } from '@reduxjs/toolkit';
 import { LoginResponse } from '../../api/auth/auth-types';
 
-type AuthState = LoginResponse & {
-  isAuthenticating: boolean;
-  isAuthenticated: boolean;
-};
-
-const initialState: AuthState = {
-  isAuthenticating: false,
-  isAuthenticated: false,
+const initialState: LoginResponse = {
   accessToken: '',
   refreshToken: '',
   email: '',
@@ -27,7 +20,6 @@ const authSlice = createSlice({
         state.email = action.payload.email;
         state.name = action.payload.name;
         state.userId = action.payload.userId;
-        state.isAuthenticated = true;
       }
     },
     clearAuth: (state) => {
@@ -36,14 +28,9 @@ const authSlice = createSlice({
       state.email = initialState.email;
       state.name = initialState.name;
       state.userId = initialState.userId;
-      state.isAuthenticated = false;
-    },
-
-    authenticating: (state, action: PayloadAction<boolean>) => {
-      state.isAuthenticating = action.payload;
     },
   },
 });
 
-export const { setAuth, clearAuth, authenticating } = authSlice.actions;
+export const { setAuth, clearAuth } = authSlice.actions;
 export default authSlice.reducer;

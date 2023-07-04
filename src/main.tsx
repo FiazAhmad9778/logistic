@@ -4,10 +4,12 @@ import ReactDOM from 'react-dom/client';
 import { store } from './infrastructure/store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
-import App from './App.tsx';
 import { AuthContextContextProvider } from './context/Auth-context';
-import './styles/index.scss';
 import { BrowserRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+
+import App from './App.tsx';
+import './styles/index.scss';
 
 const persistor = persistStore(store);
 const root = document.getElementById('root');
@@ -18,6 +20,7 @@ ReactDOM.createRoot(root as HTMLElement).render(
       <PersistGate persistor={persistor}>
         <AuthContextContextProvider>
           <BrowserRouter>
+            <ToastContainer />
             <App />
           </BrowserRouter>
         </AuthContextContextProvider>

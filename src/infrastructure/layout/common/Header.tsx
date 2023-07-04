@@ -2,10 +2,11 @@ import { Navbar, Dropdown } from 'react-bootstrap';
 import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Link, useNavigate } from 'react-router-dom';
 import { IMAGES } from '@/assets/images';
-import { useAppDispatch } from '@/infrastructure/store/store-hooks';
+import { useAppDispatch, useAppSelector } from '@/infrastructure/store/store-hooks';
 import { clearAuth } from '@/infrastructure/store/features/auth/auth-slice';
 
 export default function Header() {
+  const { name } = useAppSelector((state) => state['auth']);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -168,8 +169,7 @@ export default function Header() {
                     <div className="menu-header-content p-3 border-bottom">
                       <div className="d-flex wd-100p">
                         <div className="ms-3 my-auto">
-                          <h6 className="tx-15 font-weight-semibold mb-0">Teri Dactyl</h6>
-                          <span className="dropdown-title-text subtext op-6  tx-12">Premium Member</span>
+                          <h6 className="tx-15 font-weight-semibold mb-0">{name}</h6>
                         </div>
                       </div>
                     </div>
@@ -179,7 +179,7 @@ export default function Header() {
                     <Dropdown.Item className="dropdown-item" href={`/`}>
                       <i className="far fa-sun"></i> Settings
                     </Dropdown.Item>
-                    <Dropdown.Item className="dropdown-item" onClick={handleLogout} onKeyDown={handleLogout}>
+                    <Dropdown.Item className="dropdown-item" onClick={handleLogout}>
                       <i className="far fa-arrow-alt-circle-left"></i> Sign Out
                     </Dropdown.Item>
                   </Dropdown.Menu>

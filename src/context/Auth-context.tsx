@@ -5,13 +5,13 @@ import { useAppSelector } from '@/infrastructure/store/store-hooks';
 export const AuthContextContext = createContext<null>(null);
 
 export const AuthContextContextProvider: FCC = ({ children }) => {
-  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { accessToken } = useAppSelector((state) => state.auth);
 
-  if (!isAuthenticated && !window.location.pathname.includes('auth')) {
+  if (!accessToken && !window.location.pathname.includes('auth')) {
     window.location.replace('/auth/login');
   }
 
-  if (window.location.pathname === '/auth/login' && isAuthenticated) {
+  if (window.location.pathname === '/auth/login' && accessToken) {
     window.location.replace('/');
   }
 

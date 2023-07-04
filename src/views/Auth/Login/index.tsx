@@ -1,37 +1,42 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '@/infrastructure/store/api/auth/auth-api';
 import { useAppDispatch } from '@/infrastructure/store/store-hooks';
 import { setAuth } from '@/infrastructure/store/features/auth/auth-slice';
 import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import Form from '@/components/Form';
-import { LoginPayload } from '@/infrastructure/store/api/auth/auth-types';
+import Button from '@/components/Button';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { LoginResolver } from 'src/form-resolver/auth-resolver';
+import { HandleNotification } from '@/components/Toast';
 
 const Login = () => {
   const useFormReturn = useForm({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+    resolver: yupResolver(LoginResolver),
+    mode: 'onChange',
   });
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const [loginAPi, state] = useLoginMutation({});
+  const [loginAPi, state] = useLoginMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (e) => {
     if (state.isLoading) return;
 
-    const res = await loginAPi(e as LoginPayload);
+    const res = await loginAPi({ email: e.email, password: e.password }).unwrap();
 
-    if ('error' in res && 'data' in res.error) {
+    if ('error' in res && 'data' in res && res?.error) {
       return;
     }
 
-    if (!('error' in res)) {
-      dispatch(setAuth(res.data.data));
+    if (!('error' in res) && res.success === true) {
+      dispatch(setAuth(res.data));
+      HandleNotification(res.message || 'Login Successfully', res.success);
       navigate('/', { replace: true });
+    } else {
+      useFormReturn.setError('email', { message: res?.message ?? 'Email or Password is incorrect!' });
+      useFormReturn.setError('password', { message: res?.message ?? 'Email or password is incorrect!' });
+      return;
     }
   };
 
@@ -47,25 +52,20 @@ const Login = () => {
           placeholder="Please enter your email"
           leading={<i className="far fa-envelope"></i>}
         />
-        <div className="position-relative">
-          <Form.Input
-            type="password"
-            label="Password"
-            name="password"
-            placeholder="Please enter your password"
-            leading={<i className="fa fa-unlock"></i>}
-          />
-          <Link to="/auth/forget-password" className="text-primary tx-medium position-absolute top-0 end-0">
+        <Form.Input
+          type="password"
+          label="Password"
+          name="password"
+          placeholder="Please enter your password"
+          leading={<i className="fa fa-unlock"></i>}
+        />
+        <div className="d-flex justify-content-between align-items-center">
+          <Form.Checkbox label="Remember me" name="remember" />
+          <Link to="/auth/forget-password" className="text-primary tx-medium">
             Forget Password?
           </Link>
         </div>
-        <div className="d-flex justify-content-between align-items-center">
-          <Form.Checkbox label="Remember me" name="remember" />
-          <Link to="/auth/reset-password" className="text-primary tx-medium">
-            Reset Password?
-          </Link>
-        </div>
-        <Button className="btn-block mt-3" type="submit">
+        <Button className="btn-block mt-3" loading={state.isLoading} type="submit">
           SIGN IN
         </Button>
       </Form>

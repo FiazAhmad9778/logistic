@@ -1,5 +1,11 @@
 import { appApi } from './../index';
-import { LoginPayload, LoginResponse } from './auth-types';
+import {
+  ChangePasswordPayload,
+  ForgotPasswordPayload,
+  LoginPayload,
+  LoginResponse,
+  ResetPasswordPayload,
+} from './auth-types';
 import { GenericResponseType } from '../../../../types/common/http-types';
 
 const authApi = appApi
@@ -21,6 +27,33 @@ const authApi = appApi
           method: 'POST',
         }),
       }),
+      // FORGOT PASSWORD
+      forgotPassword: build.mutation<GenericResponseType<unknown>, ForgotPasswordPayload>({
+        query: (payload) => ({
+          url: '/auth/forgot-password',
+          body: payload,
+          method: 'POST',
+        }),
+        extraOptions: {},
+      }),
+      // RESET PASSWORD
+      resetPassword: build.mutation<GenericResponseType<unknown>, ResetPasswordPayload>({
+        query: (payload) => ({
+          url: '/auth/reset-password',
+          body: payload,
+          method: 'POST',
+        }),
+        extraOptions: {},
+      }),
+      // CHANGE PASSWORD
+      changePassword: build.mutation<GenericResponseType<unknown>, ChangePasswordPayload>({
+        query: (payload) => ({
+          url: '/auth/change-password',
+          body: payload,
+          method: 'POST',
+        }),
+        extraOptions: {},
+      }),
       // LOGOUT
       logout: build.mutation<GenericResponseType<boolean>, null>({
         query: () => ({
@@ -34,4 +67,11 @@ const authApi = appApi
     addTagTypes: ['Auth'],
   });
 
-export const { useLoginMutation, useLogoutMutation, useRefreshTokenMutation } = authApi;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useForgotPasswordMutation,
+  useResetPasswordMutation,
+  useChangePasswordMutation,
+  useRefreshTokenMutation,
+} = authApi;
