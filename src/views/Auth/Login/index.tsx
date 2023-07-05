@@ -41,7 +41,7 @@ const Login = () => {
   return (
     <React.Fragment>
       <h4>Welcome Back</h4>
-      <p className="mb-3 mt-1">Please enter your email and password</p>
+      <p className="mb-5">Please enter your email and password</p>
       <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
         <Form.Input
           label="Email"
