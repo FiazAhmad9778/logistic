@@ -11,6 +11,22 @@
   height: 100vh;
 }
 
+@media (min-width: 1024px) and (max-width: 1400px) {
+  .input-leading {
+    left: 5.5%;
+  }
+}
+@media (min-width: 1600px) {
+  .input-leading {
+    left: 3.5%;
+  }
+}
+@media (min-width: 2000px) {
+  .input-leading {
+    left: 3%;
+  }
+}
+
 .main-login-logo {
   display: flex;
   align-items: center;
