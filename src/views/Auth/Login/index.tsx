@@ -8,7 +8,6 @@ import Form from '@/components/Form';
 import Button from '@/components/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { LoginResolver } from 'src/form-resolver/auth-resolver';
-import { HandleNotification } from '@/components/Toast';
 
 const Login = () => {
   const useFormReturn = useForm({
@@ -31,7 +30,6 @@ const Login = () => {
 
     if (!('error' in res) && res.success === true) {
       dispatch(setAuth(res.data));
-      HandleNotification(res.message || 'Login Successfully', res.success);
       navigate('/', { replace: true });
     } else {
       useFormReturn.setError('email', { message: res?.message ?? 'Email or Password is incorrect!' });
@@ -43,7 +41,6 @@ const Login = () => {
   return (
     <React.Fragment>
       <h4>Welcome Back</h4>
-      <p className="mb-5">Please enter your email and password</p>
       <p className="mb-5">{"Enter your email and we'll send you instructions to reset your password"}</p>
       <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
         <Form.Input
@@ -65,7 +62,7 @@ const Login = () => {
             Forget Password?
           </Link>
         </div>
-        <Button className="btn-block mt-3" loading={state.isLoading} type="submit">
+        <Button type="submit" className="btn-block mt-3" loading={state.isLoading} disabled={state.isLoading}>
           SIGN IN
         </Button>
       </Form>
