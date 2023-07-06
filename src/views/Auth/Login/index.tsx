@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '@/infrastructure/store/api/auth/auth-api';
 import { useAppDispatch } from '@/infrastructure/store/store-hooks';
@@ -18,6 +18,7 @@ const Login = () => {
   const dispatch = useAppDispatch();
 
   const [loginAPi, state] = useLoginMutation();
+  const [error, setError] = useState<string>('');
 
   const onSubmit: SubmitHandler<FieldValues> = async (e) => {
     if (state.isLoading) return;
@@ -32,8 +33,7 @@ const Login = () => {
       dispatch(setAuth(res.data));
       navigate('/', { replace: true });
     } else {
-      useFormReturn.setError('email', { message: res?.message ?? 'Email or Password is incorrect!' });
-      useFormReturn.setError('password', { message: res?.message ?? 'Email or password is incorrect!' });
+      setError('Email or Password is incorrect!');
       return;
     }
   };
@@ -41,7 +41,7 @@ const Login = () => {
   return (
     <React.Fragment>
       <h4>Welcome Back</h4>
-      <p className="mb-5">{"Enter your email and we'll send you instructions to reset your password"}</p>
+      <p className="mb-5">Please enter your email and password</p>
       <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
         <Form.Input
           label="Email"
@@ -56,6 +56,9 @@ const Login = () => {
           placeholder="Please enter your password"
           leading={<i className="fa fa-unlock"></i>}
         />
+
+        {error && <span className="text-danger tx-12">{error}</span>}
+
         <div className="d-flex justify-content-between align-items-center">
           <Form.Checkbox label="Remember me" name="remember" />
           <Link to="/auth/forget-password" className="text-primary tx-medium">

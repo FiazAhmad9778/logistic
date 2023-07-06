@@ -17,6 +17,7 @@ const ForgotPassword = () => {
   const location = useLocation();
 
   const [saveForgotPassword, state] = useForgotPasswordMutation();
+  const [error, setError] = useState<string>('');
 
   const onSubmit: SubmitHandler<FieldValues> = async (e) => {
     const payload = {
@@ -25,9 +26,14 @@ const ForgotPassword = () => {
     };
     await saveForgotPassword(payload)
       .unwrap()
-      .then(() => {
-        useFormReturn.reset({ email: '' });
-        setInfoMessage(InfoMessage.ResetPasswordLink);
+      .then((res) => {
+        if (!('error' in res) && res.success === true) {
+          useFormReturn.reset({ email: '' });
+          setInfoMessage(InfoMessage.ResetPasswordLink);
+        } else {
+          setError('Account not found against provided email!');
+          return;
+        }
       })
       .catch((err) => console.log(err));
     console.log(payload);
@@ -46,6 +52,7 @@ const ForgotPassword = () => {
           placeholder="Please enter your email"
           leading={<i className="far fa-envelope"></i>}
         />
+        {error && <span className="text-danger tx-12">{error}</span>}
         {!infoMessage && (
           <Button className="btn-block mt-3" type="submit" loading={state.isLoading}>
             Send Reset Link

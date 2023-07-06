@@ -5,6 +5,7 @@ import {
   LoginPayload,
   LoginResponse,
   ResetPasswordPayload,
+  VerifyTokenPayload,
 } from './auth-types';
 import { GenericResponseType } from '../../../../types/common/http-types';
 
@@ -36,6 +37,17 @@ const authApi = appApi
         }),
         extraOptions: {},
       }),
+
+      // Verify
+      verifyToken: build.mutation<GenericResponseType<unknown>, VerifyTokenPayload>({
+        query: (payload) => ({
+          url: '/auth/verify',
+          body: payload,
+          method: 'POST',
+        }),
+        extraOptions: {},
+      }),
+
       // RESET PASSWORD
       resetPassword: build.mutation<GenericResponseType<unknown>, ResetPasswordPayload>({
         query: (payload) => ({
@@ -74,4 +86,5 @@ export const {
   useResetPasswordMutation,
   useChangePasswordMutation,
   useRefreshTokenMutation,
+  useVerifyTokenMutation,
 } = authApi;

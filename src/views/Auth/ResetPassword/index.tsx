@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import Form from '@/components/Form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '@/components/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ResetPasswordResolver } from 'src/form-resolver/auth-resolver';
-import { useChangePasswordMutation } from '@/infrastructure/store/api/auth/auth-api';
+import { useResetPasswordMutation, useVerifyTokenMutation } from '@/infrastructure/store/api/auth/auth-api';
 import { HandleNotification } from '@/components/Toast';
+import { Alert } from 'react-bootstrap';
 
 const ResetPassword = () => {
   const useFormReturn = useForm({
@@ -14,15 +15,18 @@ const ResetPassword = () => {
   });
   const navigate = useNavigate();
 
-  // const [saveNewPassword] = useResetPasswordMutation();
-  const [saveNewPassword, state] = useChangePasswordMutation();
+  const [setNewPassword, state] = useResetPasswordMutation();
+  const [verifyToken, verifyTokenState] = useVerifyTokenMutation();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const resetToken = queryParams.get('resetToken');
 
   const onSubmit: SubmitHandler<FieldValues> = async (e) => {
     const payload = {
-      currentPassword: e.currentPassword,
-      newPassword: e.newPassword,
+      token: '',
+      password: e.newPassword,
     };
-    await saveNewPassword(payload)
+    await setNewPassword(payload)
       .unwrap()
       .then((res) => {
         HandleNotification(res.message, res.success);
@@ -31,18 +35,44 @@ const ResetPassword = () => {
       .catch((err) => console.log(err));
   };
 
+  useEffect(() => {
+    console.log(resetToken);
+    resetToken &&
+      verifyToken({ token: resetToken })
+        .unwrap()
+        .then((res) => {
+          if (!res.success) {
+            HandleNotification('Invalid Token provided', false);
+          }
+        })
+        .catch((err) => console.log(err));
+  }, [resetToken, verifyToken]);
+
+  // Display different content based on token verification
+  if (verifyTokenState.isLoading) {
+    return <p>Loading...</p>; // Show a loading indicator while verifying the token
+  }
+
+  if (verifyTokenState.isError || !verifyTokenState.data?.success) {
+    return (
+      <React.Fragment>
+        <Alert variant="" className="alert alert-warning text-center mt-3 py-2">
+          <span className="text-red tx-medium">Invalid Token provided</span>
+        </Alert>
+        <div className="d-flex justify-content-center mt-4">
+          <Link to="/auth/login" className="text-primary tx-medium">
+            <i className="fa fa-angle-left"></i> Back To Login
+          </Link>
+        </div>
+      </React.Fragment>
+    );
+  }
+
   return (
     <React.Fragment>
       <h4>Create New Password</h4>
       <p className="mb-5 mt-4">{'Your new password must be different from previous used passwords.'}</p>
       <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
-        <Form.Input
-          type="password"
-          label="Current Password"
-          name="currentPassword"
-          placeholder="Please enter your current password"
-          leading={<i className="fa fa-unlock"></i>}
-        />
         <Form.Input
           type="password"
           label="New Password"
