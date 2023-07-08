@@ -65,7 +65,7 @@ const Login = () => {
             Forget Password?
           </Link>
         </div>
-        <Button className="btn-block mt-3" loading={state.isLoading} type="submit" disabled={state.isLoading}>
+        <Button type="submit" className="btn-block mt-3" loading={state.isLoading} disabled={state.isLoading}>
           SIGN IN
         </Button>
       </Form>

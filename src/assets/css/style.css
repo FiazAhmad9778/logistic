@@ -89889,7 +89889,7 @@ a.text-dark:focus {
   width: 300px;
 }
 
-@media (min-width: 480px) {
+@media (min-width: 380px) {
   .wd-xs-5 {
     width: 5px;
   }
@@ -89967,7 +89967,7 @@ a.text-dark:focus {
   }
 
   .wd-xs-50p {
-    width: 50%;
+    width: 50% !important;
   }
 
   .wd-xs-55 {
