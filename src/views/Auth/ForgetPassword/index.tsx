@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Alert } from 'react-bootstrap';
 import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import Form from '@/components/Form';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from '@/components/Button';
 import { useForgotPasswordMutation } from '@/infrastructure/store/api/auth/auth-api';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -14,7 +14,6 @@ const ForgotPassword = () => {
   const useFormReturn = useForm({
     resolver: yupResolver(ForgotPasswordResolver),
   });
-  const location = useLocation();
 
   const [saveForgotPassword, state] = useForgotPasswordMutation();
   const [error, setError] = useState<string>('');
@@ -22,7 +21,7 @@ const ForgotPassword = () => {
   const onSubmit: SubmitHandler<FieldValues> = async (e) => {
     const payload = {
       email: e.email,
-      host: `${import.meta.env.VITE_API_BASE_URL}${location.pathname}`,
+      host: window.location.origin,
     };
     await saveForgotPassword(payload)
       .unwrap()
@@ -44,7 +43,7 @@ const ForgotPassword = () => {
       <h4>
         Forgot Password? <i className="fa fa-unlock-alt tx-primary"></i>
       </h4>
-      <p className="mb-5 mt-4">{"Enter your email and we'll send you instructions to reset your password"}</p>
+      <p className="mb-2 mt-1">{"Enter your email and we'll send you instructions to reset your password"}</p>
       <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
         <Form.Input
           label="Email"
