@@ -14,7 +14,7 @@ export const genericResolver = {
   confirmPassword: yup
     .string()
     .required('Confirm password is required!')
-    .oneOf([yup.ref('newPassword')], 'Your passwords do not match!'),
+    .oneOf([yup.ref('password')], 'Your passwords do not match!'),
 };
 
 export const LoginResolver = yup.object().shape({
@@ -27,7 +27,6 @@ export const ForgotPasswordResolver = yup.object().shape({
 });
 
 export const ResetPasswordResolver = yup.object().shape({
-  currentPassword: genericResolver.password,
-  newPassword: genericResolver.password,
+  password: genericResolver.password,
   confirmPassword: genericResolver.confirmPassword,
 });

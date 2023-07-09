@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import Form from '@/components/Form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '@/components/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ResetPasswordResolver } from 'src/form-resolver/auth-resolver';
-import { useResetPasswordMutation, useVerifyTokenMutation } from '@/infrastructure/store/api/auth/auth-api';
+import { useResetPasswordMutation } from '@/infrastructure/store/api/auth/auth-api';
 import { HandleNotification } from '@/components/Toast';
-import { Alert } from 'react-bootstrap';
 
 const ResetPassword = () => {
   const useFormReturn = useForm({
@@ -15,58 +14,29 @@ const ResetPassword = () => {
   });
   const navigate = useNavigate();
 
-  const [setNewPassword, state] = useResetPasswordMutation();
-  const [verifyToken, verifyTokenState] = useVerifyTokenMutation();
+  const [setNewPassword, setNewPasswordState] = useResetPasswordMutation();
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const resetToken = queryParams.get('resetToken');
+  const [error, setError] = useState<string>('');
 
   const onSubmit: SubmitHandler<FieldValues> = async (e) => {
-    const payload = {
-      token: '',
-      password: e.newPassword,
-    };
-    await setNewPassword(payload)
-      .unwrap()
-      .then((res) => {
-        HandleNotification(res.message, res.success);
+    if (resetToken) {
+      const payload = {
+        token: resetToken,
+        password: e.password,
+      };
+      const res = await setNewPassword(payload).unwrap();
+
+      if (!('error' in res) && res.success === true) {
+        HandleNotification('Password reset successfully.', res.success);
         navigate('/auth/login');
-      })
-      .catch((err) => console.log(err));
+      } else {
+        setError('Reset link expired!');
+        return;
+      }
+    }
   };
-
-  useEffect(() => {
-    console.log(resetToken);
-    resetToken &&
-      verifyToken({ token: resetToken })
-        .unwrap()
-        .then((res) => {
-          if (!res.success) {
-            HandleNotification('Invalid Token provided', false);
-          }
-        })
-        .catch((err) => console.log(err));
-  }, [resetToken, verifyToken]);
-
-  // Display different content based on token verification
-  if (verifyTokenState.isLoading) {
-    return <p>Loading...</p>; // Show a loading indicator while verifying the token
-  }
-
-  if (verifyTokenState.isError || !verifyTokenState.data?.success) {
-    return (
-      <React.Fragment>
-        <Alert variant="" className="alert alert-warning text-center mt-3 py-2">
-          <span className="text-red tx-medium">Invalid Token provided</span>
-        </Alert>
-        <div className="d-flex justify-content-center mt-4">
-          <Link to="/auth/login" className="text-primary tx-medium">
-            <i className="fa fa-angle-left"></i> Back To Login
-          </Link>
-        </div>
-      </React.Fragment>
-    );
-  }
 
   return (
     <React.Fragment>
@@ -76,7 +46,7 @@ const ResetPassword = () => {
         <Form.Input
           type="password"
           label="New Password"
-          name="newPassword"
+          name="password"
           placeholder="Please enter new password"
           leading={<i className="fa fa-unlock"></i>}
         />
@@ -87,7 +57,10 @@ const ResetPassword = () => {
           placeholder="Please enter confirm password"
           leading={<i className="fa fa-unlock"></i>}
         />
-        <Button className="btn-block mt-3" type="submit" isLoading={state.isLoading}>
+
+        {error && <span className="text-danger tx-12">{error}</span>}
+
+        <Button className="btn-block mt-3" type="submit" isLoading={setNewPasswordState.isLoading}>
           Reset Password
         </Button>
         <div className="d-flex justify-content-center mt-4">
