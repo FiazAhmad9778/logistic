@@ -12,6 +12,8 @@ import {
   ClientGroupManagementIcon,
   RouteList,
   AutoRouteAssignmentIcon,
+  CustomerManagement,
+  CustomerReviewIcon,
 } from '@/components/Icon';
 
 export const MENUITEMS = [
@@ -59,12 +61,12 @@ export const MENUITEMS = [
         title: 'Order Management',
       },
       {
-        path: `order-status-list`,
+        path: `order-status-management`,
         icon: OrderStatusIcon,
         type: 'link',
         selected: false,
         active: false,
-        title: 'Order Status',
+        title: 'Order Status Management',
       },
       {
         path: `profile-and-profile-list`,
@@ -121,6 +123,22 @@ export const MENUITEMS = [
         selected: false,
         active: false,
         title: 'Client Group Management',
+      },
+      {
+        path: `customer-management`,
+        icon: CustomerManagement,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Customer Management',
+      },
+      {
+        path: `customer-review-and-rating`,
+        icon: CustomerReviewIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Customer Review and Rating',
       },
     ],
   },

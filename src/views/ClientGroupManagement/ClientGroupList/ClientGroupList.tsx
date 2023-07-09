@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createColumnHelper, useReactTable, getCoreRowModel } from '@tanstack/react-table';
 import Table from '@/components/Table';
 import Pagination from '@/components/Pagination';
 import { useDialogState } from '@/hooks/useDialogState';
 import Dialog from '@/components/Modal';
 import Button from '@/components/Button';
+import AddClientGroupDialog from '../AddClientGroupDialog/AddClientGroupDialog';
 
 const ClientGroupList = () => {
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
+  const [clientGroupDialog, setClientGroupDialog] = useState<boolean>(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -28,7 +30,7 @@ const ClientGroupList = () => {
       header: () => <span>Action</span>,
       cell: () => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fa fa-edit me-1" onClick={setOpenDialog}></i>
+          <i className="fa fa-edit me-1" onClick={() => setClientGroupDialog(true)}></i>
           <i className="far fa-trash-alt" onClick={setOpenDialog}></i>
         </span>
       ),
@@ -63,6 +65,7 @@ const ClientGroupList = () => {
           </div>
         </div>
       </Dialog>
+      <AddClientGroupDialog isOpen={clientGroupDialog} setCloseDialog={() => setClientGroupDialog(false)} />
     </React.Fragment>
   );
 };

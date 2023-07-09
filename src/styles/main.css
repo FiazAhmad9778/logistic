@@ -2,8 +2,9 @@
 .input-leading {
   position: absolute;
   top: 50%;
-  left: 4.5%;
+  left: 0;
   margin-top: 1px;
+  padding-left: 35px;
   color: #4d5875 !important;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -49,6 +50,11 @@ input::file-selector-button {
   outline: 0;
   box-shadow: none;
 }
+.input-control:disabled,
+.input-control[readonly] {
+  background-color: rgba(234, 243, 241, 0.5784313725);
+  opacity: 1;
+}
 
 .textarea-control {
   display: block;
@@ -78,24 +84,6 @@ input::file-selector-button {
   border-color: var(--primary-bg-color);
   outline: 0;
   box-shadow: none;
-}
-
-@media (min-width: 1024px) and (max-width: 1200px) {
-  .input-leading {
-    left: 5.5%;
-  }
-}
-
-@media (min-width: 1600px) {
-  .input-leading {
-    left: 3.5%;
-  }
-}
-
-@media (min-width: 2000px) {
-  .input-leading {
-    left: 3%;
-  }
 }
 
 .signin-section {
@@ -228,4 +216,7 @@ input::file-selector-button {
 .table-primary thead th,
 .table-primary tbody + tbody {
   border-color: #cfd4de !important;
+  max-width: 350px !important;
+  white-space: pre-wrap;
+  vertical-align: middle;
 }

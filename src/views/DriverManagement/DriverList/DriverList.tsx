@@ -48,6 +48,7 @@ const DriverList = () => {
       header: () => <span>Action</span>,
       cell: () => (
         <span className="d-block text-center cursor-pointer text-primary">
+          <i className="fas fa-eye me-1" onClick={() => navigate('/drivers/view-safety-check')}></i>
           <i className="fa fa-edit me-1" onClick={() => navigate('/drivers/create-driver')}></i>
           <i className="far fa-trash-alt" onClick={setOpenDialog}></i>
         </span>

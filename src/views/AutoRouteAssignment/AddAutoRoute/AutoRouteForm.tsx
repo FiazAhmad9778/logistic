@@ -15,7 +15,7 @@ const AutoRouteForm: React.FC<IAutoRouteForm> = ({ onSubmit }) => {
               <Form.Input label="Assign From" name="assignFrom" type="date" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Assign From" name="assignTilee" type="date" />
+              <Form.Input label="Assign To" name="assignTo" type="date" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Select label="Project" name="project" options={[]} />

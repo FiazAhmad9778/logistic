@@ -25,6 +25,13 @@ import AddClient from '@/views/ClientManagement/AddClient/AddClient';
 import ClientGroupManagement from '@/views/ClientGroupManagement';
 import VehicleSafetyCheck from '@/views/VehicleSafetyCheck';
 import AddSafetyCheck from '@/views/VehicleSafetyCheck/AddSafetyCheck/AddSafetyCheck';
+import CustomerManagement from '@/views/CustomerManagement';
+import AddCustomer from '@/views/CustomerManagement/AddCustomer/AddCustomer';
+import CustomerReviewRating from '@/views/CustomerReviewRating';
+import ViewSafetyCheck from '@/views/DriverManagement/ViewSafetyCheck/ViewSafetyCheck';
+import ViewOrderStatus from '@/views/OrderStatusManagement/ViewOrderStatus/ViewOrderStatus';
+import AssignedOrdersList from '@/views/RouteAssignment/AssignedOrdersList/AssignedOrdersList';
+import DriverRouteReview from '@/views/CustomerReviewRating/DriverRouteReview/DriverRouteReview';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -74,6 +81,11 @@ export const routes: RoutePathDefinition[] = [
             element: <AddDriver />,
           },
           {
+            path: 'drivers/view-safety-check',
+            title: 'VIEW SAFETY CHECK',
+            element: <ViewSafetyCheck />,
+          },
+          {
             path: 'drivers/bulk-upload-driver',
             title: 'UPLOAD DRIVER',
             element: <UploadDriver />,
@@ -84,9 +96,14 @@ export const routes: RoutePathDefinition[] = [
             element: <OrderManagement />,
           },
           {
-            path: 'order-status-list',
-            title: 'ORDER LIST',
+            path: 'order-status-management',
+            title: 'ORDER STATUS MANAGEMENT',
             element: <OrderStatusManagement />,
+          },
+          {
+            path: 'order-status-management/view-order-status',
+            title: 'ORDER STATUS MANAGEMENT',
+            element: <ViewOrderStatus />,
           },
           {
             path: 'route-list',
@@ -102,6 +119,11 @@ export const routes: RoutePathDefinition[] = [
             path: 'route-assignment-list',
             title: 'ROUTE ASSIGNMENT LIST',
             element: <RouteAssignment />,
+          },
+          {
+            path: 'route-assignment-list/assigned-orders-list',
+            title: 'ROUTE ASSIGNMENT LIST',
+            element: <AssignedOrdersList />,
           },
           {
             path: 'route-assignment-list/assign-route',
@@ -142,6 +164,26 @@ export const routes: RoutePathDefinition[] = [
             path: 'client-group-management',
             title: 'CLIENT GROUP MANAGEMENT',
             element: <ClientGroupManagement />,
+          },
+          {
+            path: 'customer-management',
+            title: 'CUSTOMER MANAGEMENT',
+            element: <CustomerManagement />,
+          },
+          {
+            path: 'customer-management/add-customer',
+            title: 'ADD CUSTOMER',
+            element: <AddCustomer />,
+          },
+          {
+            path: 'customer-review-and-rating',
+            title: 'CUSTOMER REVIEW AND RATING',
+            element: <CustomerReviewRating />,
+          },
+          {
+            path: 'customer-review-and-rating/driver-route-review',
+            title: 'DRIVER ROUTE REVIEW',
+            element: <DriverRouteReview />,
           },
           {
             path: '*',

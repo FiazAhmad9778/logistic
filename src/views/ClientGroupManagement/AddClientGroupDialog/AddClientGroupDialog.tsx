@@ -12,9 +12,9 @@ const AddClientGroupDialog: React.FC<IAddClientGroupProps> = ({ isOpen, setClose
   const useFormReturn = useForm();
   return (
     <div>
-      <Dialog title="Add Client Group" show={isOpen} handleClose={setCloseDialog}>
+      <Dialog title="Manage Client Group" show={isOpen} handleClose={setCloseDialog}>
         <Form useFormReturn={useFormReturn} onSubmit={(e) => console.log(e)}>
-          <Form.Input label="Role Name" name="role" placeholder="Enter client group name" />
+          <Form.Input label="Client Group Name" name="clientGroupName" />
           <Form.Checkbox label="Active" name="active" />
           <div className="d-flex justify-content-end gap-2 mt-4 mb-2">
             <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={setCloseDialog}>

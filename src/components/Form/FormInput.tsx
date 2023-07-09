@@ -52,8 +52,8 @@ const FormInput: FCC<InputProps> = ({
           id={name}
           defaultValue={defaultValue ? defaultValue : getValues(name)}
           className={classNames(
-            'input-control tx-12 ',
-            leading ? 'pd-l-30' : '',
+            'input-control tx-12',
+            leading && 'pd-l-30',
             errors[name]?.message && 'border-danger',
             className,
           )}

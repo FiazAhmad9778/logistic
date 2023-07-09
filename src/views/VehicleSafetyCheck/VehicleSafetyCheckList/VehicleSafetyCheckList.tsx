@@ -6,8 +6,10 @@ import { IMAGES } from '@/assets/images';
 import Dialog from '@/components/Modal';
 import Button from '@/components/Button';
 import { useDialogState } from '@/hooks/useDialogState';
+import { useNavigate } from 'react-router-dom';
 
 const VehicleSafetyCheckList = () => {
+  const navigate = useNavigate();
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
@@ -43,6 +45,7 @@ const VehicleSafetyCheckList = () => {
       header: () => <span>Action</span>,
       cell: () => (
         <span className="d-block text-center cursor-pointer text-primary">
+          <i className="fa fa-edit me-1" onClick={() => navigate('/vehicle-safety-check-list/add-safety-check')}></i>
           <i className="far fa-trash-alt" onClick={setOpenDialog}></i>
         </span>
       ),
@@ -58,7 +61,7 @@ const VehicleSafetyCheckList = () => {
     <React.Fragment>
       <Table useReactTableReturn={useReactTableReturn} />
       <Pagination />
-      <Dialog title="Delete Vahicle" show={isOpen} handleClose={setCloseDialog}>
+      <Dialog title="Delete Vehicle" show={isOpen} handleClose={setCloseDialog}>
         <div>
           <p className="tx-14 tx-medium mg-b-20">Are you sure you want to delete this item?</p>
           <div className="d-flex justify-content-end">

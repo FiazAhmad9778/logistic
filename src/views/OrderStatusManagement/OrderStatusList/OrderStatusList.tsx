@@ -2,8 +2,10 @@ import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const OrderStatusList = () => {
+  const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -39,8 +41,8 @@ const OrderStatusList = () => {
       id: 'Create Order Instruction',
       header: () => <span>Action</span>,
       cell: () => (
-        <span className="d-block text-center cursor-pointer">
-          <i className="fas fa-eye me-1"></i>
+        <span className="d-block text-center cursor-pointer text-primary">
+          <i className="fas fa-eye me-1" onClick={() => navigate('/order-status-management/view-order-status')}></i>
         </span>
       ),
     }),

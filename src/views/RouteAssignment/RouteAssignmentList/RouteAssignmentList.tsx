@@ -18,7 +18,7 @@ const RouteAssignmentList = () => {
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.accessor('ClientGroupName', {
-      header: 'Group Name',
+      header: 'Client Group',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.accessor('RouteName', {
@@ -62,7 +62,7 @@ const RouteAssignmentList = () => {
       header: () => <span>Action</span>,
       cell: () => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fa fa-edit me-1" onClick={() => navigate('/route-assignment-list/assign-route')}></i>
+          <i className="fas fa-eye me-1" onClick={() => navigate('/route-assignment-list/assigned-orders-list')}></i>
           <i className="far fa-trash-alt" onClick={setOpenDialog}></i>
         </span>
       ),
@@ -78,7 +78,7 @@ const RouteAssignmentList = () => {
     <React.Fragment>
       <Table useReactTableReturn={useReactTableReturn} />
       <Pagination />
-      <Dialog title="Delete Route" show={isOpen} handleClose={setCloseDialog}>
+      <Dialog title="Delete Assigned Route" show={isOpen} handleClose={setCloseDialog}>
         <div>
           <p className="tx-14 tx-medium mg-b-20">Are you sure you want to delete this item?</p>
           <div className="d-flex justify-content-end">

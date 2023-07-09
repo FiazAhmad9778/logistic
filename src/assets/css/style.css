@@ -35818,7 +35818,7 @@ a.option-dots {
 }
 
 .rtl .pd-l-30 {
-  padding-right: 30px;
+  padding-right: 30px !important;
 }
 
 .rtl .pd-r-35 {
@@ -78937,7 +78937,7 @@ radius-1 {
 }
 
 .pd-l-30 {
-  padding-left: 30px;
+  padding-left: 30px !important;
 }
 
 .pd-35 {
