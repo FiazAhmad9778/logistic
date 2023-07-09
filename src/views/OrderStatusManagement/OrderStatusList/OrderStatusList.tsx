@@ -1,7 +1,7 @@
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { Card, Col, Form } from 'react-bootstrap';
+import React from 'react';
 
 const OrderStatusList = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,20 +52,10 @@ const OrderStatusList = () => {
     getCoreRowModel: getCoreRowModel(),
   });
   return (
-    <Col sm={12} className="col-12">
-      <Card className="card-primary">
-        <Card.Header>
-          <h4 className="card-title">Order Status List</h4>
-          <div className="d-flex justify-content-start mt-4">
-            <Form.Control className="form-control w-25 mb-0" placeholder="Search..." />
-          </div>
-        </Card.Header>
-        <Card.Body className="pt-0">
-          <Table useReactTableReturn={useReactTableReturn} />
-          <Pagination />
-        </Card.Body>
-      </Card>
-    </Col>
+    <React.Fragment>
+      <Table useReactTableReturn={useReactTableReturn} />
+      <Pagination />
+    </React.Fragment>
   );
 };
 

@@ -4,7 +4,6 @@ import Table from '@/components/Table';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Button from '@/components/Button';
 import { useNavigate } from 'react-router-dom';
-import Breadcrumb from '@/components/Breadcrumb';
 import Pagination from '@/components/Pagination';
 import Dialog from '@/components/Modal';
 import { useDialogState } from '@/hooks/useDialogState';
@@ -56,35 +55,20 @@ const UserList: React.FC = () => {
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
-  const breadcrumbPath = [
-    {
-      name: 'Company',
-      path: '/users',
-      active: true,
-    },
-  ];
   return (
     <Row>
-      <Col md={12}>
-        <Breadcrumb
-          breadcrumbPath={breadcrumbPath}
-          button={
-            <Button
-              btnType="btn-outline-primary"
-              icon={<i className="fa fa fa-plus"></i>}
-              onClick={() => navigate('/users/create-user')}
-            >
-              {'New Record'}
-            </Button>
-          }
-        />
-      </Col>
       <Col sm={12} className="col-12">
         <Card className="card-primary">
           <Card.Header>
-            <h4 className="card-title">User List</h4>
-            <div className="d-flex justify-content-start mt-4">
+            <div className="d-flex justify-content-between mb-2">
               <Form.Control className="form-control w-25 mb-0" placeholder="Search..." />
+              <Button
+                btnType="btn-outline-primary"
+                icon={<i className="fa fa fa-plus"></i>}
+                onClick={() => navigate('/users/create-user')}
+              >
+                {'New Record'}
+              </Button>
             </div>
           </Card.Header>
           <Card.Body className="pt-0">

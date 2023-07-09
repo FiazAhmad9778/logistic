@@ -1,6 +1,6 @@
 import React from 'react';
-import { Card, Breadcrumb as Breadcrumbs } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { classNames } from '@/helpers/classNames';
+import { Link, useLocation } from 'react-router-dom';
 
 type Path = {
   name: string;
@@ -14,34 +14,58 @@ interface IBreadcrumb {
   button?: React.ReactNode;
 }
 
-const Breadcrumb: React.FC<IBreadcrumb> = ({ breadcrumbTitle, breadcrumbPath, button }) => {
-  const navigate = useNavigate();
-  return (
-    <Card>
-      <Card.Body className="py-2">
-        <div aria-label="breadcrumb" className="d-flex align-item-center justify-content-between">
-          <Breadcrumbs className="mb-0 mg-b-0">
-            {breadcrumbPath &&
-              breadcrumbPath.map((item) => (
-                <Breadcrumbs.Item
-                  key={item.name}
-                  onClick={() => navigate(item.path)}
-                  className="mb-0"
-                  active={item.active}
-                >
-                  {item.name}
-                </Breadcrumbs.Item>
-              ))}
-            {breadcrumbTitle && (
-              <Breadcrumbs.Item href="#" className="mb-0" active={true}>
-                {breadcrumbTitle}
-              </Breadcrumbs.Item>
+const Breadcrumb: React.FC<IBreadcrumb> = ({ button }) => {
+  const location = useLocation();
+
+  let currentLink = '';
+  const crumbs = location.pathname
+    .split('/')
+    .filter((crumb) => crumb !== '')
+    .map((crumb, index) => {
+      currentLink += `/${crumb}`;
+      const newCrumb = crumb
+        .split('-')
+        .filter((crumb) => crumb !== '')
+        .map((item) => ` ${item.toLocaleUpperCase()}`);
+
+      return (
+        <span key={crumb} className="mb-0">
+          <Link
+            to={currentLink}
+            className={classNames(
+              location.pathname.split('/').filter((crumb) => crumb !== '').length === 1
+                ? 'text-primary'
+                : currentLink === location.pathname && 'text-primary',
+              'tx-gray-600 font-weight-semibold tx-14',
             )}
-          </Breadcrumbs>
-          {button && <div className="d-flex align-items-center">{button}</div>}
-        </div>
-      </Card.Body>
-    </Card>
+          >
+            {index !== 0 && (
+              <svg className="ms-1 mb-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
+                <g transform="rotate(180 12 12) translate(24 0) scale(-1 1)">
+                  <path
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="m13 17l5-5l-5-5M6 17l5-5l-5-5"
+                  />
+                </g>
+              </svg>
+            )}
+            <span>{newCrumb}</span>
+          </Link>
+        </span>
+      );
+    });
+  return (
+    <div aria-label="breadcrumb" className="d-flex align-item-center justify-content-between">
+      <span></span>
+      <div className="mb-0 mg-b-0 d-flex align-items-center">
+        <span>{crumbs}</span>
+      </div>
+      {button && <div className="d-flex align-items-center">{button}</div>}
+    </div>
   );
 };
 

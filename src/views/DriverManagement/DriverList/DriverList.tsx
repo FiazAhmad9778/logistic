@@ -1,12 +1,11 @@
-import Button from '@/components/Button';
-import Dialog from '@/components/Modal';
+import React from 'react';
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import { useDialogState } from '@/hooks/useDialogState';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import React from 'react';
-import { Card, Col, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import Dialog from '@/components/Modal';
+import Button from '@/components/Button';
 
 const DriverList = () => {
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
@@ -63,20 +62,8 @@ const DriverList = () => {
   });
   return (
     <React.Fragment>
-      <Col sm={12} className="col-12">
-        <Card className="card-primary">
-          <Card.Header>
-            <h4 className="card-title">Driver List</h4>
-            <div className="d-flex justify-content-start mt-4">
-              <Form.Control className="form-control w-25 mb-0" placeholder="Search..." />
-            </div>
-          </Card.Header>
-          <Card.Body className="pt-0">
-            <Table useReactTableReturn={useReactTableReturn} />
-            <Pagination />
-          </Card.Body>
-        </Card>
-      </Col>
+      <Table useReactTableReturn={useReactTableReturn} />
+      <Pagination />
       <Dialog title="Delete Driver" show={isOpen} handleClose={setCloseDialog}>
         <div>
           <p className="tx-14 tx-medium mg-b-20">Are you sure you want to delete this item?</p>

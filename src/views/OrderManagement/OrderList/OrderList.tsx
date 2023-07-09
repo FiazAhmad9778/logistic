@@ -1,9 +1,12 @@
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
+import { useDialogState } from '@/hooks/useDialogState';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { Card, Col, Form } from 'react-bootstrap';
+import React from 'react';
+import AddOrderInstructionDialog from '../AddOrderInstruction/AddOrderInstructionDialog';
 
 const OrderList = () => {
+  const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -43,8 +46,8 @@ const OrderList = () => {
       id: 'Create Order Instruction',
       header: () => <span>Action</span>,
       cell: () => (
-        <span className="d-block text-center cursor-pointer">
-          <i className="fa fa-edit me-1"></i>
+        <span className="d-block text-center cursor-pointer text-primary">
+          <i className="fa fa-edit me-1" onClick={setOpenDialog}></i>
         </span>
       ),
     }),
@@ -56,20 +59,11 @@ const OrderList = () => {
     getCoreRowModel: getCoreRowModel(),
   });
   return (
-    <Col sm={12} className="col-12">
-      <Card className="card-primary">
-        <Card.Header>
-          <h4 className="card-title">Order List</h4>
-          <div className="d-flex justify-content-start mt-4">
-            <Form.Control className="form-control w-25 mb-0" placeholder="Search..." />
-          </div>
-        </Card.Header>
-        <Card.Body className="pt-0">
-          <Table useReactTableReturn={useReactTableReturn} />
-          <Pagination />
-        </Card.Body>
-      </Card>
-    </Col>
+    <React.Fragment>
+      <Table useReactTableReturn={useReactTableReturn} />
+      <Pagination />
+      <AddOrderInstructionDialog isOpen={isOpen} setCloseDialog={setCloseDialog} />
+    </React.Fragment>
   );
 };
 

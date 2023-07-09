@@ -1184,7 +1184,7 @@ btn-outline-primary:hover .bg-primary {
   display: inline-block;
   padding-right: 0.5rem;
   color: rgba(227, 230, 232, 0.6901960784);
-  content: '/' !important;
+  content: '' !important;
 }
 
 .breadcrumb-item + .breadcrumb-item:hover::before {
@@ -7595,39 +7595,6 @@ pre code {
 .form-control::placeholder {
   color: #7987a1;
   opacity: 1;
-}
-
-.input-control {
-  display: block;
-  width: 100%;
-  height: 38.6px;
-  padding: 0.375rem 0.75rem;
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 2;
-  color: #4d5875;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 2px solid #ededf5;
-  border-radius: 5px;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-}
-
-.input-control[type='file'] {
-  height: auto;
-}
-
-.input-control::-ms-expand {
-  background-color: transparent;
-  border: 0;
-}
-
-.input-control:focus {
-  color: #4d5875;
-  background-color: #fff;
-  border-color: var(--primary-bg-color);
-  outline: 0;
-  box-shadow: none;
 }
 
 .input::placeholder {

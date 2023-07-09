@@ -1,39 +1,29 @@
-import Breadcrumb from '@/components/Breadcrumb';
 import Button from '@/components/Button';
 import Form from '@/components/Form';
 import { Card, Col, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const UploadDriver = () => {
   const useFormReturn = useForm();
-  const breadcrumbPath = [
-    {
-      name: 'Driver Management',
-      path: '/drivers',
-      active: false,
-    },
-    {
-      name: 'Upload Driver',
-      path: '/drivers/bulk-upload-driver',
-      active: true,
-    },
-  ];
+  const navigate = useNavigate();
+
   return (
     <Row>
-      <Col md={12}>
-        <Breadcrumb
-          breadcrumbPath={breadcrumbPath}
-          button={
-            <Button type="button" btnType="btn-outline-primary">
-              Export Drivers
-            </Button>
-          }
-        />
-      </Col>
       <Col sm={12} className="col-12">
         <Card className="card-primary">
           <Card.Header>
-            <h4 className="card-title">Bulk Upload Driver</h4>
+            <div className="d-flex justify-content-between mb-2">
+              <h4 className="card-title">Bulk Upload Driver</h4>
+              <div className="d-flex gap-2">
+                <Button type="button" btnSize="btn-sm" btnType="btn-outline-primary" onClick={() => navigate(-1)}>
+                  Back
+                </Button>
+                <Button type="button" btnSize="btn-sm" btnType="btn-outline-primary">
+                  Export Drivers
+                </Button>
+              </div>
+            </div>
           </Card.Header>
           <Card.Body className="pt-0">
             <Form useFormReturn={useFormReturn} onSubmit={(e) => console.log(e)}>

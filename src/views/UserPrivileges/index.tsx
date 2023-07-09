@@ -1,4 +1,3 @@
-import Breadcrumb from '@/components/Breadcrumb';
 import Button from '@/components/Button';
 import Form from '@/components/Form';
 import Dialog from '@/components/Modal';
@@ -16,7 +15,7 @@ import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/re
 const UserPrivileges = () => {
   const { newRoleDialog, deleteRoleDialog } = useAppSelector((state) => state['user']);
   const useFormReturn = useForm();
-  const diapatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
@@ -47,79 +46,88 @@ const UserPrivileges = () => {
   });
 
   const handleNewRoleDialog = () => {
-    diapatch(toggleNewRoleDialog(false));
+    dispatch(toggleNewRoleDialog(false));
   };
   const handleDeleteRoleDialog = () => {
-    diapatch(toggleDeleteNewRoleDialog(false));
+    dispatch(toggleDeleteNewRoleDialog(false));
   };
   return (
     <Row>
-      <Col md={12}>
-        <Breadcrumb breadcrumbTitle="User Privileges Management" />
-      </Col>
-      <Col md={6}>
-        <Form useFormReturn={useFormReturn} onSubmit={(e) => console.log(e)}>
-          <Form.Select
-            name="role"
-            options={[
-              { value: 'Accountant', name: 'Accountant' },
-              { value: 'Foodmove', name: 'Foodmove' },
-              { value: 'Manager', name: 'Manager' },
-            ]}
-            onChange={(value) => console.log(value)}
-          />
-        </Form>
-      </Col>
-      <Col md={6}>
-        <div className="d-flex justify-content-end mb-3">
-          <Button
-            type="submit"
-            btnType="btn-danger"
-            className="me-2"
-            icon={<i className="far fa-trash-alt"></i>}
-            onClick={() => diapatch(toggleDeleteNewRoleDialog(true))}
-          >
-            {'Delete Role'}
-          </Button>
-          <Button
-            type="submit"
-            btnType="btn-primary"
-            icon={<i className="fa fa fa-plus"></i>}
-            btnSize="btn-sm"
-            onClick={() => diapatch(toggleNewRoleDialog(true))}
-          >
-            {'New Role'}
-          </Button>
-          <div>
-            <Dialog title="Added Role" show={deleteRoleDialog} handleClose={handleDeleteRoleDialog}>
-              <div className="my-2">
-                <Table useReactTableReturn={useReactTableReturn} />
-                <div className="d-flex justify-content-end mt-4">
-                  <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={handleDeleteRoleDialog}>
-                    Cancel
-                  </Button>
-                </div>
-              </div>
-            </Dialog>
-          </div>
-          <div>
-            <Dialog title="Add Role" show={newRoleDialog} handleClose={handleNewRoleDialog}>
-              <Form useFormReturn={useFormReturn} onSubmit={(e) => console.log(e)}>
-                <Form.Select label="Role Name" name="role" options={[]} />
-                <div className="d-flex justify-content-end gap-2 mt-4 mb-2">
-                  <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={handleNewRoleDialog}>
-                    Cancel
-                  </Button>
-                  <Button btnSize="btn-sm">Save</Button>
-                </div>
-              </Form>
-            </Dialog>
-          </div>
-        </div>
-      </Col>
       <Col sm={12} className="col-12">
         <Card className="card-primary">
           <Card.Body className="pt-4">
+            <Row>
+              <Col md={6}>
+                <Form useFormReturn={useFormReturn} onSubmit={(e) => console.log(e)}>
+                  <Form.Select
+                    name="role"
+                    options={[
+                      { value: 'Accountant', name: 'Accountant' },
+                      { value: 'Foodmove', name: 'Foodmove' },
+                      { value: 'Manager', name: 'Manager' },
+                    ]}
+                    onChange={(value) => console.log(value)}
+                  />
+                </Form>
+              </Col>
+              <Col md={6}>
+                <div className="d-flex justify-content-end mb-3">
+                  <Button
+                    type="submit"
+                    btnType="btn-outline-danger"
+                    className="me-2"
+                    icon={<i className="far fa-trash-alt"></i>}
+                    onClick={() => dispatch(toggleDeleteNewRoleDialog(true))}
+                  >
+                    {'Delete Role'}
+                  </Button>
+                  <Button
+                    type="submit"
+                    btnType="btn-outline-primary"
+                    icon={<i className="fa fa fa-plus"></i>}
+                    btnSize="btn-sm"
+                    onClick={() => dispatch(toggleNewRoleDialog(true))}
+                  >
+                    {'New Role'}
+                  </Button>
+                  <div>
+                    <Dialog title="Added Role" show={deleteRoleDialog} handleClose={handleDeleteRoleDialog}>
+                      <div className="my-2">
+                        <Table useReactTableReturn={useReactTableReturn} />
+                        <div className="d-flex justify-content-end mt-4">
+                          <Button
+                            type="button"
+                            btnType="btn-outline-danger"
+                            btnSize="btn-sm"
+                            onClick={handleDeleteRoleDialog}
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    </Dialog>
+                  </div>
+                  <div>
+                    <Dialog title="Add Role" show={newRoleDialog} handleClose={handleNewRoleDialog}>
+                      <Form useFormReturn={useFormReturn} onSubmit={(e) => console.log(e)}>
+                        <Form.Select label="Role Name" name="role" options={[]} />
+                        <div className="d-flex justify-content-end gap-2 mt-4 mb-2">
+                          <Button
+                            type="button"
+                            btnType="btn-outline-danger"
+                            btnSize="btn-sm"
+                            onClick={handleNewRoleDialog}
+                          >
+                            Cancel
+                          </Button>
+                          <Button btnSize="btn-sm">Save</Button>
+                        </div>
+                      </Form>
+                    </Dialog>
+                  </div>
+                </div>
+              </Col>
+            </Row>
             <Row>
               {privilegesRecord?.map((item) => (
                 <Col md={4} key={item.name} className="my-3">

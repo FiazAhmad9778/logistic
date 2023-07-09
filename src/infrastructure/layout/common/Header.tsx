@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { IMAGES } from '@/assets/images';
 import { useAppDispatch, useAppSelector } from '@/infrastructure/store/store-hooks';
 import { clearAuth } from '@/infrastructure/store/features/auth/auth-slice';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export default function Header() {
   const { name } = useAppSelector((state) => state['auth']);
@@ -46,6 +47,9 @@ export default function Header() {
             <Link to={`/`} className="header-logo">
               <img src={IMAGES.LOGO} className="mobile-logo logo-1" alt="logo" />
             </Link>
+          </div>
+          <div className="main-header-center ms-4 d-sm-none d-md-none d-lg-block">
+            <Breadcrumb />
           </div>
         </div>
         <div className="main-header-right">

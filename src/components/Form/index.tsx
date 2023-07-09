@@ -3,6 +3,7 @@ import { FormProvider, FieldValues, UseFormReturn } from 'react-hook-form';
 import FormInput from './FormInput';
 import { FormSelect } from './FormSelect';
 import FormCheckbox from './FormCheckbox';
+import FormTextarea from './FormTextarea';
 
 interface IFormProps extends React.DetailedHTMLProps<React.FormHTMLAttributes<HTMLFormElement>, HTMLFormElement> {
   name?: string;
@@ -26,4 +27,5 @@ export default Object.assign(Form, {
   Input: FormInput,
   Select: FormSelect,
   Checkbox: FormCheckbox,
+  Textarea: FormTextarea,
 });

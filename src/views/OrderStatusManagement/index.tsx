@@ -1,14 +1,21 @@
-import Breadcrumb from '@/components/Breadcrumb';
-import { Col, Row } from 'react-bootstrap';
+import { Card, Col, Row, Form } from 'react-bootstrap';
 import OrderStatusList from './OrderStatusList/OrderStatusList';
 
 const OrderStatusManagement = () => {
   return (
     <Row>
-      <Col md={12}>
-        <Breadcrumb breadcrumbTitle="Order Status Management" />
+      <Col sm={12} className="col-12">
+        <Card className="card-primary">
+          <Card.Header>
+            <div className="d-flex justify-content-start mb-2">
+              <Form.Control className="form-control w-25 mb-0" placeholder="Search..." />
+            </div>
+          </Card.Header>
+          <Card.Body className="pt-0">
+            <OrderStatusList />
+          </Card.Body>
+        </Card>
       </Col>
-      <OrderStatusList />
     </Row>
   );
 };

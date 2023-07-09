@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createUserResolver } from 'src/form-resolver/create-user-resolver';
-import Breadcrumb from '@/components/Breadcrumb';
 
 const CreateUser = () => {
   const useFormReturn = useForm({
@@ -13,34 +12,15 @@ const CreateUser = () => {
   });
   const navigate = useNavigate();
 
-  const breadcrumbPath = [
-    {
-      name: 'Company',
-      path: '/users',
-      active: false,
-    },
-    {
-      name: 'Create User',
-      path: '/users/create-user/',
-      active: true,
-    },
-  ];
   return (
     <Row>
-      <Col md={12}>
-        <Breadcrumb
-          breadcrumbPath={breadcrumbPath}
-          button={
+      <Col sm={12} className="col-12">
+        <Card className="card-primary">
+          <Card.Header className="d-flex justify-content-between mb-2">
+            <h4 className="card-title">Add User</h4>
             <Button btnType="btn-outline-primary" btnSize="btn-sm" onClick={() => navigate(-1)}>
               {'Back'}
             </Button>
-          }
-        />
-      </Col>
-      <Col sm={12} className="col-12">
-        <Card className="card-primary">
-          <Card.Header>
-            <h4 className="card-title">Add User</h4>
           </Card.Header>
           <Card.Body className="pt-0">
             <Row>
