@@ -13,6 +13,9 @@ const ViewSafetyCheckForm: React.FC<ISafetyCheckForm> = ({ onSubmitUser }) => {
       <Col md={{ span: 6, offset: 1 }}>
         <Form useFormReturn={useFormReturn} onSubmit={onSubmitUser}>
           <Row>
+            <Col xl={12} lg={12} md={12} sm={12}>
+              <Form.Input label="Driver Name" name="DriverName" />
+            </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Checkbox label="Brakes" name="Brakes" />
             </Col>

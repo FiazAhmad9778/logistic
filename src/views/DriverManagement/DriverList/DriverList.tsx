@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import { useDialogState } from '@/hooks/useDialogState';
@@ -6,9 +6,11 @@ import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/re
 import { useNavigate } from 'react-router-dom';
 import Dialog from '@/components/Modal';
 import Button from '@/components/Button';
+import MileageDialog from '../MileageDialog/MileageDialog';
 
 const DriverList = () => {
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
+  const [mileageDialog, setMileageDialog] = useState<boolean>(false);
   const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
@@ -50,7 +52,8 @@ const DriverList = () => {
         <span className="d-block text-center cursor-pointer text-primary">
           <i className="fas fa-eye me-1" onClick={() => navigate('/drivers/view-safety-check')}></i>
           <i className="fa fa-edit me-1" onClick={() => navigate('/drivers/create-driver')}></i>
-          <i className="far fa-trash-alt" onClick={setOpenDialog}></i>
+          <i className="far fa-trash-alt me-1" onClick={setOpenDialog}></i>
+          <i className="fa fa-location-arrow" onClick={() => setMileageDialog(true)}></i>
         </span>
       ),
     }),
@@ -84,6 +87,7 @@ const DriverList = () => {
           </div>
         </div>
       </Dialog>
+      <MileageDialog isOpen={mileageDialog} setCloseDialog={() => setMileageDialog(false)} />
     </React.Fragment>
   );
 };
