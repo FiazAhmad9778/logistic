@@ -25,10 +25,6 @@ const Login = () => {
 
     const res = await loginAPi({ email: e.email, password: e.password }).unwrap();
 
-    if ('error' in res && 'data' in res && res?.error) {
-      return;
-    }
-
     if (!('error' in res) && res.success === true) {
       dispatch(setAuth(res.data));
       navigate('/', { replace: true });
