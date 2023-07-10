@@ -12,6 +12,8 @@ import { useForm } from 'react-hook-form';
 import 'react-bootstrap/Modal';
 import Table from '@/components/Table';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import UserRoleData from '../../constant/data/user-roles.json';
+
 const UserPrivileges = () => {
   const { newRoleDialog, deleteRoleDialog } = useAppSelector((state) => state['user']);
   const useFormReturn = useForm();
@@ -40,7 +42,7 @@ const UserPrivileges = () => {
   ];
 
   const useReactTableReturn = useReactTable({
-    data: roleRecord || [],
+    data: UserRoleData || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -333,24 +335,5 @@ const privilegesRecord = [
     permissions: [
       { id: randomNumber(), name: 'View', icon: <i className="fas fa-eye me-1 tx-primary"></i>, isTrue: true },
     ],
-  },
-];
-
-const roleRecord = [
-  {
-    id: '1',
-    name: 'Accountant',
-  },
-  {
-    id: '2',
-    name: 'Foodmove',
-  },
-  {
-    id: '3',
-    name: 'Manager',
-  },
-  {
-    id: '4',
-    name: 'Ole & Steen',
   },
 ];

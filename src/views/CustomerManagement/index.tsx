@@ -16,7 +16,7 @@ const CustomerManagement = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/customer-management/add-customer')}
               >
-                New Record
+                New Customer
               </Button>
             </div>
           </Card.Header>

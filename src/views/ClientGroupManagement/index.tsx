@@ -18,7 +18,7 @@ const ClientGroupManagement = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => setOpenDialog()}
               >
-                New Record
+                {'New Client Group'}
               </Button>
             </div>
           </Card.Header>

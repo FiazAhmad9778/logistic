@@ -27,7 +27,7 @@ const DriverManagement = () => {
                   icon={<i className="fa fa fa-plus"></i>}
                   onClick={() => navigate('/drivers/create-driver')}
                 >
-                  {'New Record'}
+                  {'New Driver'}
                 </Button>
               </div>
             </div>

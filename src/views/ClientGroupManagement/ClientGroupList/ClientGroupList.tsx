@@ -6,6 +6,7 @@ import { useDialogState } from '@/hooks/useDialogState';
 import Dialog from '@/components/Modal';
 import Button from '@/components/Button';
 import AddClientGroupDialog from '../AddClientGroupDialog/AddClientGroupDialog';
+import ClientGroupListing from '../../../constant/data/client-groups-list.json';
 
 const ClientGroupList = () => {
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
@@ -38,7 +39,7 @@ const ClientGroupList = () => {
   ];
 
   const useReactTableReturn = useReactTable({
-    data: RouteAssignmentRecord,
+    data: ClientGroupListing,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -71,142 +72,3 @@ const ClientGroupList = () => {
 };
 
 export default ClientGroupList;
-
-const RouteAssignmentRecord = [
-  {
-    ClientGroupId: 21,
-    ClientGroupName: 'BD Together',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1687164560573)/',
-  },
-  {
-    ClientGroupId: 29,
-    ClientGroupName: 'Caterlink',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1688534906107)/',
-  },
-  {
-    ClientGroupId: 25,
-    ClientGroupName: 'CH & Co G & G',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1687164609590)/',
-  },
-  {
-    ClientGroupId: 20,
-    ClientGroupName: 'CH & Co Kent',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1687164544780)/',
-  },
-  {
-    ClientGroupId: 30,
-    ClientGroupName: 'Compass East Sussex',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1688535995193)/',
-  },
-  {
-    ClientGroupId: 23,
-    ClientGroupName: 'Compass Wales',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1687164579993)/',
-  },
-  {
-    ClientGroupId: 5,
-    ClientGroupName: 'Dorset - Platebox',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1660219143177)/',
-  },
-  {
-    ClientGroupId: 19,
-    ClientGroupName: 'ESS Project',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1674564241907)/',
-  },
-  {
-    ClientGroupId: 24,
-    ClientGroupName: 'Harrison Bromley',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1687164593090)/',
-  },
-  {
-    ClientGroupId: 26,
-    ClientGroupName: 'Independent Bexley',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1687164624480)/',
-  },
-  {
-    ClientGroupId: 27,
-    ClientGroupName: 'Independent Welling',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1687164634353)/',
-  },
-  {
-    ClientGroupId: 31,
-    ClientGroupName: 'ISS Barnet',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1688536367890)/',
-  },
-  {
-    ClientGroupId: 22,
-    ClientGroupName: 'ISS Ealing',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1687164569590)/',
-  },
-  {
-    ClientGroupId: 32,
-    ClientGroupName: 'ISS Lambeth',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1688542013443)/',
-  },
-  {
-    ClientGroupId: 17,
-    ClientGroupName: 'Master',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1673623832327)/',
-  },
-  {
-    ClientGroupId: 18,
-    ClientGroupName: 'Ole and Steen',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1674207453850)/',
-  },
-  {
-    ClientGroupId: 28,
-    ClientGroupName: 'twelve 15',
-    IsActive: true,
-    IsDeleted: false,
-    CreatedDate: '6/19/2023',
-    UpdatedDate: '/Date(1688534890523)/',
-  },
-];

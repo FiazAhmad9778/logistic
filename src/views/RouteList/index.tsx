@@ -17,7 +17,7 @@ const RouteList = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/route-list/add-route')}
               >
-                New Record
+                {'New Route'}
               </Button>
             </div>
           </Card.Header>

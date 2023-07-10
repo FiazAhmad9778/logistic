@@ -17,7 +17,7 @@ const ClientManagement = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/client-management/add-client')}
               >
-                New Record
+                {'New Client'}
               </Button>
             </div>
           </Card.Header>

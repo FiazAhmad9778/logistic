@@ -105,7 +105,7 @@ export const MENUITEMS = [
         type: 'link',
         selected: false,
         active: false,
-        title: 'Vahicle Safety Check List',
+        title: 'Vehicle Safety Check List',
       },
       {
         path: `client-management`,

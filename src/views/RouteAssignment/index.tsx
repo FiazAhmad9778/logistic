@@ -17,7 +17,7 @@ const RouteAssignment = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/route-assignment-list/assign-route')}
               >
-                New Record
+                {'New Route Assignment'}
               </Button>
             </div>
           </Card.Header>

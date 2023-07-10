@@ -17,7 +17,7 @@ const VehicleSafetyCheck = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/vehicle-safety-check-list/add-safety-check')}
               >
-                New Record
+                {'New Safety Check'}
               </Button>
             </div>
           </Card.Header>

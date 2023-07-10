@@ -17,7 +17,7 @@ const AutoRouteAssignment = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/auto-route-assignment-list/add-auto-route')}
               >
-                New Record
+                {'New Auto Route'}
               </Button>
             </div>
           </Card.Header>

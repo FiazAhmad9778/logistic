@@ -5,6 +5,7 @@ import Pagination from '@/components/Pagination';
 import { useDialogState } from '@/hooks/useDialogState';
 import Dialog from '@/components/Modal';
 import Button from '@/components/Button';
+import ClientListing from '../../../constant/data/clients-list.json';
 
 const ClientManagementList = () => {
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
@@ -47,7 +48,7 @@ const ClientManagementList = () => {
   ];
 
   const useReactTableReturn = useReactTable({
-    data: RouteAssignmentRecord,
+    data: ClientListing,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -78,90 +79,3 @@ const ClientManagementList = () => {
   );
 };
 export default ClientManagementList;
-
-const RouteAssignmentRecord = [
-  {
-    ClientId: 49,
-    ClientName: 'Ole and Steen 26 01 23',
-    ClientFirstName: null,
-    ClientLastName: null,
-    PersonOfContactName: 'Awais Malik',
-    ClientAddress1: null,
-    ClientAddress2: null,
-    ClientCity: null,
-    ClientState: null,
-    ClientCountry: null,
-    ClientPostalCode: null,
-    ClientLongitude: null,
-    ClientLatitude: null,
-    ClientMobile: '07825990483',
-    ClientEmail: 'awais.malik@oleandsteen.co.uk',
-    IsDeleted: false,
-    IsActive: false,
-    CreatedOnUtc: '26/1/2023',
-    UpdatedOnUtc: '/Date(-62135596800000)/',
-    Password: null,
-    ProfileId: 0,
-    ProfileName: null,
-    MatchingProfileText: 'Ole and Steen',
-    SecurityKey: null,
-    KeyValidTill: null,
-    BufferTime: 0,
-  },
-  {
-    ClientId: 55,
-    ClientName: 'Ole and Steen 06 04 23',
-    ClientFirstName: null,
-    ClientLastName: null,
-    PersonOfContactName: 'Sherry Joshi',
-    ClientAddress1: null,
-    ClientAddress2: null,
-    ClientCity: null,
-    ClientState: null,
-    ClientCountry: null,
-    ClientPostalCode: null,
-    ClientLongitude: null,
-    ClientLatitude: null,
-    ClientMobile: null,
-    ClientEmail: 'Sherry.Joshi@oleandsteen.co.uk',
-    IsDeleted: false,
-    IsActive: false,
-    CreatedOnUtc: '26/1/2023',
-    UpdatedOnUtc: '/Date(-62135596800000)/',
-    Password: null,
-    ProfileId: 0,
-    ProfileName: null,
-    MatchingProfileText: 'Ole',
-    SecurityKey: null,
-    KeyValidTill: null,
-    BufferTime: 0,
-  },
-  {
-    ClientId: 57,
-    ClientName: 'ESS Zachary 260423 part 2',
-    ClientFirstName: null,
-    ClientLastName: null,
-    PersonOfContactName: 'Harry Hyman',
-    ClientAddress1: null,
-    ClientAddress2: null,
-    ClientCity: null,
-    ClientState: null,
-    ClientCountry: null,
-    ClientPostalCode: null,
-    ClientLongitude: null,
-    ClientLatitude: null,
-    ClientMobile: null,
-    ClientEmail: 'Harry.Hyman@compass-group.co.uk',
-    IsDeleted: false,
-    IsActive: false,
-    CreatedOnUtc: '26/1/2023',
-    UpdatedOnUtc: '/Date(-62135596800000)/',
-    Password: null,
-    ProfileId: 0,
-    ProfileName: null,
-    MatchingProfileText: 'ESS',
-    SecurityKey: null,
-    KeyValidTill: null,
-    BufferTime: 0,
-  },
-];

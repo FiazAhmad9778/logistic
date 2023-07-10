@@ -200,17 +200,12 @@ const Sidebar = () => {
   return (
     <>
       <div className="sticky">
-        <aside
-          className="app-sidebar "
-          onMouseOver={() => Onhover()}
-          onFocus={() => Onhover()}
-          onMouseOut={() => Outhover()}
-          onBlur={() => Outhover()}
-        >
+        <aside className="app-sidebar ">
           <Scrollbars className="hor-scroll" style={{ position: 'absolute' }}>
             <div className="main-sidebar-header active">
               <NavLink className="header-logo active d-flex" to={`/`}>
                 <img src={IMAGES.LOGO_WHITE} className="main-logo desktop-logo" alt="logo" />
+                <img src={IMAGES.LOGO_MINI_WHITE} className="main-logo  mobile-logo" alt="logo" />
                 <div
                   className="app-sidebar__toggle d-flex align-items-center justify-content-end"
                   data-bs-toggle="sidebar"
@@ -227,7 +222,13 @@ const Sidebar = () => {
                 {/* <img src={IMAGES.LOGO} className="main-logo  mobile-logo" alt="logo" /> */}
               </NavLink>
             </div>
-            <div className="main-sidemenu">
+            <div
+              className="main-sidemenu"
+              onMouseOver={() => Onhover()}
+              onFocus={() => Onhover()}
+              onMouseOut={() => Outhover()}
+              onBlur={() => Outhover()}
+            >
               <div className="slide-left disabled" id="slide-left">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
                   <path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" />
