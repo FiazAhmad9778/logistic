@@ -1,4 +1,4 @@
-export interface LoginPayload {
+export interface LoginRequest {
   email: string;
   password: string;
 }
@@ -10,19 +10,19 @@ export interface LoginResponse {
   name: string;
   userId: number;
 }
-export interface ForgotPasswordPayload {
+export interface ForgotPasswordRequest {
   email: string;
   host: string;
 }
-export interface ResetPasswordPayload {
+export interface ResetPasswordRequest {
   token: string;
   password: string;
 }
 
-export interface VerifyTokenPayload {
+export interface VerifyTokenRequest {
   token: string;
 }
-export interface ChangePasswordPayload {
+export interface ChangePasswordRequest {
   currentPassword: string;
   newPassword: string;
 }

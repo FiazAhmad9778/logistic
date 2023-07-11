@@ -1,11 +1,11 @@
 import { appApi } from './../index';
 import {
-  ChangePasswordPayload,
-  ForgotPasswordPayload,
-  LoginPayload,
+  ChangePasswordRequest,
+  ForgotPasswordRequest,
+  LoginRequest,
   LoginResponse,
-  ResetPasswordPayload,
-  VerifyTokenPayload,
+  ResetPasswordRequest,
+  VerifyTokenRequest,
 } from './auth-types';
 import { GenericResponseType } from '../../../../types/common/http-types';
 
@@ -13,7 +13,7 @@ const authApi = appApi
   .injectEndpoints({
     endpoints: (build) => ({
       // LOGIN
-      login: build.mutation<GenericResponseType<LoginResponse>, LoginPayload>({
+      login: build.mutation<GenericResponseType<LoginResponse>, LoginRequest>({
         query: (payload) => ({
           url: '/auth/login',
           body: payload,
@@ -29,7 +29,7 @@ const authApi = appApi
         }),
       }),
       // FORGOT PASSWORD
-      forgotPassword: build.mutation<GenericResponseType<unknown>, ForgotPasswordPayload>({
+      forgotPassword: build.mutation<GenericResponseType<unknown>, ForgotPasswordRequest>({
         query: (payload) => ({
           url: '/auth/forgot-password',
           body: payload,
@@ -39,7 +39,7 @@ const authApi = appApi
       }),
 
       // Verify
-      verifyToken: build.mutation<GenericResponseType<unknown>, VerifyTokenPayload>({
+      verifyToken: build.mutation<GenericResponseType<unknown>, VerifyTokenRequest>({
         query: (payload) => ({
           url: '/auth/verify',
           body: payload,
@@ -49,7 +49,7 @@ const authApi = appApi
       }),
 
       // RESET PASSWORD
-      resetPassword: build.mutation<GenericResponseType<unknown>, ResetPasswordPayload>({
+      resetPassword: build.mutation<GenericResponseType<unknown>, ResetPasswordRequest>({
         query: (payload) => ({
           url: '/auth/reset-password',
           body: payload,
@@ -58,7 +58,7 @@ const authApi = appApi
         extraOptions: {},
       }),
       // CHANGE PASSWORD
-      changePassword: build.mutation<GenericResponseType<unknown>, ChangePasswordPayload>({
+      changePassword: build.mutation<GenericResponseType<unknown>, ChangePasswordRequest>({
         query: (payload) => ({
           url: '/auth/change-password',
           body: payload,
