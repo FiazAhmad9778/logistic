@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { createColumnHelper, useReactTable, getCoreRowModel } from '@tanstack/react-table';
 import Table from '@/components/Table';
 import Pagination from '@/components/Pagination';
 import { useDialogState } from '@/hooks/useDialogState';
 import Dialog from '@/components/Modal';
 import Button from '@/components/Button';
-import AddClientGroupDialog from '../AddClientGroupDialog/AddClientGroupDialog';
 import ClientGroupListing from '../../../constant/data/client-groups-list.json';
+import { useNavigate } from 'react-router-dom';
 
 const ClientGroupList = () => {
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
-  const [clientGroupDialog, setClientGroupDialog] = useState<boolean>(false);
+  const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -18,9 +18,25 @@ const ClientGroupList = () => {
       header: 'Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
+    columnHelper.accessor('ClientGroupName', {
+      header: 'Client Name',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('email', {
+      header: 'Email',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('phone', {
+      header: 'Mobile',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
     columnHelper.accessor('IsActive', {
       header: 'Active',
-      cell: ({ getValue }) => <span>{getValue() ? 'Yes' : 'No'}</span>,
+      cell: ({ getValue }) => <span className="tx-primary">{getValue() ? 'Yes' : 'No'}</span>,
+    }),
+    columnHelper.accessor('address', {
+      header: 'Address',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.accessor('CreatedDate', {
       header: 'Date Added',
@@ -31,7 +47,7 @@ const ClientGroupList = () => {
       header: () => <span>Action</span>,
       cell: () => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fa fa-edit me-1" onClick={() => setClientGroupDialog(true)}></i>
+          <i className="fa fa-edit me-1" onClick={() => navigate('/client-group-management/add-client-group')}></i>
           <i className="far fa-trash-alt" onClick={setOpenDialog}></i>
         </span>
       ),
@@ -66,7 +82,6 @@ const ClientGroupList = () => {
           </div>
         </div>
       </Dialog>
-      <AddClientGroupDialog isOpen={clientGroupDialog} setCloseDialog={() => setClientGroupDialog(false)} />
     </React.Fragment>
   );
 };

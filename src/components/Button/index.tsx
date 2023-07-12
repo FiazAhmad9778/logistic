@@ -23,16 +23,32 @@ interface IProps extends buttonDefaultProps {
   isLoading?: boolean;
   className?: string;
   loading?: boolean;
+  loaderSize?: number;
 }
 
-const Button: FCC<IProps> = ({ icon, btnType = 'btn-primary', btnSize, className, loading, children, ...rest }) => {
+const Button: FCC<IProps> = ({
+  icon,
+  btnType = 'btn-primary',
+  btnSize,
+  className,
+  loading,
+  loaderSize = 12,
+  children,
+  ...rest
+}) => {
   return (
     <button className={classNames('btn px-4', btnType, btnSize, className)} {...rest}>
       <span className={classNames('d-flex justify-content-center align-items-center gap-2', icon && '')}>
         {icon && <span>{icon}</span>}
         {children}
         {loading && (
-          <BeatLoader color="#fff" loading={loading} size={12} aria-label="Loading Spinner" data-testid="loader" />
+          <BeatLoader
+            color="#fff"
+            loading={loading}
+            size={loaderSize}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
         )}
       </span>
     </button>

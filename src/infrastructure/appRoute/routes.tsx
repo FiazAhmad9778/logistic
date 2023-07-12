@@ -32,6 +32,7 @@ import ViewSafetyCheck from '@/views/DriverManagement/ViewSafetyCheck/ViewSafety
 import ViewOrderStatus from '@/views/OrderStatusManagement/ViewOrderStatus/ViewOrderStatus';
 import AssignedOrdersList from '@/views/RouteAssignment/AssignedOrdersList/AssignedOrdersList';
 import DriverRouteReview from '@/views/CustomerReviewRating/DriverRouteReview/DriverRouteReview';
+import AddClientGroup from '@/views/ClientGroupManagement/AddClientGroup/AddClientGroup';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -164,6 +165,11 @@ export const routes: RoutePathDefinition[] = [
             path: 'client-group-management',
             title: 'CLIENT GROUP MANAGEMENT',
             element: <ClientGroupManagement />,
+          },
+          {
+            path: 'client-group-management/add-client-group',
+            title: 'ADD CLIENT GROUP',
+            element: <AddClientGroup />,
           },
           {
             path: 'customer-management',

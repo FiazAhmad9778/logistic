@@ -8,17 +8,17 @@ import { HandleNotification } from '@/components/Toast';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { userRoleResolver } from 'src/form-resolver/user-role';
 
-interface IADDROLEDIALOG {
+interface IAddRoleDialog {
   isOpen: boolean;
   setCloseDialog: () => void;
 }
 
-const AddRoleDialog: React.FC<IADDROLEDIALOG> = ({ isOpen, setCloseDialog }) => {
+const AddRoleDialog: React.FC<IAddRoleDialog> = ({ isOpen, setCloseDialog }) => {
   const useFormReturn = useForm({
     resolver: yupResolver(userRoleResolver),
   });
 
-  const [saveRole] = useSaveRoleMutation();
+  const [saveRole, state] = useSaveRoleMutation();
   const onSubmitRole: SubmitHandler<FieldValues> = async (e) => {
     const payload = {
       roleId: 0,
@@ -42,7 +42,9 @@ const AddRoleDialog: React.FC<IADDROLEDIALOG> = ({ isOpen, setCloseDialog }) => 
             <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={setCloseDialog}>
               Cancel
             </Button>
-            <Button btnSize="btn-sm">Save</Button>
+            <Button btnSize="btn-sm" loading={state.isLoading} loaderSize={8} disabled={state.isLoading}>
+              Save
+            </Button>
           </div>
         </Form>
       </Dialog>

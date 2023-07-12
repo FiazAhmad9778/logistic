@@ -6,15 +6,16 @@ import Button from '@/components/Button';
 import { RoleResponse } from '@/infrastructure/store/api/user-previleges/user-privileges-types';
 import { useDeleteRoleMutation } from '@/infrastructure/store/api/user-previleges/user-privileges-api';
 import { HandleNotification } from '@/components/Toast';
+import Loader from '@/components/Loader';
 
-interface IDELETEROLEDIALOG {
+interface IDeleteDialog {
   isOpen: boolean;
   setCloseDialog: () => void;
   roleList?: RoleResponse[];
 }
 
-const DeleteRoleDialog: React.FC<IDELETEROLEDIALOG> = ({ isOpen, setCloseDialog, roleList }) => {
-  const [deleteRole] = useDeleteRoleMutation();
+const DeleteRoleDialog: React.FC<IDeleteDialog> = ({ isOpen, setCloseDialog, roleList }) => {
+  const [deleteRole, state] = useDeleteRoleMutation();
   const columnHelper = createColumnHelper<RoleResponse>();
   const columns = [
     columnHelper.accessor('name', {
@@ -51,14 +52,20 @@ const DeleteRoleDialog: React.FC<IDELETEROLEDIALOG> = ({ isOpen, setCloseDialog,
   return (
     <React.Fragment>
       <Dialog title="Added Role" show={isOpen} handleClose={setCloseDialog}>
-        <div className="my-2">
-          <Table useReactTableReturn={useReactTableReturn} />
-          <div className="d-flex justify-content-end mt-4">
-            <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={setCloseDialog}>
-              Cancel
-            </Button>
+        {state.isLoading ? (
+          <div className="fixed inset-0 opacity-100 d-flex align-items-center">
+            <Loader />
           </div>
-        </div>
+        ) : (
+          <div className="my-2">
+            <Table useReactTableReturn={useReactTableReturn} />
+            <div className="d-flex justify-content-end mt-4">
+              <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={setCloseDialog}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        )}
       </Dialog>
     </React.Fragment>
   );
