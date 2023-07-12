@@ -7,7 +7,7 @@ type InputProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputEle
 export type CheckboxItemProps = Omit<InputProps, 'id' | 'type'>;
 
 export interface CheckboxProps extends CheckboxItemProps {
-  id?: string;
+  id?: number | string;
   label?: string | JSX.Element;
   name: string;
   error?: string;
@@ -33,14 +33,14 @@ const FormCheckbox: React.FC<CheckboxProps> = ({ id, label, name, ...rest }) => 
             <div className="custom-checkbox custom-control">
               <input
                 ref={ref}
-                id={id || name}
+                id={id?.toString() || name}
                 aria-describedby={`${label}-description`}
                 type="checkbox"
                 className="custom-control-input"
                 {...rest}
                 {...reg}
               />
-              <Form.Label htmlFor={id || name} className="custom-control-label tx-12 mt-1">
+              <Form.Label htmlFor={id?.toString() || name} className="custom-control-label tx-12 mt-1">
                 {label}
               </Form.Label>
             </div>
