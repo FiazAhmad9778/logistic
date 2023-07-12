@@ -8,7 +8,7 @@ import { useAppSelector } from '@/infrastructure/store/store-hooks';
 const history: any = [];
 
 const Sidebar = () => {
-  const [menuitems, setMenuitems]: any = useState(MENUITEMS);
+  const [menuitems, setMenuitems]: any = useState([]);
   const location = useLocation();
   const { claims } = useAppSelector((state) => state.auth);
 
@@ -19,9 +19,12 @@ const Sidebar = () => {
     if (history.length > 2) {
       history.shift();
     }
-    if (history[0] !== history[1]) {
-      setSideMenu();
-    }
+    // if (history[0] !== history[1]) {
+    //   setSideMenu();
+    // }
+
+    setSideMenu();
+
     const mainContent: any = document.querySelector('.main-content');
 
     //when we click on the body to remove
@@ -46,7 +49,7 @@ const Sidebar = () => {
   }
   //<-------End---->
   function clearMenuActive() {
-    MENUITEMS.map((mainLevel: any) => {
+    const updated = menuitems.map((mainLevel: any) => {
       if (mainLevel.Items) {
         mainLevel.Items.map((sublevel: any) => {
           sublevel.active = false;
@@ -73,14 +76,22 @@ const Sidebar = () => {
       }
       return mainLevel;
     });
-    setMenuitems((arr: any) => [...arr]);
+    setMenuitems(updated);
   }
   function setSideMenu() {
-    if (menuitems.Items) {
-      const filteredMenuItems = menuitems.Items.filter((menu: any) => {
-        // Check if the requiredClaims array is empty or if there is an overlap with userClaims
-        return menu.requiredClaims.length === 0 || menu.requiredClaims.some((claim: any) => claims.includes(claim));
+    if (menuitems) {
+      const filteredMenuItems = MENUITEMS.map((group) => {
+        const filteredItems = group.Items.filter((item) => {
+          // Check if the requiredClaims array is empty or if there is an overlap with userClaims
+          return item.requiredClaims.length === 0 || item.requiredClaims.some((claim) => claims.includes(claim));
+        });
+
+        return {
+          ...group,
+          Items: filteredItems,
+        };
       });
+
       if (filteredMenuItems) {
         filteredMenuItems.map((mainLevel: any) => {
           if (mainLevel.Items) {
@@ -125,9 +136,9 @@ const Sidebar = () => {
               return items;
             });
           }
-          setMenuitems((arr: any) => [...arr]);
           return mainLevel;
         });
+        setMenuitems(filteredMenuItems);
       }
     }
   }

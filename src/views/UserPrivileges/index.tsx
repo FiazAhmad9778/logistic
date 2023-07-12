@@ -15,15 +15,17 @@ import {
 } from '@/infrastructure/store/api/user-previleges/user-privileges-api';
 import { RoleResponse } from '@/infrastructure/store/api/user-previleges/user-privileges-types';
 import Loader from '@/components/Loader';
-import React from 'react';
+import React, { useState } from 'react';
 import { SingleValue } from 'react-select';
 
 const UserPrivileges = () => {
   const { newRoleDialog, deleteRoleDialog } = useAppSelector((state) => state['user']);
+  const useDropdownFormReturn = useForm();
   const useFormReturn = useForm();
   const dispatch = useAppDispatch();
   const { data: roleList } = useRoleListingQuery(null);
   const [getClaimGroup, { data: claimGroupList, isLoading: IsClaimGroupListLoading }] = useLazyClaimGroupListingQuery();
+  const [roleId, setRoleId] = useState<number | null>(null);
 
   const handleNewRoleDialog = () => {
     dispatch(toggleNewRoleDialog(false));
@@ -33,10 +35,12 @@ const UserPrivileges = () => {
   };
   const handleOnChangeRole = (value: SingleValue<{ value: number; name: string }>) => {
     getClaimGroup(value?.value);
-    useFormReturn.setValue('role', value?.value);
+    useDropdownFormReturn.setValue('role', value?.value);
+    setRoleId(value?.value ?? null);
   };
 
   const handleClaimGroup: SubmitHandler<FieldValues> = (e) => {
+    console.log(roleId);
     console.log(e);
   };
   const loading = IsClaimGroupListLoading;
@@ -47,7 +51,7 @@ const UserPrivileges = () => {
           <Card.Body className="pt-4">
             <Row>
               <Col md={6}>
-                <Form useFormReturn={useFormReturn} onSubmit={(e) => console.log(e)}>
+                <Form useFormReturn={useDropdownFormReturn} onSubmit={(e) => console.log(e)}>
                   <Form.Select
                     name="role"
                     options={roleList?.data?.map((option: RoleResponse) => ({
@@ -92,6 +96,7 @@ const UserPrivileges = () => {
                       roleList={roleList?.data}
                       isOpen={deleteRoleDialog}
                       setCloseDialog={handleDeleteRoleDialog}
+                      useDropdownFormReturn={useDropdownFormReturn}
                     />
                     <AddRoleDialog isOpen={newRoleDialog} setCloseDialog={handleNewRoleDialog} />
                   </div>
@@ -134,11 +139,6 @@ const UserPrivileges = () => {
                       ))}
                     </Row>
                   </React.Fragment>
-                  <Col md={12}>
-                    <div className="d-flex justify-content-end mt-4">
-                      <Button type="submit">Save</Button>
-                    </div>
-                  </Col>
                 </Form>
               )}
             </Row>
