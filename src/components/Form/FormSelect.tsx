@@ -4,7 +4,7 @@ import { useFormContext, Controller } from 'react-hook-form';
 import Select, { ActionMeta, CSSObjectWithLabel, GroupBase, OnChangeValue, OptionsOrGroups, Props } from 'react-select';
 
 export type OptionDefaultFormat = {
-  value: string;
+  value: number | string;
   name: string;
   icon?: JSX.Element;
 };
@@ -174,7 +174,7 @@ const generateSelectDefaultValue = (options: OptionsOrGroups<any, any>, value: s
   const finalVal = typeof value === 'number' ? value.toString() : value;
   return Array.isArray(value)
     ? options?.filter((e: OptionDefaultFormat) => {
-        if (value?.includes(e.value)) {
+        if (value?.includes(e.value as string)) {
           return {
             value: e.value,
             name: e.name,

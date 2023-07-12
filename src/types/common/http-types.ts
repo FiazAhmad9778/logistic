@@ -1,5 +1,5 @@
 export interface GenericResponseType<T> {
-  errors: [];
+  errors: string[];
   message: string;
   success: true;
   data: T;
