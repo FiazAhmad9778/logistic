@@ -4,7 +4,7 @@ export interface RoleResponse {
 }
 
 export interface RoleRequest {
-  roleId: number;
+  roleId: number | null;
   roleName: string;
   claims: number[];
 }

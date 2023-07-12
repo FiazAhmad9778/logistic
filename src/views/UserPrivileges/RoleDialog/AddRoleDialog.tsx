@@ -18,7 +18,7 @@ const AddRoleDialog: React.FC<IAddRoleDialog> = ({ isOpen, setCloseDialog }) => 
     resolver: yupResolver(userRoleResolver),
   });
 
-  const [saveRole, state] = useSaveRoleMutation();
+  const [saveRole, saveRoleState] = useSaveRoleMutation();
   const onSubmitRole: SubmitHandler<FieldValues> = async (e) => {
     const payload = {
       roleId: 0,
@@ -29,6 +29,7 @@ const AddRoleDialog: React.FC<IAddRoleDialog> = ({ isOpen, setCloseDialog }) => 
     if (res.success === true) {
       HandleNotification(res.message || 'Role added successfully.', res.success);
       setCloseDialog();
+      useFormReturn.reset();
     } else {
       HandleNotification(res?.errors[0], res.success);
     }
@@ -42,7 +43,7 @@ const AddRoleDialog: React.FC<IAddRoleDialog> = ({ isOpen, setCloseDialog }) => 
             <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={setCloseDialog}>
               Cancel
             </Button>
-            <Button btnSize="btn-sm" loading={state.isLoading} loaderSize={8} disabled={state.isLoading}>
+            <Button btnSize="btn-sm" loading={saveRoleState.isLoading} disabled={saveRoleState.isLoading}>
               Save
             </Button>
           </div>

@@ -6,15 +6,17 @@ import Button from '@/components/Button';
 import { RoleResponse } from '@/infrastructure/store/api/user-previleges/user-privileges-types';
 import { useDeleteRoleMutation } from '@/infrastructure/store/api/user-previleges/user-privileges-api';
 import { HandleNotification } from '@/components/Toast';
+import { UseFormReturn } from 'react-hook-form';
 import Loader from '@/components/Loader';
 
-interface IDeleteDialog {
+interface IDeleteRoleDialog {
   isOpen: boolean;
   setCloseDialog: () => void;
   roleList?: RoleResponse[];
+  useDropdownFormReturn: UseFormReturn;
 }
 
-const DeleteRoleDialog: React.FC<IDeleteDialog> = ({ isOpen, setCloseDialog, roleList }) => {
+const DeleteRoleDialog: React.FC<IDeleteRoleDialog> = ({ isOpen, setCloseDialog, roleList, useDropdownFormReturn }) => {
   const [deleteRole, state] = useDeleteRoleMutation();
   const columnHelper = createColumnHelper<RoleResponse>();
   const columns = [
@@ -40,9 +42,12 @@ const DeleteRoleDialog: React.FC<IDeleteDialog> = ({ isOpen, setCloseDialog, rol
   });
 
   const handleDeleteRole = async (id: number) => {
-    console.log(id);
     const res = await deleteRole(id).unwrap();
     if (!('error' in res) && res.success === true) {
+      const roleValue = useDropdownFormReturn.getValues('role');
+      if (roleValue && roleValue == id) {
+        useDropdownFormReturn.reset();
+      }
       HandleNotification(res.message || 'Role deleted successfully.', res.success === true);
       setCloseDialog();
     } else {

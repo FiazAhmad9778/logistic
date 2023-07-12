@@ -3,12 +3,14 @@ import Scrollbars from 'react-custom-scrollbars-2';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { IMAGES } from '@/assets/images';
 import { MENUITEMS } from './Menu';
+import { useAppSelector } from '@/infrastructure/store/store-hooks';
 
 const history: any = [];
 
 const Sidebar = () => {
-  const [menuitems, setMenuitems]: any = useState(MENUITEMS);
+  const [menuitems, setMenuitems]: any = useState([]);
   const location = useLocation();
+  const { claims } = useAppSelector((state) => state.auth);
 
   // let currentLink = '';
   const activePath = location.pathname.split('/').filter((crumb) => crumb !== '');
@@ -17,9 +19,12 @@ const Sidebar = () => {
     if (history.length > 2) {
       history.shift();
     }
-    if (history[0] !== history[1]) {
-      setSidemenu();
-    }
+    // if (history[0] !== history[1]) {
+    //   setSideMenu();
+    // }
+
+    setSideMenu();
+
     const mainContent: any = document.querySelector('.main-content');
 
     //when we click on the body to remove
@@ -44,10 +49,9 @@ const Sidebar = () => {
   }
   //<-------End---->
   function clearMenuActive() {
-    console.log('clear');
-    MENUITEMS.map((mainlevel: any) => {
-      if (mainlevel.Items) {
-        mainlevel.Items.map((sublevel: any) => {
+    const updated = menuitems.map((mainLevel: any) => {
+      if (mainLevel.Items) {
+        mainLevel.Items.map((sublevel: any) => {
           sublevel.active = false;
           if (sublevel.children) {
             sublevel.children.map((sublevel1: any) => {
@@ -70,67 +74,82 @@ const Sidebar = () => {
           return sublevel;
         });
       }
-      return mainlevel;
+      return mainLevel;
     });
-    setMenuitems((arr: any) => [...arr]);
+    setMenuitems(updated);
   }
-  function setSidemenu() {
+  function setSideMenu() {
     if (menuitems) {
-      menuitems.map((mainlevel: any) => {
-        if (mainlevel.Items) {
-          mainlevel.Items.map((items: any) => {
-            items.active = false;
-            items.selected = false;
-            if (location.pathname === '/nowa/preview/' || location.pathname === '/nowa/preview/') {
-              location.pathname = '/nowa/preview/dashboard/dashboard-1/';
-            }
-            if (location.pathname === items.path + '/') {
-              items.active = true;
-              items.selected = true;
-            }
-            if (items.children) {
-              items.children.map((submenu: any) => {
-                submenu.active = false;
-                submenu.selected = false;
-                if (location.pathname === submenu.path + '/') {
-                  items.active = true;
-                  items.selected = true;
-                  submenu.active = true;
-                  submenu.selected = true;
-                }
-                if (submenu.children) {
-                  submenu.children.map((submenu1: any) => {
-                    submenu1.active = false;
-                    submenu1.selected = false;
-                    if (location.pathname === submenu1.path + '/') {
-                      items.active = true;
-                      items.selected = true;
-                      submenu.active = true;
-                      submenu.selected = true;
-                      submenu1.active = true;
-                      submenu1.selected = true;
-                    }
-                    return submenu1;
-                  });
-                }
-                return submenu;
-              });
-            }
-            return items;
-          });
-        }
-        setMenuitems((arr: any) => [...arr]);
-        return mainlevel;
+      const filteredMenuItems = MENUITEMS.map((group) => {
+        const filteredItems = group.Items.filter((item) => {
+          // Check if the requiredClaims array is empty or if there is an overlap with userClaims
+          return item.requiredClaims.length === 0 || item.requiredClaims.some((claim) => claims.includes(claim));
+        });
+
+        return {
+          ...group,
+          Items: filteredItems,
+        };
       });
+
+      if (filteredMenuItems) {
+        filteredMenuItems.map((mainLevel: any) => {
+          if (mainLevel.Items) {
+            mainLevel.Items.map((items: any) => {
+              items.active = false;
+              items.selected = false;
+              if (location.pathname === '/nowa/preview/' || location.pathname === '/nowa/preview/') {
+                location.pathname = '/nowa/preview/dashboard/dashboard-1/';
+              }
+              if (location.pathname === items.path + '/') {
+                items.active = true;
+                items.selected = true;
+              }
+              if (items.children) {
+                items.children.map((submenu: any) => {
+                  submenu.active = false;
+                  submenu.selected = false;
+                  if (location.pathname === submenu.path + '/') {
+                    items.active = true;
+                    items.selected = true;
+                    submenu.active = true;
+                    submenu.selected = true;
+                  }
+                  if (submenu.children) {
+                    submenu.children.map((submenu1: any) => {
+                      submenu1.active = false;
+                      submenu1.selected = false;
+                      if (location.pathname === submenu1.path + '/') {
+                        items.active = true;
+                        items.selected = true;
+                        submenu.active = true;
+                        submenu.selected = true;
+                        submenu1.active = true;
+                        submenu1.selected = true;
+                      }
+                      return submenu1;
+                    });
+                  }
+                  return submenu;
+                });
+              }
+              return items;
+            });
+          }
+          return mainLevel;
+        });
+        setMenuitems(filteredMenuItems);
+      }
     }
   }
-  function toggleSidemenu(item: any) {
+
+  function toggleSideMenu(item: any) {
     if (!document.body.classList.contains('horizontalmenu-hover') || window.innerWidth < 992) {
       // To show/hide the menu
       if (!item.active) {
-        menuitems.map((mainlevel: any) => {
-          if (mainlevel.Items) {
-            mainlevel.Items.map((sublevel: any) => {
+        menuitems.map((mainLevel: any) => {
+          if (mainLevel.Items) {
+            mainLevel.Items.map((sublevel: any) => {
               sublevel.active = false;
               if (item === sublevel) {
                 sublevel.active = true;
@@ -171,7 +190,7 @@ const Sidebar = () => {
               return sublevel;
             });
           }
-          return mainlevel;
+          return mainLevel;
         });
       } else {
         item.active = !item.active;
@@ -181,13 +200,13 @@ const Sidebar = () => {
     setMenuitems((arr: any) => [...arr]);
   }
   //Hover effect
-  function Onhover() {
+  function onHover() {
     if (document.querySelector('.app')) {
       if (document.querySelector('.app')?.classList.contains('sidenav-toggled'))
         document.querySelector('.app')?.classList.add('sidenav-toggled-open');
     }
   }
-  function Outhover() {
+  function hoverOut() {
     if (document.querySelector('.app')) {
       document.querySelector('.app')?.classList.remove('sidenav-toggled-open');
     }
@@ -224,10 +243,10 @@ const Sidebar = () => {
             </div>
             <div
               className="main-sidemenu"
-              onMouseOver={() => Onhover()}
-              onFocus={() => Onhover()}
-              onMouseOut={() => Outhover()}
-              onBlur={() => Outhover()}
+              onMouseOver={() => onHover()}
+              onFocus={() => onHover()}
+              onMouseOut={() => hoverOut()}
+              onBlur={() => hoverOut()}
             >
               <div className="slide-left disabled" id="slide-left">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24">
@@ -236,10 +255,10 @@ const Sidebar = () => {
               </div>
 
               <ul className="side-menu">
-                {menuitems.map((Item: any, itemi: any) => (
-                  <Fragment key={itemi + Math.random() * 100}>
-                    <li className="side-item side-item-category">{Item.menutitle}</li>
-                    {Item.Items.map((menuItem: any, i: any) => {
+                {menuitems.map((item: any, i: any) => (
+                  <Fragment key={i + Math.random() * 100}>
+                    <li className="side-item side-item-category">{item.title}</li>
+                    {item.Items.map((menuItem: any, i: any) => {
                       return (
                         <li
                           className={`slide ${
@@ -266,7 +285,7 @@ const Sidebar = () => {
                               href="javascript"
                               onClick={(event) => {
                                 event.preventDefault();
-                                toggleSidemenu(menuItem);
+                                toggleSideMenu(menuItem);
                               }}
                               className={`side-menu__item ${menuItem.selected ? 'active is-expanded' : ''}`}
                             >
@@ -305,7 +324,7 @@ const Sidebar = () => {
                                         className={`slide-item ${childrenItem.selected ? 'active is-expanded' : ''}`}
                                         onClick={(event) => {
                                           event.preventDefault();
-                                          toggleSidemenu(childrenItem);
+                                          toggleSideMenu(childrenItem);
                                         }}
                                       >
                                         <span className="sub-side-menu__label">
@@ -356,7 +375,7 @@ const Sidebar = () => {
                                                   className="sub-side-menu__item"
                                                   onClick={(event) => {
                                                     event.preventDefault();
-                                                    toggleSidemenu(childrenSubItem);
+                                                    toggleSideMenu(childrenSubItem);
                                                   }}
                                                 >
                                                   <span className="sub-side-menu__label">
@@ -365,23 +384,23 @@ const Sidebar = () => {
                                                   </span>
                                                   <i className="sub-angle2 fe fe-chevron-down"></i>
                                                 </NavLink>
-                                                {childrenItem.children.map((childrenSubItemsub: any, key: any) => (
+                                                {childrenItem.children.map((childrenSubItemSub: any, key: any) => (
                                                   <ul
                                                     key={key}
                                                     className={`sub-slide-menu1 ${
-                                                      childrenSubItemsub.selected ? 'open' : ''
+                                                      childrenSubItemSub.selected ? 'open' : ''
                                                     }`}
                                                     style={
-                                                      childrenSubItemsub.active
+                                                      childrenSubItemSub.active
                                                         ? { display: 'block' }
                                                         : { display: 'none' }
                                                     }
                                                   >
-                                                    {childrenItem.children.map((childrenSubItemsubs: any, key: any) => (
+                                                    {childrenItem.children.map((childrenSubItemSubs: any, key: any) => (
                                                       <li key={key}>
                                                         <NavLink className="sub-slide-item2" to="#">
-                                                          {childrenSubItemsubs.title}
-                                                          {childrenSubItemsubs.active}
+                                                          {childrenSubItemSubs.title}
+                                                          {childrenSubItemSubs.active}
                                                         </NavLink>
                                                       </li>
                                                     ))}

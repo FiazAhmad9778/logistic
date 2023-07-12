@@ -8,6 +8,7 @@ const initialState: LoginResponse = {
   email: '',
   name: '',
   userId: 0,
+  claims: [],
 };
 const authSlice = createSlice({
   name: 'auth',
@@ -20,6 +21,7 @@ const authSlice = createSlice({
         state.email = action.payload.email;
         state.name = action.payload.name;
         state.userId = action.payload.userId;
+        state.claims = action.payload.claims;
       }
     },
     clearAuth: (state) => {
@@ -28,6 +30,7 @@ const authSlice = createSlice({
       state.email = initialState.email;
       state.name = initialState.name;
       state.userId = initialState.userId;
+      state.claims = initialState.claims;
     },
   },
 });
