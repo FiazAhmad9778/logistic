@@ -46,7 +46,7 @@ const DeleteRoleDialog: React.FC<IDeleteRoleDialog> = ({ isOpen, setCloseDialog,
     if (!('error' in res) && res.success === true) {
       const roleValue = useDropdownFormReturn.getValues('role');
       if (roleValue && roleValue == id) {
-        useDropdownFormReturn.reset();
+        useDropdownFormReturn.reset({ role: '' });
       }
       HandleNotification(res.message || 'Role deleted successfully.', res.success === true);
       setCloseDialog();

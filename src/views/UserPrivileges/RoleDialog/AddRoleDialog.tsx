@@ -43,7 +43,12 @@ const AddRoleDialog: React.FC<IAddRoleDialog> = ({ isOpen, setCloseDialog }) => 
             <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={setCloseDialog}>
               Cancel
             </Button>
-            <Button btnSize="btn-sm" loading={saveRoleState.isLoading} disabled={saveRoleState.isLoading}>
+            <Button
+              btnSize="btn-sm"
+              loading={saveRoleState.isLoading}
+              loaderSize={8}
+              disabled={saveRoleState.isLoading}
+            >
               Save
             </Button>
           </div>

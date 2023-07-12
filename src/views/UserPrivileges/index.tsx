@@ -26,7 +26,7 @@ const UserPrivileges = () => {
   const { data: roleList } = useRoleListingQuery(null);
   const [getClaimGroup, { data: claimGroupList, isLoading: IsClaimGroupListLoading }] = useLazyClaimGroupListingQuery();
   const [roleId, setRoleId] = useState<number | null>(null);
-
+  console.log('roleList', roleId && roleList?.data?.map((item) => item.id).includes(roleId));
   const handleNewRoleDialog = () => {
     dispatch(toggleNewRoleDialog(false));
   };
@@ -110,7 +110,8 @@ const UserPrivileges = () => {
                 <Form useFormReturn={useFormReturn} onSubmit={handleClaimGroup}>
                   <React.Fragment>
                     <Row>
-                      {roleList?.data?.map((item) => item.id).includes(useFormReturn.watch('role')) &&
+                      {roleId &&
+                        roleList?.data?.map((item) => item.id).includes(roleId) &&
                         claimGroupList &&
                         claimGroupList?.data?.map((item) => (
                           <Col md={4} key={item.claimGroupName} className="my-3">
