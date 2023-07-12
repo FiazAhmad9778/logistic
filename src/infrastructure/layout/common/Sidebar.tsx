@@ -83,7 +83,7 @@ const Sidebar = () => {
       const filteredMenuItems = MENUITEMS.map((group) => {
         const filteredItems = group.Items.filter((item) => {
           // Check if the requiredClaims array is empty or if there is an overlap with userClaims
-          return item.requiredClaims.length === 0 || item.requiredClaims.some((claim) => claims.includes(claim));
+          return item.requiredClaims.length === 0 || item.requiredClaims.some((claim) => claims?.includes(claim));
         });
 
         return {

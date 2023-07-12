@@ -7,6 +7,7 @@ import { RoleResponse } from '@/infrastructure/store/api/user-previleges/user-pr
 import { useDeleteRoleMutation } from '@/infrastructure/store/api/user-previleges/user-privileges-api';
 import { HandleNotification } from '@/components/Toast';
 import { UseFormReturn } from 'react-hook-form';
+import Loader from '@/components/Loader';
 
 interface IDeleteRoleDialog {
   isOpen: boolean;
@@ -16,7 +17,7 @@ interface IDeleteRoleDialog {
 }
 
 const DeleteRoleDialog: React.FC<IDeleteRoleDialog> = ({ isOpen, setCloseDialog, roleList, useDropdownFormReturn }) => {
-  const [deleteRole] = useDeleteRoleMutation();
+  const [deleteRole, state] = useDeleteRoleMutation();
   const columnHelper = createColumnHelper<RoleResponse>();
   const columns = [
     columnHelper.accessor('name', {
@@ -45,7 +46,7 @@ const DeleteRoleDialog: React.FC<IDeleteRoleDialog> = ({ isOpen, setCloseDialog,
     if (!('error' in res) && res.success === true) {
       const roleValue = useDropdownFormReturn.getValues('roleId');
       if (roleValue && roleValue == id) {
-        useDropdownFormReturn.reset();
+        useDropdownFormReturn.reset({ role: '' });
       }
       HandleNotification(res.message || 'Role deleted successfully.', res.success === true);
       setCloseDialog();
@@ -56,14 +57,20 @@ const DeleteRoleDialog: React.FC<IDeleteRoleDialog> = ({ isOpen, setCloseDialog,
   return (
     <React.Fragment>
       <Dialog title="Added Role" show={isOpen} handleClose={setCloseDialog}>
-        <div className="my-2">
-          <Table useReactTableReturn={useReactTableReturn} />
-          <div className="d-flex justify-content-end mt-4">
-            <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={setCloseDialog}>
-              Cancel
-            </Button>
+        {state.isLoading ? (
+          <div className="fixed inset-0 opacity-100 d-flex align-items-center">
+            <Loader />
           </div>
-        </div>
+        ) : (
+          <div className="my-2">
+            <Table useReactTableReturn={useReactTableReturn} />
+            <div className="d-flex justify-content-end mt-4">
+              <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={setCloseDialog}>
+                Cancel
+              </Button>
+            </div>
+          </div>
+        )}
       </Dialog>
     </React.Fragment>
   );

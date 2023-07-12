@@ -139,33 +139,36 @@ const UserPrivileges = () => {
                 >
                   <React.Fragment>
                     <Row>
-                      {claimGroupList?.data?.map((item) => (
-                        <Col md={4} key={item.claimGroupName} className="my-3">
-                          <div className="h-100">
-                            <div className="border bd-primary br-ts-5 br-te-5">
-                              <p className="tx-15 tx-semibold px-4 mb-0 py-2 bg-primary tx-white br-ts-3 br-te-3">
-                                {item.claimGroupName}
-                              </p>
+                      {useDropdownFormReturn.getValues('roleId') &&
+                        roleList?.data?.map((item) => item.id).includes(useDropdownFormReturn.getValues('roleId')) &&
+                        claimGroupList &&
+                        claimGroupList?.data?.map((item) => (
+                          <Col md={4} key={item.claimGroupName} className="my-3">
+                            <div className="h-100">
+                              <div className="border bd-primary br-ts-5 br-te-5">
+                                <p className="tx-15 tx-semibold px-4 mb-0 py-2 bg-primary tx-white br-ts-3 br-te-3">
+                                  {item.claimGroupName}
+                                </p>
+                              </div>
+                              <div className="border privileges-body br-bs-5 br-be-5">
+                                {item.claims.map((item) => {
+                                  return (
+                                    <div
+                                      key={item.claimId}
+                                      className="d-flex justify-content-between align-items-center privileges-form-checkbox my-3"
+                                    >
+                                      <p className="mb-0">
+                                        {privilegesIcon[item.claimValue as keyof typeof privilegesIcon]}
+                                        {item.claimValue}
+                                      </p>
+                                      <Form.Checkbox id={item.claimId} name={item.claimValue} />
+                                    </div>
+                                  );
+                                })}
+                              </div>
                             </div>
-                            <div className="border privileges-body br-bs-5 br-be-5">
-                              {item.claims.map((item) => {
-                                return (
-                                  <div
-                                    key={item.claimId}
-                                    className="d-flex justify-content-between align-items-center privileges-form-checkbox my-3"
-                                  >
-                                    <p className="mb-0">
-                                      {privilegesIcon[item.claimValue as keyof typeof privilegesIcon]}
-                                      {item.claimValue}
-                                    </p>
-                                    <Form.Checkbox id={item.claimId} name={item.claimId.toString()} />
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </div>
-                        </Col>
-                      ))}
+                          </Col>
+                        ))}
                     </Row>
                   </React.Fragment>
                 </Form>

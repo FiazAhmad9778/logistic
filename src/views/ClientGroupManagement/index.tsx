@@ -1,11 +1,10 @@
 import { Row, Col, Card, Form } from 'react-bootstrap';
 import Button from '@/components/Button';
 import ClientGroupList from './ClientGroupList/ClientGroupList';
-import { useDialogState } from '@/hooks/useDialogState';
-import AddClientGroupDialog from './AddClientGroupDialog/AddClientGroupDialog';
+import { useNavigate } from 'react-router-dom';
 
 const ClientGroupManagement = () => {
-  const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
+  const navigate = useNavigate();
   return (
     <Row>
       <Col sm={12} className="col-12">
@@ -16,7 +15,7 @@ const ClientGroupManagement = () => {
               <Button
                 btnType="btn-outline-primary"
                 icon={<i className="fa fa fa-plus"></i>}
-                onClick={() => setOpenDialog()}
+                onClick={() => navigate('/client-group-management/add-client-group')}
               >
                 {'New Client Group'}
               </Button>
@@ -27,7 +26,6 @@ const ClientGroupManagement = () => {
           </Card.Body>
         </Card>
       </Col>
-      <AddClientGroupDialog isOpen={isOpen} setCloseDialog={setCloseDialog} />
     </Row>
   );
 };
