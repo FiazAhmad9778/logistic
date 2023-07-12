@@ -16,6 +16,7 @@ import {
 import { RoleResponse } from '@/infrastructure/store/api/user-previleges/user-privileges-types';
 import Loader from '@/components/Loader';
 import React from 'react';
+import { SingleValue } from 'react-select';
 
 const UserPrivileges = () => {
   const { newRoleDialog, deleteRoleDialog } = useAppSelector((state) => state['user']);
@@ -29,6 +30,10 @@ const UserPrivileges = () => {
   };
   const handleDeleteRoleDialog = () => {
     dispatch(toggleDeleteNewRoleDialog(false));
+  };
+  const handleOnChangeRole = (value: SingleValue<{ value: number; name: string }>) => {
+    getClaimGroup(value?.value);
+    useFormReturn.setValue('role', value?.value);
   };
 
   const handleClaimGroup: SubmitHandler<FieldValues> = (e) => {
@@ -49,7 +54,7 @@ const UserPrivileges = () => {
                       value: option.id,
                       name: option.name,
                     }))}
-                    onChange={(value) => getClaimGroup(value?.value)}
+                    onChange={handleOnChangeRole}
                   />
                 </Form>
               </Col>
@@ -129,6 +134,11 @@ const UserPrivileges = () => {
                       ))}
                     </Row>
                   </React.Fragment>
+                  <Col md={12}>
+                    <div className="d-flex justify-content-end mt-4">
+                      <Button type="submit">Save</Button>
+                    </div>
+                  </Col>
                 </Form>
               )}
             </Row>
