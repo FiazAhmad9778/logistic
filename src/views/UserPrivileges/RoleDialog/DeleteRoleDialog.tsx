@@ -43,7 +43,7 @@ const DeleteRoleDialog: React.FC<IDeleteRoleDialog> = ({ isOpen, setCloseDialog,
   const handleDeleteRole = async (id: number) => {
     const res = await deleteRole(id).unwrap();
     if (!('error' in res) && res.success === true) {
-      const roleValue = useDropdownFormReturn.getValues('role');
+      const roleValue = useDropdownFormReturn.getValues('roleId');
       if (roleValue && roleValue == id) {
         useDropdownFormReturn.reset();
       }

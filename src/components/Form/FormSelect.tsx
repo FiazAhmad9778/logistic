@@ -90,7 +90,6 @@ export const FormSelect = <
               className={classNames('py-0 d-flex justify-content-center')}
               styles={{
                 control: (provided, { selectProps, isFocused }) => {
-                  console.log('selectProps', selectProps, isFocused);
                   return {
                     ...provided,
                     width: '99.5%',

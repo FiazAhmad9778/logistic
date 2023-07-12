@@ -6,17 +6,19 @@ import {
 } from '@/infrastructure/store/features/user-privileges/user-privileges-slice';
 import { useAppDispatch, useAppSelector } from '@/infrastructure/store/store-hooks';
 import { Card, Col, Row } from 'react-bootstrap';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import AddRoleDialog from './RoleDialog/AddRoleDialog';
 import DeleteRoleDialog from './RoleDialog/DeleteRoleDialog';
 import {
   useLazyClaimGroupListingQuery,
   useRoleListingQuery,
+  useSaveRoleMutation,
 } from '@/infrastructure/store/api/user-previleges/user-privileges-api';
 import { RoleResponse } from '@/infrastructure/store/api/user-previleges/user-privileges-types';
 import Loader from '@/components/Loader';
-import React, { useState } from 'react';
+import React from 'react';
 import { SingleValue } from 'react-select';
+import { HandleNotification } from '@/components/Toast';
 
 const UserPrivileges = () => {
   const { newRoleDialog, deleteRoleDialog } = useAppSelector((state) => state['user']);
@@ -25,7 +27,7 @@ const UserPrivileges = () => {
   const dispatch = useAppDispatch();
   const { data: roleList } = useRoleListingQuery(null);
   const [getClaimGroup, { data: claimGroupList, isLoading: IsClaimGroupListLoading }] = useLazyClaimGroupListingQuery();
-  const [roleId, setRoleId] = useState<number | null>(null);
+  const [saveRole, saveRoleState] = useSaveRoleMutation();
 
   const handleNewRoleDialog = () => {
     dispatch(toggleNewRoleDialog(false));
@@ -35,13 +37,32 @@ const UserPrivileges = () => {
   };
   const handleOnChangeRole = (value: SingleValue<{ value: number; name: string }>) => {
     getClaimGroup(value?.value);
-    useDropdownFormReturn.setValue('role', value?.value);
-    setRoleId(value?.value ?? null);
+    useDropdownFormReturn.setValue('roleId', value?.value);
+    useDropdownFormReturn.setValue('roleName', value?.name);
   };
 
-  const handleClaimGroup: SubmitHandler<FieldValues> = (e) => {
-    console.log(roleId);
-    console.log(e);
+  const handleClaimGroup = async () => {
+    const claims = useFormReturn.getValues();
+    console.log(claims);
+    if (claims) {
+      const assignedClaims = Object.keys(claims).reduce((array: number[], key) => {
+        if (claims[key]) {
+          array.push(parseInt(key));
+        }
+        return array;
+      }, []);
+      const payload = {
+        roleId: useDropdownFormReturn.getValues('roleId'),
+        roleName: useDropdownFormReturn.getValues('roleName'),
+        claims: assignedClaims,
+      };
+      const res = await saveRole(payload).unwrap();
+      if (res.success === true) {
+        HandleNotification(res.message || 'Role updated successfully.', res.success);
+      } else {
+        HandleNotification(res?.errors[0], res.success);
+      }
+    }
   };
   const loading = IsClaimGroupListLoading;
   return (
@@ -53,7 +74,7 @@ const UserPrivileges = () => {
               <Col md={6}>
                 <Form useFormReturn={useDropdownFormReturn} onSubmit={(e) => console.log(e)}>
                   <Form.Select
-                    name="role"
+                    name="roleId"
                     options={roleList?.data?.map((option: RoleResponse) => ({
                       value: option.id,
                       name: option.name,
@@ -79,6 +100,9 @@ const UserPrivileges = () => {
                     icon={<i className="fa fa fa-plus"></i>}
                     btnSize="btn-sm"
                     className="me-2"
+                    onClick={() => handleClaimGroup()}
+                    loading={saveRoleState.isLoading}
+                    disabled={saveRoleState.isLoading}
                   >
                     {'Save Changes'}
                   </Button>
@@ -107,7 +131,12 @@ const UserPrivileges = () => {
               {loading ? (
                 <Loader />
               ) : (
-                <Form useFormReturn={useFormReturn} onSubmit={handleClaimGroup}>
+                <Form
+                  useFormReturn={useFormReturn}
+                  onSubmit={(e) => {
+                    console.log(e);
+                  }}
+                >
                   <React.Fragment>
                     <Row>
                       {claimGroupList?.data?.map((item) => (
@@ -129,7 +158,7 @@ const UserPrivileges = () => {
                                       {privilegesIcon[item.claimValue as keyof typeof privilegesIcon]}
                                       {item.claimValue}
                                     </p>
-                                    <Form.Checkbox id={item.claimId} name={item.claimValue} />
+                                    <Form.Checkbox id={item.claimId} name={item.claimId.toString()} />
                                   </div>
                                 );
                               })}
