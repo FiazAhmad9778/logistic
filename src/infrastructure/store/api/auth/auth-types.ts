@@ -9,6 +9,7 @@ export interface LoginResponse {
   email: string;
   name: string;
   userId: number;
+  claims: string[];
 }
 export interface ForgotPasswordRequest {
   email: string;
