@@ -18,28 +18,25 @@ const AddClientGroupForm: React.FC<IClientGroupForm> = ({ onSubmit }) => {
         <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
           <Row>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Client Group Name" name="name" placeholder="Enter client group name" />
+              <Form.Input label="Client Group Name" name="clientGroupName" placeholder="Enter client group name" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Client Name" name="clientName" placeholder="Enter client name" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="First Name" name="firstName" placeholder="Enter first name" />
+              <Form.Input label="Contact First Name" name="firstName" placeholder="Enter contact first name" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Last Name" name="lastName" placeholder="Enter last name" />
+              <Form.Input label="Contact Last Name" name="lastName" placeholder="Enter contact last name" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Email" name="email" placeholder="Enter email" />
+              <Form.Input label="Contact Email" name="email" placeholder="Enter contact email" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Mobile" name="phone" placeholder="Enter mobile" />
+              <Form.Input label="Contact Mobile" name="phoneNumber" placeholder="Enter contact number" />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Textarea label="Address" name="address" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Mark as Active" name="isActive" />
             </Col>
             <Col md={12} className="d-flex justify-content-end mt-2">
               <Button type="submit">Save</Button>

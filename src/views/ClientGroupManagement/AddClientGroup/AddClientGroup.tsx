@@ -5,19 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import AddClientGroupForm from './AddClientGroupForm';
 import { useSaveClientGroupMutation } from '@/infrastructure/store/api/client-group/client-group-api';
 import { HandleNotification } from '@/components/Toast';
-import { ClientGroupRequest } from '@/infrastructure/store/api/client-group/client-group-types';
+import { CreateClientGroupRequest } from '@/infrastructure/store/api/client-group/client-group-types';
 
 const AddClientGroup = () => {
   const navigate = useNavigate();
   const [saveClientGroup] = useSaveClientGroupMutation();
   const onSubmitClientGroup: SubmitHandler<FieldValues> = async (e) => {
-    const res = await saveClientGroup(e as ClientGroupRequest).unwrap();
+    const res = await saveClientGroup(e as CreateClientGroupRequest).unwrap();
     if (res.success === true) {
+      navigate('/client-group-management', { replace: true });
       HandleNotification(res.message || 'Client group added successfully.', res.success);
     } else {
       HandleNotification(res?.errors[0], res.success);
     }
-    console.log(e);
   };
   return (
     <Row>

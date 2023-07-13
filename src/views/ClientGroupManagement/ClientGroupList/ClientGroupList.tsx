@@ -5,38 +5,23 @@ import Pagination from '@/components/Pagination';
 import { useDialogState } from '@/hooks/useDialogState';
 import Dialog from '@/components/Modal';
 import Button from '@/components/Button';
-import ClientGroupListing from '../../../constant/data/client-groups-list.json';
 import { useNavigate } from 'react-router-dom';
+import { useClientGroupsQuery } from '@/infrastructure/store/api/client-group/client-group-api';
 
 const ClientGroupList = () => {
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
   const navigate = useNavigate();
+  const { data: clientGroupsListing } = useClientGroupsQuery(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
-    columnHelper.accessor('ClientGroupName', {
+    columnHelper.accessor('name', {
       header: 'Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('ClientGroupName', {
-      header: 'Client Name',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('email', {
-      header: 'Email',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('phone', {
-      header: 'Mobile',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('IsActive', {
+    columnHelper.accessor('isActive', {
       header: 'Active',
       cell: ({ getValue }) => <span className="tx-primary">{getValue() ? 'Yes' : 'No'}</span>,
-    }),
-    columnHelper.accessor('address', {
-      header: 'Address',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.accessor('CreatedDate', {
       header: 'Date Added',
@@ -47,7 +32,7 @@ const ClientGroupList = () => {
       header: () => <span>Action</span>,
       cell: () => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fa fa-edit me-1" onClick={() => navigate('/client-group-management/add-client-group')}></i>
+          <i className="fa fa-edit me-1" onClick={() => navigate('/client-group-management/edit-client-group')}></i>
           <i className="far fa-trash-alt" onClick={setOpenDialog}></i>
         </span>
       ),
@@ -55,7 +40,7 @@ const ClientGroupList = () => {
   ];
 
   const useReactTableReturn = useReactTable({
-    data: ClientGroupListing,
+    data: clientGroupsListing?.data ?? [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });

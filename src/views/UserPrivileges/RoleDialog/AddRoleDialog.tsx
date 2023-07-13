@@ -21,7 +21,7 @@ const AddRoleDialog: React.FC<IAddRoleDialog> = ({ isOpen, setCloseDialog }) => 
   const [saveRole, saveRoleState] = useSaveRoleMutation();
   const onSubmitRole: SubmitHandler<FieldValues> = async (e) => {
     const payload = {
-      roleId: 0,
+      roleId: null,
       roleName: e.roleName,
       claims: [],
     };
