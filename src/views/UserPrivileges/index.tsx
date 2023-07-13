@@ -29,6 +29,7 @@ const UserPrivileges = () => {
   const [getClaimGroup, { data: claimGroupData, isLoading: IsClaimGroupListLoading }] = useLazyClaimGroupListingQuery();
   const [saveRole, saveRoleState] = useSaveRoleMutation();
   const [claimGroupList, setClaimGroupList] = useState<ClaimGroupRequest[]>([]);
+  const [claimUpdated, setClaimUpdated] = useState<boolean>(false);
 
   const handleNewRoleDialog = () => {
     dispatch(toggleNewRoleDialog(false));
@@ -40,6 +41,7 @@ const UserPrivileges = () => {
     getClaimGroup(value?.value);
     useDropdownFormReturn.setValue('roleId', value?.value);
     useDropdownFormReturn.setValue('roleName', value?.name);
+    setClaimUpdated(false);
   };
 
   useEffect(() => {
@@ -64,6 +66,7 @@ const UserPrivileges = () => {
       };
       const res = await saveRole(payload).unwrap();
       if (res.success === true) {
+        setClaimUpdated(false);
         HandleNotification(res.message || 'Role updated successfully.', res.success);
       } else {
         HandleNotification(res?.errors[0], res.success);
@@ -83,6 +86,7 @@ const UserPrivileges = () => {
       return { ...item, claims: updatedClaims };
     });
     setClaimGroupList(updatedClaimsData);
+    setClaimUpdated(true);
   };
 
   const loading = IsClaimGroupListLoading;
@@ -123,7 +127,7 @@ const UserPrivileges = () => {
                     className="me-2"
                     onClick={() => handleClaimGroup()}
                     loading={saveRoleState.isLoading}
-                    disabled={saveRoleState.isLoading}
+                    disabled={saveRoleState.isLoading || !claimUpdated}
                   >
                     {'Save Changes'}
                   </Button>
