@@ -161,7 +161,11 @@ const UserPrivileges = () => {
                                         {privilegesIcon[item.claimValue as keyof typeof privilegesIcon]}
                                         {item.claimValue}
                                       </p>
-                                      <Form.Checkbox id={item.claimId} name={item.claimValue} />
+                                      <Form.Checkbox
+                                        id={item.claimId}
+                                        name={item.claimId.toString()}
+                                        checked={item.isAssigned}
+                                      />
                                     </div>
                                   );
                                 })}
