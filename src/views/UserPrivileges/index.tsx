@@ -14,9 +14,9 @@ import {
   useRoleListingQuery,
   useSaveRoleMutation,
 } from '@/infrastructure/store/api/user-previleges/user-privileges-api';
-import { RoleResponse } from '@/infrastructure/store/api/user-previleges/user-privileges-types';
+import { ClaimGroupRequest, RoleResponse } from '@/infrastructure/store/api/user-previleges/user-privileges-types';
 import Loader from '@/components/Loader';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SingleValue } from 'react-select';
 import { HandleNotification } from '@/components/Toast';
 
@@ -26,8 +26,9 @@ const UserPrivileges = () => {
   const useFormReturn = useForm();
   const dispatch = useAppDispatch();
   const { data: roleList } = useRoleListingQuery(null);
-  const [getClaimGroup, { data: claimGroupList, isLoading: IsClaimGroupListLoading }] = useLazyClaimGroupListingQuery();
+  const [getClaimGroup, { data: claimGroupData, isLoading: IsClaimGroupListLoading }] = useLazyClaimGroupListingQuery();
   const [saveRole, saveRoleState] = useSaveRoleMutation();
+  const [claimGroupList, setClaimGroupList] = useState<ClaimGroupRequest[]>([]);
 
   const handleNewRoleDialog = () => {
     dispatch(toggleNewRoleDialog(false));
@@ -41,9 +42,14 @@ const UserPrivileges = () => {
     useDropdownFormReturn.setValue('roleName', value?.name);
   };
 
+  useEffect(() => {
+    if (claimGroupData && claimGroupData.data) {
+      setClaimGroupList(claimGroupData.data);
+    }
+  }, [claimGroupData]);
+
   const handleClaimGroup = async () => {
     const claims = useFormReturn.getValues();
-    console.log(claims);
     if (claims) {
       const assignedClaims = Object.keys(claims).reduce((array: number[], key) => {
         if (claims[key]) {
@@ -64,6 +70,21 @@ const UserPrivileges = () => {
       }
     }
   };
+
+  const handleClaimChange = (event: any, claimId: number) => {
+    const isChecked = event.target.checked;
+    const updatedClaimsData = claimGroupList?.map((item) => {
+      const updatedClaims = item.claims.map((claim) => {
+        if (claim.claimId === claimId) {
+          return { ...claim, isAssigned: isChecked };
+        }
+        return claim;
+      });
+      return { ...item, claims: updatedClaims };
+    });
+    setClaimGroupList(updatedClaimsData);
+  };
+
   const loading = IsClaimGroupListLoading;
   return (
     <Row>
@@ -142,7 +163,7 @@ const UserPrivileges = () => {
                       {useDropdownFormReturn.getValues('roleId') &&
                         roleList?.data?.map((item) => item.id).includes(useDropdownFormReturn.getValues('roleId')) &&
                         claimGroupList &&
-                        claimGroupList?.data?.map((item) => (
+                        claimGroupList?.map((item) => (
                           <Col md={4} key={item.claimGroupName} className="my-3">
                             <div className="h-100">
                               <div className="border bd-primary br-ts-5 br-te-5">
@@ -165,6 +186,7 @@ const UserPrivileges = () => {
                                         id={item.claimId}
                                         name={item.claimId.toString()}
                                         checked={item.isAssigned}
+                                        onChange={(event) => handleClaimChange(event, item.claimId)}
                                       />
                                     </div>
                                   );

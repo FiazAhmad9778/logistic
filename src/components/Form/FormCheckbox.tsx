@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEventHandler } from 'react';
 import { Form, FormGroup } from 'react-bootstrap';
 import { useFormContext } from 'react-hook-form';
 
@@ -14,9 +14,10 @@ export interface CheckboxProps extends CheckboxItemProps {
   title?: string;
   checked?: boolean | undefined;
   description?: string;
+  onChange?: ChangeEventHandler<HTMLInputElement> | undefined;
 }
 
-const FormCheckbox: React.FC<CheckboxProps> = ({ id, label, name, ...rest }) => {
+const FormCheckbox: React.FC<CheckboxProps> = ({ id, label, name, onChange, ...rest }) => {
   const { register } = useFormContext();
 
   if (!name) {
@@ -32,13 +33,14 @@ const FormCheckbox: React.FC<CheckboxProps> = ({ id, label, name, ...rest }) => 
           <div className="checkbox">
             <div className="custom-checkbox custom-control">
               <input
+                {...rest}
+                {...reg}
                 ref={ref}
                 id={id?.toString() || name}
                 aria-describedby={`${label}-description`}
                 type="checkbox"
                 className="custom-control-input"
-                {...rest}
-                {...reg}
+                onChange={onChange}
               />
               <Form.Label htmlFor={id?.toString() || name} className="custom-control-label tx-12 mt-1">
                 {label}
