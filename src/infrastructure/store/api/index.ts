@@ -6,6 +6,6 @@ import { ExtendedErrorResponse } from '../../../types/common/http-types';
 // initialize an empty api service that we'll inject endpoints into later as needed
 export const appApi = createApi({
   baseQuery: baseQueryWithRefreshToken as unknown as BaseQueryFn<string | FetchArgs, unknown, ExtendedErrorResponse>,
-  tagTypes: ['companyUsers', 'Privileges', 'ClientGroup'],
+  tagTypes: ['companyUsers', 'Privileges', 'Client', 'ClientGroup'],
   endpoints: () => ({}),
 });

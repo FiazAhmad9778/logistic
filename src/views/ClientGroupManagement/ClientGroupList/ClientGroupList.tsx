@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createColumnHelper, useReactTable, getCoreRowModel } from '@tanstack/react-table';
 import Table from '@/components/Table';
-import Pagination from '@/components/Pagination';
 import { useDialogState } from '@/hooks/useDialogState';
 import Dialog from '@/components/Modal';
 import Button from '@/components/Button';
 import { useNavigate } from 'react-router-dom';
-import { useClientGroupsQuery } from '@/infrastructure/store/api/client-group/client-group-api';
+import {
+  useClientGroupsQuery,
+  useDeleteClientGroupMutation,
+} from '@/infrastructure/store/api/client-group/client-group-api';
+import { ClientGroupResponse } from '@/infrastructure/store/api/client-group/client-group-types';
+import { HandleNotification } from '@/components/Toast';
+import Loader from '@/components/Loader';
 
 const ClientGroupList = () => {
+  const [clientGroupId, setClientGroupId] = useState<number>();
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
   const navigate = useNavigate();
-  const { data: clientGroupsListing } = useClientGroupsQuery(null);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const columnHelper = createColumnHelper<any>();
+  const { data: clientGroupsListing, isLoading: IsClientGroupLoading } = useClientGroupsQuery(null);
+  const [deleteClientGroup, deleteClientGroupState] = useDeleteClientGroupMutation();
+
+  const columnHelper = createColumnHelper<ClientGroupResponse>();
   const columns = [
     columnHelper.accessor('name', {
       header: 'Name',
@@ -23,17 +30,32 @@ const ClientGroupList = () => {
       header: 'Active',
       cell: ({ getValue }) => <span className="tx-primary">{getValue() ? 'Yes' : 'No'}</span>,
     }),
-    columnHelper.accessor('CreatedDate', {
+    columnHelper.accessor('createdDate', {
       header: 'Date Added',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.display({
       id: 'Create Order Instruction',
       header: () => <span>Action</span>,
-      cell: () => (
+      cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fa fa-edit me-1" onClick={() => navigate('/client-group-management/edit-client-group')}></i>
-          <i className="far fa-trash-alt" onClick={setOpenDialog}></i>
+          <i
+            className="fa fa-edit me-1"
+            onClick={() =>
+              navigate('/client-group-management/edit-client-group', {
+                state: {
+                  clientGroup: info.row.original,
+                },
+              })
+            }
+          ></i>
+          <i
+            className="far fa-trash-alt"
+            onClick={() => {
+              setOpenDialog();
+              setClientGroupId(info.row.original.id);
+            }}
+          ></i>
         </span>
       ),
     }),
@@ -44,10 +66,21 @@ const ClientGroupList = () => {
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const handleDeleteClientGroup = async () => {
+    const res = await deleteClientGroup(clientGroupId).unwrap();
+    if (res.success === true) {
+      HandleNotification(res.message || 'Client group deleted successfully.', res.success === true);
+      setCloseDialog();
+    } else {
+      HandleNotification(res?.errors[0], res.success === true);
+    }
+  };
+
+  const loading = IsClientGroupLoading;
   return (
     <React.Fragment>
-      <Table useReactTableReturn={useReactTableReturn} />
-      <Pagination />
+      {loading ? <Loader /> : <Table useReactTableReturn={useReactTableReturn} />}
       <Dialog title="Delete Client Group" show={isOpen} handleClose={setCloseDialog}>
         <div>
           <p className="tx-14 tx-medium mg-b-20">Are you sure you want to delete this item?</p>
@@ -61,7 +94,16 @@ const ClientGroupList = () => {
             >
               Cancel
             </Button>
-            <Button btnType="btn-primary" btnSize="btn-sm" className="pd-x-25" type="button">
+            <Button
+              btnType="btn-primary"
+              btnSize="btn-sm"
+              className="pd-x-25"
+              type="button"
+              loaderSize={8}
+              onClick={handleDeleteClientGroup}
+              loading={deleteClientGroupState.isLoading}
+              disabled={deleteClientGroupState.isLoading}
+            >
               Confirm
             </Button>
           </div>

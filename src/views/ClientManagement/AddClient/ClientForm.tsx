@@ -1,13 +1,15 @@
+import Button from '@/components/Button';
 import Form from '@/components/Form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import { addClientResolver } from 'src/form-resolver/client/client-resolver';
 interface IClientForm {
   onSubmit: SubmitHandler<FieldValues>;
+  loadingState: boolean;
 }
-const ClientForm: React.FC<IClientForm> = ({ onSubmit }) => {
+const ClientForm: React.FC<IClientForm> = ({ onSubmit, loadingState }) => {
   const useFormReturn = useForm({
     resolver: yupResolver(addClientResolver),
   });
@@ -29,16 +31,15 @@ const ClientForm: React.FC<IClientForm> = ({ onSubmit }) => {
               <Form.Input label="Email" name="email" placeholder="Enter email" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Mobile" name="mobile" placeholder="Enter mobile" />
+              <Form.Input label="Mobile" name="phoneNumber" placeholder="Enter mobile" />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Textarea label="Address" name="address" />
             </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Mark as Active" name="active" />
-            </Col>
             <Col md={12} className="d-flex justify-content-end mt-2">
-              <Button type="submit">Save</Button>
+              <Button type="submit" loading={loadingState} disabled={loadingState}>
+                Save
+              </Button>
             </Col>
           </Row>
         </Form>

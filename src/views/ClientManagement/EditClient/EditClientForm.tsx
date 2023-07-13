@@ -1,21 +1,17 @@
 import Button from '@/components/Button';
 import Form from '@/components/Form';
-import { ClientGroupResponse } from '@/infrastructure/store/api/client-group/client-group-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
-import { editClientGroupResolver } from 'src/form-resolver/client/client-resolver';
-interface IClientGroupForm {
+import { editClientResolver } from 'src/form-resolver/client/client-resolver';
+interface IEditClientForm {
   onSubmit: SubmitHandler<FieldValues>;
-  clientGroup: ClientGroupResponse;
   loadingState: boolean;
 }
-
-const EditClientGroupForm: React.FC<IClientGroupForm> = ({ onSubmit, clientGroup, loadingState }) => {
+const EditClientForm: React.FC<IEditClientForm> = ({ onSubmit, loadingState }) => {
   const useFormReturn = useForm({
-    resolver: yupResolver(editClientGroupResolver),
-    defaultValues: { ...clientGroup, clientGroupName: clientGroup.name },
+    resolver: yupResolver(editClientResolver),
   });
   return (
     <Row>
@@ -23,7 +19,10 @@ const EditClientGroupForm: React.FC<IClientGroupForm> = ({ onSubmit, clientGroup
         <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
           <Row>
             <Col xl={12} lg={12} md={12} sm={12}>
-              <Form.Input label="Client Group Name" name="clientGroupName" placeholder="Enter client group name" />
+              <Form.Input label="Client Name" name="clientName" placeholder="Enter client name" />
+            </Col>
+            <Col xl={12} lg={12} md={12} sm={12}>
+              <Form.Textarea label="Address" name="address" />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Checkbox label="Mark as Active" name="isActive" />
@@ -39,4 +38,5 @@ const EditClientGroupForm: React.FC<IClientGroupForm> = ({ onSubmit, clientGroup
     </Row>
   );
 };
-export default EditClientGroupForm;
+
+export default EditClientForm;

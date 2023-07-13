@@ -9,7 +9,7 @@ import { CreateClientGroupRequest } from '@/infrastructure/store/api/client-grou
 
 const AddClientGroup = () => {
   const navigate = useNavigate();
-  const [saveClientGroup] = useSaveClientGroupMutation();
+  const [saveClientGroup, saveClientGroupState] = useSaveClientGroupMutation();
   const onSubmitClientGroup: SubmitHandler<FieldValues> = async (e) => {
     const res = await saveClientGroup(e as CreateClientGroupRequest).unwrap();
     if (res.success === true) {
@@ -32,7 +32,7 @@ const AddClientGroup = () => {
             </div>
           </Card.Header>
           <Card.Body className="pt-0">
-            <AddClientGroupForm onSubmit={onSubmitClientGroup} />
+            <AddClientGroupForm onSubmit={onSubmitClientGroup} loadingState={saveClientGroupState.isLoading} />
           </Card.Body>
         </Card>
       </Col>

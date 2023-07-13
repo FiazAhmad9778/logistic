@@ -1,22 +1,23 @@
 import { Row, Col, Card } from 'react-bootstrap';
 import { SubmitHandler, FieldValues } from 'react-hook-form';
-import ClientForm from './ClientForm';
 import Button from '@/components/Button';
-import { useNavigate } from 'react-router-dom';
-import { useSaveClientMutation } from '@/infrastructure/store/api/client/client-api';
-import { CreateClientRequest } from '@/infrastructure/store/api/client/client-types';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useUpdateClientMutation } from '@/infrastructure/store/api/client/client-api';
+import { UpdateClientRequest } from '@/infrastructure/store/api/client/client-types';
 import { HandleNotification } from '@/components/Toast';
+import EditClientForm from './EditClientForm';
 
-const AddClient = () => {
+const EditClient = () => {
   const navigate = useNavigate();
-  const [saveClient, saveClientState] = useSaveClientMutation();
+  useLocation();
+  const [updateClient, updateClientState] = useUpdateClientMutation();
   const onSubmitClient: SubmitHandler<FieldValues> = async (e) => {
-    const res = await saveClient(e as CreateClientRequest).unwrap();
+    const res = await updateClient(e as UpdateClientRequest).unwrap();
     if (res.success === true) {
       navigate('/client-management', { replace: true });
-      HandleNotification(res.message || 'Client added successfully.', res.success);
+      HandleNotification(res.message || 'Client updated successfully.', res.success);
     } else {
-      HandleNotification(res.message || res?.errors[0], res.success);
+      HandleNotification(res?.errors[0], res.success);
     }
   };
   return (
@@ -25,14 +26,14 @@ const AddClient = () => {
         <Card className="card-primary">
           <Card.Header>
             <div className="d-flex justify-content-between mb-2">
-              <h4 className="card-title">Add Client</h4>
+              <h4 className="card-title">Edit Client</h4>
               <Button btnType="btn-outline-primary" btnSize="btn-sm" onClick={() => navigate(-1)}>
                 {'Back'}
               </Button>
             </div>
           </Card.Header>
           <Card.Body className="pt-0">
-            <ClientForm onSubmit={onSubmitClient} loadingState={saveClientState.isLoading} />
+            <EditClientForm onSubmit={onSubmitClient} loadingState={updateClientState.isLoading} />
           </Card.Body>
         </Card>
       </Col>
@@ -40,4 +41,4 @@ const AddClient = () => {
   );
 };
 
-export default AddClient;
+export default EditClient;

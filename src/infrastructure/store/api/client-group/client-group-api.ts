@@ -12,7 +12,7 @@ const clientGroupApi = appApi
           method: 'Get',
         }),
       }),
-      saveClientGroup: build.mutation<GenericResponseType<unknown>, CreateClientGroupRequest>({
+      saveClientGroup: build.mutation<GenericResponseType<number>, CreateClientGroupRequest>({
         query: (payload) => ({
           url: '/clientgroup',
           method: 'Post',
@@ -21,11 +21,18 @@ const clientGroupApi = appApi
         invalidatesTags: () => [{ type: 'ClientGroup', id: `client-groups` }],
       }),
 
-      updateClientGroup: build.mutation<GenericResponseType<unknown>, UpdateClientGroupRequest>({
+      updateClientGroup: build.mutation<GenericResponseType<number>, UpdateClientGroupRequest>({
         query: (payload) => ({
           url: '/clientgroup',
           method: 'Put',
           body: payload,
+        }),
+        invalidatesTags: () => [{ type: 'ClientGroup', id: `client-groups` }],
+      }),
+      deleteClientGroup: build.mutation<GenericResponseType<boolean>, number | undefined>({
+        query: (id) => ({
+          url: `/clientgroup/delete?Id=${id}`,
+          method: 'Delete',
         }),
         invalidatesTags: () => [{ type: 'ClientGroup', id: `client-groups` }],
       }),
@@ -35,4 +42,9 @@ const clientGroupApi = appApi
     addTagTypes: ['ClientGroup'],
   });
 
-export const { useClientGroupsQuery, useSaveClientGroupMutation, useUpdateClientGroupMutation } = clientGroupApi;
+export const {
+  useClientGroupsQuery,
+  useSaveClientGroupMutation,
+  useUpdateClientGroupMutation,
+  useDeleteClientGroupMutation,
+} = clientGroupApi;

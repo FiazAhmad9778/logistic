@@ -1,14 +1,16 @@
+import Button from '@/components/Button';
 import Form from '@/components/Form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import { addClientGroupResolver } from 'src/form-resolver/client/client-resolver';
 interface IClientGroupForm {
   onSubmit: SubmitHandler<FieldValues>;
+  loadingState: boolean;
 }
 
-const AddClientGroupForm: React.FC<IClientGroupForm> = ({ onSubmit }) => {
+const AddClientGroupForm: React.FC<IClientGroupForm> = ({ onSubmit, loadingState }) => {
   const useFormReturn = useForm({
     resolver: yupResolver(addClientGroupResolver),
   });
@@ -39,7 +41,9 @@ const AddClientGroupForm: React.FC<IClientGroupForm> = ({ onSubmit }) => {
               <Form.Textarea label="Address" name="address" />
             </Col>
             <Col md={12} className="d-flex justify-content-end mt-2">
-              <Button type="submit">Save</Button>
+              <Button type="submit" loading={loadingState} disabled={loadingState}>
+                Save
+              </Button>
             </Col>
           </Row>
         </Form>

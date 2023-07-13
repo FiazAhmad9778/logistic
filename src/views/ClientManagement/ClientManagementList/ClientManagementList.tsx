@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createColumnHelper, useReactTable, getCoreRowModel } from '@tanstack/react-table';
 import Table from '@/components/Table';
-import Pagination from '@/components/Pagination';
 import { useDialogState } from '@/hooks/useDialogState';
 import Dialog from '@/components/Modal';
 import Button from '@/components/Button';
-import ClientListing from '../../../constant/data/clients-list.json';
+import Loader from '@/components/Loader';
+import { useClientListQuery, useDeleteClientMutation } from '@/infrastructure/store/api/client/client-api';
+import { HandleNotification } from '@/components/Toast';
 
 const ClientManagementList = () => {
+  const [clientId, setClientId] = useState<number>();
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
+  const { data: clientListing, isLoading: IsClientLoading } = useClientListQuery(null);
+  const [deleteClient, deleteClientState] = useDeleteClientMutation();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -37,25 +41,40 @@ const ClientManagementList = () => {
       cell: ({ getValue }) => <span>{getValue() || ''}</span>,
     }),
     columnHelper.display({
-      id: 'Create Order Instruction',
+      id: 'Client Listing',
       header: () => <span>Actions</span>,
-      cell: () => (
+      cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="far fa-trash-alt" onClick={setOpenDialog}></i>
+          <i
+            className="far fa-trash-alt"
+            onClick={() => {
+              setOpenDialog();
+              setClientId(info.row.original.id);
+            }}
+          ></i>
         </span>
       ),
     }),
   ];
 
   const useReactTableReturn = useReactTable({
-    data: ClientListing,
+    data: clientListing?.data ?? [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const handleDeleteClient = async () => {
+    const res = await deleteClient(clientId).unwrap();
+    if (res.success === true) {
+      HandleNotification(res.message || 'Client deleted successfully.', res.success === true);
+    } else {
+      HandleNotification(res?.errors[0], res.success === true);
+    }
+  };
+  const loading = IsClientLoading;
   return (
     <React.Fragment>
-      <Table useReactTableReturn={useReactTableReturn} />
-      <Pagination />
+      {loading ? <Loader /> : <Table useReactTableReturn={useReactTableReturn} />}
       <Dialog title="Delete Client" show={isOpen} handleClose={setCloseDialog}>
         <div>
           <p className="tx-14 tx-medium mg-b-20">Are you sure you want to delete this item?</p>
@@ -69,7 +88,16 @@ const ClientManagementList = () => {
             >
               Cancel
             </Button>
-            <Button btnType="btn-primary" btnSize="btn-sm" className="pd-x-25" type="button">
+            <Button
+              btnType="btn-primary"
+              btnSize="btn-sm"
+              className="pd-x-25"
+              type="button"
+              loaderSize={8}
+              onClick={handleDeleteClient}
+              loading={deleteClientState.isLoading}
+              disabled={deleteClientState.isLoading}
+            >
               Confirm
             </Button>
           </div>
