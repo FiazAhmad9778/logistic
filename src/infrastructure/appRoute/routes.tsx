@@ -34,6 +34,7 @@ import AssignedOrdersList from '@/views/RouteAssignment/AssignedOrdersList/Assig
 import DriverRouteReview from '@/views/CustomerReviewRating/DriverRouteReview/DriverRouteReview';
 import AddClientGroup from '@/views/ClientGroupManagement/AddClientGroup/AddClientGroup';
 import EditClientGroup from '@/views/ClientGroupManagement/EditClientGroup/EditClientGroup';
+import EditClient from '@/views/ClientManagement/EditClient/EditClient';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -161,6 +162,11 @@ export const routes: RoutePathDefinition[] = [
             path: 'client-management/add-client',
             title: 'ADD CLIENT',
             element: <AddClient />,
+          },
+          {
+            path: 'client-management/edit-client',
+            title: 'EDIT CLIENT',
+            element: <EditClient />,
           },
           {
             path: 'client-group-management',

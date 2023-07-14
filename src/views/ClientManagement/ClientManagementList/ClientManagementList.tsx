@@ -7,37 +7,35 @@ import Button from '@/components/Button';
 import Loader from '@/components/Loader';
 import { useClientListQuery, useDeleteClientMutation } from '@/infrastructure/store/api/client/client-api';
 import { HandleNotification } from '@/components/Toast';
+import { useNavigate } from 'react-router-dom';
+import { getDateFormatMDY } from '@/helpers/function/date-format';
+import { ClientResponse } from '@/infrastructure/store/api/client/client-types';
 
 const ClientManagementList = () => {
   const [clientId, setClientId] = useState<number>();
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
+  const navigate = useNavigate();
+
   const { data: clientListing, isLoading: IsClientLoading } = useClientListQuery(null);
   const [deleteClient, deleteClientState] = useDeleteClientMutation();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const columnHelper = createColumnHelper<any>();
+  const columnHelper = createColumnHelper<ClientResponse>();
   const columns = [
-    columnHelper.accessor('ClientName', {
+    columnHelper.accessor('name', {
       header: 'Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('PersonOfContactName', {
-      header: 'Contact Person',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
+    columnHelper.accessor('isActive', {
+      header: 'Active',
+      cell: ({ getValue }) => (
+        <span className={`${getValue() ? 'text-success' : 'text-danger'}`}>{getValue() ? 'Yes' : 'No'}</span>
+      ),
     }),
-    columnHelper.accessor('ClientEmail', {
-      header: 'Contact Email',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('ClientMobile', {
-      header: 'Contact Number',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('CreatedOnUtc', {
+    columnHelper.accessor('createdDate', {
       header: 'Date Created',
-      cell: ({ getValue }) => <span>{getValue() || ''}</span>,
+      cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
     }),
-    columnHelper.accessor('MatchingProfileText', {
-      header: 'Matching Profile Text',
+    columnHelper.accessor('address', {
+      header: 'Address',
       cell: ({ getValue }) => <span>{getValue() || ''}</span>,
     }),
     columnHelper.display({
@@ -45,6 +43,16 @@ const ClientManagementList = () => {
       header: () => <span>Actions</span>,
       cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
+          <i
+            className="fa fa-edit me-1"
+            onClick={() =>
+              navigate('/client-management/edit-client', {
+                state: {
+                  client: info.row.original,
+                },
+              })
+            }
+          ></i>
           <i
             className="far fa-trash-alt"
             onClick={() => {

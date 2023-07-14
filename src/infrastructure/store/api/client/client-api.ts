@@ -1,18 +1,18 @@
 import { appApi } from '../index';
 import { GenericResponseType } from '../../../../types/common/http-types';
-import { CreateClientRequest, UpdateClientRequest } from './client-types';
+import { ClientResponse, CreateClientRequest, UpdateClientRequest } from './client-types';
 
 const clientGroupApi = appApi
   .injectEndpoints({
     endpoints: (build) => ({
-      clientList: build.query<GenericResponseType<unknown[]>, null | undefined>({
+      clientList: build.query<GenericResponseType<ClientResponse[]>, null | undefined>({
         providesTags: [{ type: 'Client', id: `clients` }],
         query: () => ({
           url: '/client/list',
           method: 'Get',
         }),
       }),
-      saveClient: build.mutation<GenericResponseType<unknown>, CreateClientRequest>({
+      saveClient: build.mutation<GenericResponseType<number>, CreateClientRequest>({
         query: (payload) => ({
           url: '/client',
           method: 'Post',
@@ -20,7 +20,7 @@ const clientGroupApi = appApi
         }),
         invalidatesTags: () => [{ type: 'Client', id: `clients` }],
       }),
-      updateClient: build.mutation<GenericResponseType<unknown>, UpdateClientRequest>({
+      updateClient: build.mutation<GenericResponseType<number>, UpdateClientRequest>({
         query: (payload) => ({
           url: '/client',
           method: 'Put',

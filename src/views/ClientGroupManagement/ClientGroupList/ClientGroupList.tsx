@@ -12,6 +12,7 @@ import {
 import { ClientGroupResponse } from '@/infrastructure/store/api/client-group/client-group-types';
 import { HandleNotification } from '@/components/Toast';
 import Loader from '@/components/Loader';
+import { getDateFormatMDY } from '@/helpers/function/date-format';
 
 const ClientGroupList = () => {
   const [clientGroupId, setClientGroupId] = useState<number>();
@@ -28,11 +29,13 @@ const ClientGroupList = () => {
     }),
     columnHelper.accessor('isActive', {
       header: 'Active',
-      cell: ({ getValue }) => <span className="tx-primary">{getValue() ? 'Yes' : 'No'}</span>,
+      cell: ({ getValue }) => (
+        <span className={`${getValue() ? 'text-success' : 'text-danger'}`}>{getValue() ? 'Yes' : 'No'}</span>
+      ),
     }),
     columnHelper.accessor('createdDate', {
       header: 'Date Added',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
+      cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
     }),
     columnHelper.display({
       id: 'Create Order Instruction',

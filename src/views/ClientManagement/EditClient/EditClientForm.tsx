@@ -1,5 +1,6 @@
 import Button from '@/components/Button';
 import Form from '@/components/Form';
+import { ClientResponse } from '@/infrastructure/store/api/client/client-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
@@ -7,11 +8,13 @@ import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import { editClientResolver } from 'src/form-resolver/client/client-resolver';
 interface IEditClientForm {
   onSubmit: SubmitHandler<FieldValues>;
+  client: ClientResponse;
   loadingState: boolean;
 }
-const EditClientForm: React.FC<IEditClientForm> = ({ onSubmit, loadingState }) => {
+const EditClientForm: React.FC<IEditClientForm> = ({ onSubmit, client, loadingState }) => {
   const useFormReturn = useForm({
     resolver: yupResolver(editClientResolver),
+    defaultValues: { ...client, clientName: client.name },
   });
   return (
     <Row>

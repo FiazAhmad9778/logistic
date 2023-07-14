@@ -9,7 +9,7 @@ import EditClientForm from './EditClientForm';
 
 const EditClient = () => {
   const navigate = useNavigate();
-  useLocation();
+  const location = useLocation();
   const [updateClient, updateClientState] = useUpdateClientMutation();
   const onSubmitClient: SubmitHandler<FieldValues> = async (e) => {
     const res = await updateClient(e as UpdateClientRequest).unwrap();
@@ -33,7 +33,11 @@ const EditClient = () => {
             </div>
           </Card.Header>
           <Card.Body className="pt-0">
-            <EditClientForm onSubmit={onSubmitClient} loadingState={updateClientState.isLoading} />
+            <EditClientForm
+              onSubmit={onSubmitClient}
+              client={location.state.client}
+              loadingState={updateClientState.isLoading}
+            />
           </Card.Body>
         </Card>
       </Col>
