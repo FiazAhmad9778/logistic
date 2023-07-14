@@ -13,6 +13,8 @@ import { ClientGroupResponse } from '@/infrastructure/store/api/client-group/cli
 import { HandleNotification } from '@/components/Toast';
 import Loader from '@/components/Loader';
 import { getDateFormatMDY } from '@/helpers/function/date-format';
+import IconButton from '@/components/Permission/action-icon';
+import { ClaimCode } from 'src/enums/claim-codes';
 
 const ClientGroupList = () => {
   const [clientGroupId, setClientGroupId] = useState<number>();
@@ -42,7 +44,8 @@ const ClientGroupList = () => {
       header: () => <span>Action</span>,
       cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i
+          <IconButton
+            requiredClaims={[ClaimCode.CGME]}
             className="fa fa-edit me-1"
             onClick={() =>
               navigate('/client-group-management/edit-client-group', {
@@ -51,14 +54,15 @@ const ClientGroupList = () => {
                 },
               })
             }
-          ></i>
-          <i
+          />
+          <IconButton
+            requiredClaims={[ClaimCode.CGMD]}
             className="far fa-trash-alt"
             onClick={() => {
               setOpenDialog();
               setClientGroupId(info.row.original.id);
             }}
-          ></i>
+          />
         </span>
       ),
     }),

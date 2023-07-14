@@ -10,6 +10,8 @@ import { HandleNotification } from '@/components/Toast';
 import { useNavigate } from 'react-router-dom';
 import { getDateFormatMDY } from '@/helpers/function/date-format';
 import { ClientResponse } from '@/infrastructure/store/api/client/client-types';
+import IconButton from '@/components/Permission/action-icon';
+import { ClaimCode } from 'src/enums/claim-codes';
 
 const ClientManagementList = () => {
   const [clientId, setClientId] = useState<number>();
@@ -43,7 +45,8 @@ const ClientManagementList = () => {
       header: () => <span>Actions</span>,
       cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i
+          <IconButton
+            requiredClaims={[ClaimCode.CliMgE]}
             className="fa fa-edit me-1"
             onClick={() =>
               navigate('/client-management/edit-client', {
@@ -52,14 +55,15 @@ const ClientManagementList = () => {
                 },
               })
             }
-          ></i>
-          <i
+          />
+          <IconButton
+            requiredClaims={[ClaimCode.CliMgD]}
             className="far fa-trash-alt"
             onClick={() => {
               setOpenDialog();
               setClientId(info.row.original.id);
             }}
-          ></i>
+          />
         </span>
       ),
     }),
