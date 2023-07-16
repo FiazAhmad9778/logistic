@@ -10,6 +10,8 @@ import { useDeleteDriverMutation, useDriversListQuery } from '@/infrastructure/s
 import { HandleNotification } from '@/components/Toast';
 import Loader from '@/components/Loader';
 import { DriverResponse } from '@/infrastructure/store/api/driver/driver-types';
+import IconButton from '@/components/Permission/action-icon';
+import { ClaimCode } from 'src/enums/claim-codes';
 
 const DriverList = () => {
   const [driverId, setDriverId] = useState<number>();
@@ -24,6 +26,10 @@ const DriverList = () => {
   const columns = [
     columnHelper.accessor('id', {
       header: 'Driver Id',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('name', {
+      header: 'Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.accessor('address', {
@@ -41,25 +47,26 @@ const DriverList = () => {
       header: () => <span>Action</span>,
       cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fas fa-eye me-1" onClick={() => navigate('/drivers/view-safety-check')}></i>
-          <i
+          <IconButton
+            requiredClaims={[ClaimCode.DME]}
             className="fa fa-edit me-1"
             onClick={() =>
               navigate('/driver-management/edit-driver', {
                 state: {
-                  driver: info.row.original,
+                  driverId: info.row.original.id,
                 },
               })
             }
-          ></i>
-          <i
-            className="far fa-trash-alt"
+          />
+          <IconButton
+            requiredClaims={[ClaimCode.DMD]}
+            className="far fa-trash-alt me-1"
             onClick={() => {
               setOpenDialog();
               setDriverId(info.row.original.id);
             }}
-          ></i>
-          <i className="fa fa-location-arrow" onClick={() => setMileageDialog(true)}></i>
+          />
+          {/* <i className="fa fa-location-arrow" onClick={() => setMileageDialog(true)}></i> */}
         </span>
       ),
     }),
@@ -74,8 +81,10 @@ const DriverList = () => {
   const handleDeleteDriver = async () => {
     const res = await deleteDriver(driverId).unwrap();
     if (res.success === true) {
+      setCloseDialog();
       HandleNotification(res.message || 'Driver deleted successfully.', res.success === true);
     } else {
+      setCloseDialog();
       HandleNotification(res?.errors[0], res.success === true);
     }
   };

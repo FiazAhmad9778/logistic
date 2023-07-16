@@ -49,9 +49,7 @@ const DeleteRoleDialog: React.FC<IDeleteRoleDialog> = ({ isOpen, setCloseDialog,
         useDropdownFormReturn.reset({ role: '' });
       }
       HandleNotification(res.message || 'Role deleted successfully.', res.success === true);
-      setCloseDialog();
     } else {
-      setCloseDialog();
       HandleNotification(res?.errors[0], res.success === true);
     }
   };

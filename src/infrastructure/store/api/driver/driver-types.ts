@@ -1,5 +1,6 @@
 export interface DriverResponse {
   id: number;
+  name: string;
   address: string;
   isActive: boolean;
   createdDate: string;

@@ -7,6 +7,7 @@ const genericResolver = {
   phoneNumber: yup.string().required('Mobile is required!'),
   address: yup.string().required('Address is required!'),
   driverId: yup.string().required('Driver Id is required!'),
+  isActive: yup.boolean(),
 };
 
 export const addDriverResolver = yup.object().shape({
@@ -20,4 +21,5 @@ export const addDriverResolver = yup.object().shape({
 
 export const editDriverResolver = yup.object().shape({
   address: genericResolver.address,
+  isActive: genericResolver.isActive,
 });

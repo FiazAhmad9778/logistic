@@ -1,21 +1,15 @@
 import Button from '@/components/Button';
 import Form from '@/components/Form';
-import { ClientResponse } from '@/infrastructure/store/api/client/client-types';
-import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
-import { editClientResolver } from 'src/form-resolver/client/client-resolver';
+import { SubmitHandler, FieldValues, UseFormReturn } from 'react-hook-form';
 interface IEditClientForm {
   onSubmit: SubmitHandler<FieldValues>;
-  client: ClientResponse;
   loadingState: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  useFormReturn: UseFormReturn<any, object>;
 }
-const EditClientForm: React.FC<IEditClientForm> = ({ onSubmit, client, loadingState }) => {
-  const useFormReturn = useForm({
-    resolver: yupResolver(editClientResolver),
-    defaultValues: { ...client, clientName: client.name },
-  });
+const EditClientForm: React.FC<IEditClientForm> = ({ useFormReturn, onSubmit, loadingState }) => {
   return (
     <Row>
       <Col md={{ span: 6, offset: 1 }}>

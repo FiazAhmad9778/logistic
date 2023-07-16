@@ -50,7 +50,7 @@ const ClientGroupList = () => {
             onClick={() =>
               navigate('/client-group-management/edit-client-group', {
                 state: {
-                  clientGroup: info.row.original,
+                  clientGroupId: info.row.original.id,
                 },
               })
             }
@@ -77,9 +77,10 @@ const ClientGroupList = () => {
   const handleDeleteClientGroup = async () => {
     const res = await deleteClientGroup(clientGroupId).unwrap();
     if (res.success === true) {
-      HandleNotification(res.message || 'Client group deleted successfully.', res.success === true);
       setCloseDialog();
+      HandleNotification(res.message || 'Client group deleted successfully.', res.success === true);
     } else {
+      setCloseDialog();
       HandleNotification(res?.errors[0], res.success === true);
     }
   };

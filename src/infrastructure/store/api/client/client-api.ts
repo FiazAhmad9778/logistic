@@ -5,6 +5,13 @@ import { ClientResponse, CreateClientRequest, UpdateClientRequest } from './clie
 const clientGroupApi = appApi
   .injectEndpoints({
     endpoints: (build) => ({
+      clientById: build.query<GenericResponseType<ClientResponse>, number | null | undefined>({
+        providesTags: [{ type: 'Client', id: `client` }],
+        query: (id) => ({
+          url: `/client/get?Id=${id}`,
+          method: 'Get',
+        }),
+      }),
       clientList: build.query<GenericResponseType<ClientResponse[]>, null | undefined>({
         providesTags: [{ type: 'Client', id: `clients` }],
         query: () => ({
@@ -26,7 +33,10 @@ const clientGroupApi = appApi
           method: 'Put',
           body: payload,
         }),
-        invalidatesTags: () => [{ type: 'Client', id: `clients` }],
+        invalidatesTags: () => [
+          { type: 'Client', id: `clients` },
+          { type: 'Client', id: `client` },
+        ],
       }),
       deleteClient: build.mutation<GenericResponseType<unknown>, number | undefined>({
         query: (id) => ({
@@ -41,5 +51,10 @@ const clientGroupApi = appApi
     addTagTypes: ['Client'],
   });
 
-export const { useClientListQuery, useSaveClientMutation, useUpdateClientMutation, useDeleteClientMutation } =
-  clientGroupApi;
+export const {
+  useClientByIdQuery,
+  useClientListQuery,
+  useSaveClientMutation,
+  useUpdateClientMutation,
+  useDeleteClientMutation,
+} = clientGroupApi;

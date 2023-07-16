@@ -51,7 +51,7 @@ const ClientManagementList = () => {
             onClick={() =>
               navigate('/client-management/edit-client', {
                 state: {
-                  client: info.row.original,
+                  clientId: info.row.original.id,
                 },
               })
             }
@@ -78,8 +78,10 @@ const ClientManagementList = () => {
   const handleDeleteClient = async () => {
     const res = await deleteClient(clientId).unwrap();
     if (res.success === true) {
+      setCloseDialog();
       HandleNotification(res.message || 'Client deleted successfully.', res.success === true);
     } else {
+      setCloseDialog();
       HandleNotification(res?.errors[0], res.success === true);
     }
   };

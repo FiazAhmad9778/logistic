@@ -1,23 +1,16 @@
+import React from 'react';
 import Button from '@/components/Button';
 import Form from '@/components/Form';
-import { DriverResponse } from '@/infrastructure/store/api/driver/driver-types';
-import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { editDriverResolver } from 'src/form-resolver/driver/driver-resolver';
-
+import { FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form';
 interface IEditDriverForm {
   onSubmit: SubmitHandler<FieldValues>;
-  driver: DriverResponse;
   loadingState: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  useFormReturn: UseFormReturn<any, object>;
 }
 
-const EditDriverForm: React.FC<IEditDriverForm> = ({ onSubmit, driver, loadingState }) => {
-  const useFormReturn = useForm({
-    resolver: yupResolver(editDriverResolver),
-    defaultValues: driver,
-  });
+const EditDriverForm: React.FC<IEditDriverForm> = ({ useFormReturn, onSubmit, loadingState }) => {
   return (
     <Row>
       <Col md={{ span: 6, offset: 1 }}>

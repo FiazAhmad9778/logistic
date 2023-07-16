@@ -5,6 +5,13 @@ import { CreateDriverRequest, DriverResponse, UpdateDriverRequest } from './driv
 const driverApi = appApi
   .injectEndpoints({
     endpoints: (build) => ({
+      driverById: build.query<GenericResponseType<DriverResponse>, number | null | undefined>({
+        providesTags: [{ type: 'Driver', id: `driver` }],
+        query: (id) => ({
+          url: `/driver/get?id=${id}`,
+          method: 'Get',
+        }),
+      }),
       driversList: build.query<GenericResponseType<DriverResponse[]>, null | undefined>({
         providesTags: [{ type: 'Driver', id: `drivers` }],
         query: () => ({
@@ -26,7 +33,10 @@ const driverApi = appApi
           method: 'Put',
           body: payload,
         }),
-        invalidatesTags: () => [{ type: 'Driver', id: `drivers` }],
+        invalidatesTags: () => [
+          { type: 'Driver', id: `drivers` },
+          { type: 'Driver', id: `driver` },
+        ],
       }),
       deleteDriver: build.mutation<GenericResponseType<unknown>, number | undefined>({
         query: (id) => ({
@@ -41,5 +51,10 @@ const driverApi = appApi
     addTagTypes: ['Driver'],
   });
 
-export const { useDriversListQuery, useSaveDriverMutation, useUpdateDriverMutation, useDeleteDriverMutation } =
-  driverApi;
+export const {
+  useDriverByIdQuery,
+  useDriversListQuery,
+  useSaveDriverMutation,
+  useUpdateDriverMutation,
+  useDeleteDriverMutation,
+} = driverApi;

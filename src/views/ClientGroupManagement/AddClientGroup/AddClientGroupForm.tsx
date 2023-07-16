@@ -1,19 +1,16 @@
 import Button from '@/components/Button';
 import Form from '@/components/Form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
-import { addClientGroupResolver } from 'src/form-resolver/client/client-resolver';
+import { SubmitHandler, FieldValues, UseFormReturn } from 'react-hook-form';
 interface IClientGroupForm {
   onSubmit: SubmitHandler<FieldValues>;
   loadingState: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  useFormReturn: UseFormReturn<any, object>;
 }
 
-const AddClientGroupForm: React.FC<IClientGroupForm> = ({ onSubmit, loadingState }) => {
-  const useFormReturn = useForm({
-    resolver: yupResolver(addClientGroupResolver),
-  });
+const AddClientGroupForm: React.FC<IClientGroupForm> = ({ useFormReturn, onSubmit, loadingState }) => {
   return (
     <Row>
       <Col md={{ span: 6, offset: 1 }}>

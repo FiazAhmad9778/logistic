@@ -8,6 +8,7 @@ const genericResolver = {
   email: yup.string().required('Email is required!'),
   phoneNumber: yup.string().required('Mobile is required!'),
   address: yup.string().required('Address is required!'),
+  isActive: yup.boolean(),
 };
 
 export const addClientResolver = yup.object().shape({
@@ -22,6 +23,7 @@ export const addClientResolver = yup.object().shape({
 export const editClientResolver = yup.object().shape({
   clientName: genericResolver.clientName,
   address: genericResolver.address,
+  isActive: genericResolver.isActive,
 });
 
 export const addClientGroupResolver = yup.object().shape({

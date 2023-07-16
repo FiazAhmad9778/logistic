@@ -23,6 +23,7 @@ const AddDriver = () => {
     if ('validationErrors' in res && res.isSuccess) {
       res?.validationErrors?.map((error) => useFormReturn.setError(error?.name as never, { message: error.message }));
     }
+
     if (res.success === true) {
       navigate('/driver-management', { replace: true });
       HandleNotification(res.message || 'Driver added successfully.', res.success);

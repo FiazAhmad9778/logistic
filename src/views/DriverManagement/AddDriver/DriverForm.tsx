@@ -32,9 +32,6 @@ const DriverForm: React.FC<IDriverForm> = ({ useFormReturn, onSubmit, loadingSta
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Driver Id" name="driverId" placeholder="Enter unique driver Id" />
             </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Profile Image" name="profile" type="file" />
-            </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Textarea label="Address" name="address" />
             </Col>
