@@ -74,7 +74,7 @@ const UserPrivileges = () => {
     }
   };
 
-  const handleClaimChange = (event: any, claimId: number) => {
+  const handleClaimChange = (event: React.ChangeEvent<HTMLInputElement>, claimId: number) => {
     const isChecked = event.target.checked;
     const updatedClaimsData = claimGroupList?.map((item) => {
       const updatedClaims = item.claims.map((claim) => {

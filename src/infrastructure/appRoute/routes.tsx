@@ -6,7 +6,7 @@ import Dashboard from '@/views/Dashboard';
 import NotFound from '@/views/ErrorPage/NotFound';
 import CreateUser from '@/views/Company/CreateUser';
 import DriverManagement from '@/views/DriverManagement';
-import AddDriver from '@/views/DriverManagement/CreateUpdateDriver/AddDriver';
+import AddDriver from '@/views/DriverManagement/AddDriver/AddDriver';
 import OrderManagement from '@/views/OrderManagement';
 import OrderStatusManagement from '@/views/OrderStatusManagement';
 import UserPrivileges from '@/views/UserPrivileges';
@@ -36,6 +36,7 @@ import AddClientGroup from '@/views/ClientGroupManagement/AddClientGroup/AddClie
 import EditClientGroup from '@/views/ClientGroupManagement/EditClientGroup/EditClientGroup';
 import EditClient from '@/views/ClientManagement/EditClient/EditClient';
 import { ClaimCode } from 'src/enums/claim-codes';
+import EditDriver from '@/views/DriverManagement/EditDriver/EditDriver';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -80,16 +81,21 @@ export const routes: RoutePathDefinition[] = [
             requiredClaims: [ClaimCode.UMA],
           },
           {
-            path: 'drivers',
-            title: 'DRIVER LIST',
+            path: 'driver-management',
+            title: 'DRIVER MANAGEMENT',
             element: <DriverManagement />,
             requiredClaims: [ClaimCode.DMA, ClaimCode.DMD, ClaimCode.DME, ClaimCode.DMV],
           },
           {
-            path: 'drivers/create-driver',
-            title: 'CREATE DRIVER',
+            path: 'driver-management/add-driver',
+            title: 'ADD DRIVER',
             element: <AddDriver />,
             requiredClaims: [ClaimCode.DMA],
+          },
+          {
+            path: 'driver-management/edit-driver',
+            title: 'EDIT DRIVER',
+            element: <EditDriver />,
           },
           {
             path: 'drivers/view-safety-check',

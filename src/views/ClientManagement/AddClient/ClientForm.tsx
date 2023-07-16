@@ -1,18 +1,15 @@
+import React from 'react';
 import Button from '@/components/Button';
 import Form from '@/components/Form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
-import { addClientResolver } from 'src/form-resolver/client/client-resolver';
+import { SubmitHandler, FieldValues, UseFormReturn } from 'react-hook-form';
 interface IClientForm {
   onSubmit: SubmitHandler<FieldValues>;
   loadingState: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  useFormReturn: UseFormReturn<any, object>;
 }
-const ClientForm: React.FC<IClientForm> = ({ onSubmit, loadingState }) => {
-  const useFormReturn = useForm({
-    resolver: yupResolver(addClientResolver),
-  });
+const ClientForm: React.FC<IClientForm> = ({ useFormReturn, onSubmit, loadingState }) => {
   return (
     <Row>
       <Col md={{ span: 6, offset: 1 }}>

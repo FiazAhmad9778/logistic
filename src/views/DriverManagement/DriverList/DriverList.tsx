@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import { useDialogState } from '@/hooks/useDialogState';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
@@ -7,41 +6,38 @@ import { useNavigate } from 'react-router-dom';
 import Dialog from '@/components/Modal';
 import Button from '@/components/Button';
 import MileageDialog from '../MileageDialog/MileageDialog';
-import DriverListData from '../../../constant/data/drivers-list.json';
+import { useDeleteDriverMutation, useDriversListQuery } from '@/infrastructure/store/api/driver/driver-api';
+import { HandleNotification } from '@/components/Toast';
+import Loader from '@/components/Loader';
+import { DriverResponse } from '@/infrastructure/store/api/driver/driver-types';
+import IconButton from '@/components/Permission/action-icon';
+import { ClaimCode } from 'src/enums/claim-codes';
 
 const DriverList = () => {
-  const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
+  const [driverId, setDriverId] = useState<number>();
   const [mileageDialog, setMileageDialog] = useState<boolean>(false);
+  const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const columnHelper = createColumnHelper<any>();
+
+  const { data: driverListing, isLoading: IsDriverLoading } = useDriversListQuery(null);
+  const [deleteDriver, deleteDriverState] = useDeleteDriverMutation();
+
+  const columnHelper = createColumnHelper<DriverResponse>();
   const columns = [
-    columnHelper.accessor('user', {
-      header: 'Name',
-      cell: (info) => (
-        <span>
-          {info.row.original.FirstName} {info.row.original.LastName}
-        </span>
-      ),
-    }),
-    columnHelper.accessor('ClientGroupName', {
-      header: 'Group Name',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('DriverId', {
+    columnHelper.accessor('id', {
       header: 'Driver Id',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('Email', {
-      header: 'Email',
+    columnHelper.accessor('name', {
+      header: 'Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('Mobile', {
-      header: 'Contact Date',
+    columnHelper.accessor('address', {
+      header: 'Address',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('DriverOnlineStatus', {
-      header: 'Online Status',
+    columnHelper.accessor('isActive', {
+      header: 'Active',
       cell: ({ getValue }) => (
         <span className={`${getValue() ? 'text-success' : 'text-danger'}`}>{getValue() ? 'Yes' : 'No'}</span>
       ),
@@ -49,26 +45,54 @@ const DriverList = () => {
     columnHelper.display({
       id: 'action',
       header: () => <span>Action</span>,
-      cell: () => (
+      cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fas fa-eye me-1" onClick={() => navigate('/drivers/view-safety-check')}></i>
-          <i className="fa fa-edit me-1" onClick={() => navigate('/drivers/create-driver')}></i>
-          <i className="far fa-trash-alt me-1" onClick={setOpenDialog}></i>
-          <i className="fa fa-location-arrow" onClick={() => setMileageDialog(true)}></i>
+          <IconButton
+            requiredClaims={[ClaimCode.DME]}
+            className="fa fa-edit me-1"
+            onClick={() =>
+              navigate('/driver-management/edit-driver', {
+                state: {
+                  driverId: info.row.original.id,
+                },
+              })
+            }
+          />
+          <IconButton
+            requiredClaims={[ClaimCode.DMD]}
+            className="far fa-trash-alt me-1"
+            onClick={() => {
+              setOpenDialog();
+              setDriverId(info.row.original.id);
+            }}
+          />
+          {/* <i className="fa fa-location-arrow" onClick={() => setMileageDialog(true)}></i> */}
         </span>
       ),
     }),
   ];
 
   const useReactTableReturn = useReactTable({
-    data: DriverListData,
+    data: driverListing?.data ?? [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const handleDeleteDriver = async () => {
+    const res = await deleteDriver(driverId).unwrap();
+    if (res.success === true) {
+      setCloseDialog();
+      HandleNotification(res.message || 'Driver deleted successfully.', res.success === true);
+    } else {
+      setCloseDialog();
+      HandleNotification(res?.errors[0], res.success === true);
+    }
+  };
+
+  const loading = IsDriverLoading;
   return (
     <React.Fragment>
-      <Table useReactTableReturn={useReactTableReturn} />
-      <Pagination />
+      {loading ? <Loader /> : <Table useReactTableReturn={useReactTableReturn} />}
       <Dialog title="Delete Driver" show={isOpen} handleClose={setCloseDialog}>
         <div>
           <p className="tx-14 tx-medium mg-b-20">Are you sure you want to delete this item?</p>
@@ -82,7 +106,16 @@ const DriverList = () => {
             >
               Cancel
             </Button>
-            <Button btnType="btn-primary" btnSize="btn-sm" className="pd-x-25" type="button">
+            <Button
+              btnType="btn-primary"
+              btnSize="btn-sm"
+              className="pd-x-25"
+              type="button"
+              loaderSize={8}
+              onClick={handleDeleteDriver}
+              loading={deleteDriverState.isLoading}
+              disabled={deleteDriverState.isLoading}
+            >
               Confirm
             </Button>
           </div>

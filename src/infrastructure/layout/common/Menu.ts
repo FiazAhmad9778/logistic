@@ -48,7 +48,7 @@ export const MENUITEMS = [
       },
 
       {
-        path: `drivers`,
+        path: `driver-management`,
         icon: ManageDriverIcon,
         type: 'link',
         selected: false,

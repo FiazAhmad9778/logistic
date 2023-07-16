@@ -5,6 +5,13 @@ import { ClientGroupResponse, CreateClientGroupRequest, UpdateClientGroupRequest
 const clientGroupApi = appApi
   .injectEndpoints({
     endpoints: (build) => ({
+      clientGroupById: build.query<GenericResponseType<ClientGroupResponse>, number | null | undefined>({
+        providesTags: [{ type: 'ClientGroup', id: `client-group` }],
+        query: (id) => ({
+          url: `/clientgroup/get?id=${id}`,
+          method: 'Get',
+        }),
+      }),
       clientGroups: build.query<GenericResponseType<ClientGroupResponse[]>, null | undefined>({
         providesTags: [{ type: 'ClientGroup', id: `client-groups` }],
         query: () => ({
@@ -27,7 +34,10 @@ const clientGroupApi = appApi
           method: 'Put',
           body: payload,
         }),
-        invalidatesTags: () => [{ type: 'ClientGroup', id: `client-groups` }],
+        invalidatesTags: () => [
+          { type: 'ClientGroup', id: `client-groups` },
+          { type: 'ClientGroup', id: `client-group` },
+        ],
       }),
       deleteClientGroup: build.mutation<GenericResponseType<boolean>, number | undefined>({
         query: (id) => ({
@@ -43,6 +53,7 @@ const clientGroupApi = appApi
   });
 
 export const {
+  useClientGroupByIdQuery,
   useClientGroupsQuery,
   useSaveClientGroupMutation,
   useUpdateClientGroupMutation,
