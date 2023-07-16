@@ -27,10 +27,12 @@ const AddRoleDialog: React.FC<IAddRoleDialog> = ({ isOpen, setCloseDialog }) => 
     };
     const res = await saveRole(payload).unwrap();
     if (res.success === true) {
-      HandleNotification(res.message || 'Role added successfully.', res.success);
       setCloseDialog();
-      useFormReturn.reset();
+      useFormReturn.reset({ roleName: '' });
+      HandleNotification(res.message || 'Role added successfully.', res.success);
     } else {
+      setCloseDialog();
+      useFormReturn.reset({ roleName: '' });
       HandleNotification(res?.errors[0], res.success);
     }
   };

@@ -25,7 +25,7 @@ const DriverManagement = () => {
                 <Button
                   btnType="btn-outline-primary"
                   icon={<i className="fa fa fa-plus"></i>}
-                  onClick={() => navigate('/drivers/create-driver')}
+                  onClick={() => navigate('/driver-management/add-driver')}
                 >
                   {'New Driver'}
                 </Button>

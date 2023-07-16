@@ -6,7 +6,7 @@ import Dashboard from '@/views/Dashboard';
 import NotFound from '@/views/ErrorPage/NotFound';
 import CreateUser from '@/views/Company/CreateUser';
 import DriverManagement from '@/views/DriverManagement';
-import AddDriver from '@/views/DriverManagement/CreateUpdateDriver/AddDriver';
+import AddDriver from '@/views/DriverManagement/AddDriver/AddDriver';
 import OrderManagement from '@/views/OrderManagement';
 import OrderStatusManagement from '@/views/OrderStatusManagement';
 import UserPrivileges from '@/views/UserPrivileges';
@@ -35,6 +35,7 @@ import DriverRouteReview from '@/views/CustomerReviewRating/DriverRouteReview/Dr
 import AddClientGroup from '@/views/ClientGroupManagement/AddClientGroup/AddClientGroup';
 import EditClientGroup from '@/views/ClientGroupManagement/EditClientGroup/EditClientGroup';
 import EditClient from '@/views/ClientManagement/EditClient/EditClient';
+import EditDriver from '@/views/DriverManagement/EditDriver/EditDriver';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -74,14 +75,19 @@ export const routes: RoutePathDefinition[] = [
             element: <CreateUser />,
           },
           {
-            path: 'drivers',
-            title: 'DRIVER LIST',
+            path: 'driver-management',
+            title: 'DRIVER MANAGEMENT',
             element: <DriverManagement />,
           },
           {
-            path: 'drivers/create-driver',
-            title: 'CREATE DRIVER',
+            path: 'driver-management/add-driver',
+            title: 'ADD DRIVER',
             element: <AddDriver />,
+          },
+          {
+            path: 'driver-management/edit-driver',
+            title: 'EDIT DRIVER',
+            element: <EditDriver />,
           },
           {
             path: 'drivers/view-safety-check',

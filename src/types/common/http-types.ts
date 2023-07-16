@@ -2,7 +2,14 @@ export interface GenericResponseType<T> {
   errors: string[];
   message: string;
   success: true;
+  isSuccess?: boolean;
+  validationErrors?: ValidationError[];
   data: T;
+}
+
+export interface ValidationError {
+  name: string;
+  message: string;
 }
 
 export interface GenericCreateEntityResponse<T> {
