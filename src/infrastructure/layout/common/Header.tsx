@@ -3,8 +3,8 @@ import { Scrollbars } from 'react-custom-scrollbars-2';
 import { Link, useNavigate } from 'react-router-dom';
 import { IMAGES } from '@/assets/images';
 import { useAppDispatch, useAppSelector } from '@/infrastructure/store/store-hooks';
-import { clearAuth } from '@/infrastructure/store/features/auth/auth-slice';
 import Breadcrumb from '@/components/Breadcrumb';
+import { logout } from '@/infrastructure/store/store';
 
 export default function Header() {
   const { name } = useAppSelector((state) => state['auth']);
@@ -16,7 +16,7 @@ export default function Header() {
   };
 
   const handleLogout = () => {
-    dispatch(clearAuth());
+    dispatch(logout());
     const path = `/auth/login`;
     navigate(path);
   };

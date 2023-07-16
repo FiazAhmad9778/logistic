@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore, createAction } from '@reduxjs/toolkit';
 // Import from redux persist FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -14,13 +14,24 @@ import userPrivilegeSlice from './features/user-privileges/user-privileges-slice
  * `STORE = app wide store's` \
  * `API = app wide API's`
  */
-export const rootReducers = combineReducers({
+
+export const logout = createAction('user-logout');
+
+export const appReducer = combineReducers({
   // STORE
   auth: authReducer,
   user: userPrivilegeSlice,
   // API
   [appApi.reducerPath]: appApi.reducer,
 });
+
+const rootReducers = (state: any, action: any) => {
+  if (action.type === logout.type) {
+    state = undefined;
+    storage.removeItem('persist:root');
+  }
+  return appReducer(state, action);
+};
 
 /**
  * ### Persisted Storage Configuration

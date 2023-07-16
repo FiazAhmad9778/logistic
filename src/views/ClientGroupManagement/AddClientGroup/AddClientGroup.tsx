@@ -7,11 +7,11 @@ import { useSaveClientGroupMutation } from '@/infrastructure/store/api/client-gr
 import { HandleNotification } from '@/components/Toast';
 import { CreateClientGroupRequest } from '@/infrastructure/store/api/client-group/client-group-types';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { addDriverResolver } from 'src/form-resolver/driver/driver-resolver';
+import { addClientGroupResolver } from 'src/form-resolver/client/client-resolver';
 
 const AddClientGroup = () => {
   const useFormReturn = useForm({
-    resolver: yupResolver(addDriverResolver),
+    resolver: yupResolver(addClientGroupResolver),
   });
   const navigate = useNavigate();
   const [saveClientGroup, saveClientGroupState] = useSaveClientGroupMutation();
