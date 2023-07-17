@@ -1,6 +1,11 @@
 export interface DriverResponse {
   id: number;
   name: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  driverId: string;
   address: string;
   isActive: boolean;
   createdDate: string;
