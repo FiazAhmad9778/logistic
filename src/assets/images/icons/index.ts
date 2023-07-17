@@ -13,9 +13,9 @@ import ClientManagement from './clientmanagement.png';
 import CustomerManagement from './customermanagement.png';
 import CustomerReview from './customerreview.png';
 import Delivery from './delivery.png';
-import Question from './Question.png';
-import Temperature from './Temperature.png';
-import VehicleSafety from './VehicleSafety.png';
+import Question from './question.png';
+import Temperature from './temperature.png';
+import VehicleSafety from './vehiclesafety.png';
 import InteractiveControl from './interactivecontrol.png';
 import RouteList from './routelist.png';
 

@@ -28,14 +28,24 @@ export const MENUITEMS = [
         title: 'Dashboard',
         requiredClaims: [],
       },
+
       {
-        path: `company-users`,
-        icon: UserIcon,
+        path: `client-group-management`,
+        icon: ClientGroupManagementIcon,
         type: 'link',
         selected: false,
         active: false,
-        title: 'Company User',
-        requiredClaims: [ClaimCode.UMA, ClaimCode.UMD, ClaimCode.UME, ClaimCode.UMV],
+        title: 'Client Group Management',
+        requiredClaims: [ClaimCode.CGMA, ClaimCode.CGMD, ClaimCode.CGME, ClaimCode.CGMV],
+      },
+      {
+        path: `client-management`,
+        icon: ClientManagementIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Client Management',
+        requiredClaims: [ClaimCode.CliMgA, ClaimCode.CliMgD, ClaimCode.CliMgE, ClaimCode.CliMgV],
       },
       {
         path: `user-privileges`,
@@ -46,7 +56,6 @@ export const MENUITEMS = [
         title: 'User Privileges',
         requiredClaims: [ClaimCode.UPA, ClaimCode.UPD, ClaimCode.UPE, ClaimCode.UPV],
       },
-
       {
         path: `driver-management`,
         icon: ManageDriverIcon,
@@ -55,6 +64,15 @@ export const MENUITEMS = [
         active: false,
         title: 'Driver Management',
         requiredClaims: [ClaimCode.DMA, ClaimCode.DMD, ClaimCode.DME, ClaimCode.DMV],
+      },
+      {
+        path: `company-users`,
+        icon: UserIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Company User',
+        requiredClaims: [ClaimCode.UMA, ClaimCode.UMD, ClaimCode.UME, ClaimCode.UMV],
       },
       {
         path: `order-list`,
@@ -117,24 +135,6 @@ export const MENUITEMS = [
         active: false,
         title: 'Vehicle Safety Check List',
         requiredClaims: [ClaimCode.VSCA, ClaimCode.VSCD, ClaimCode.VSCE, ClaimCode.VSCV],
-      },
-      {
-        path: `client-management`,
-        icon: ClientManagementIcon,
-        type: 'link',
-        selected: false,
-        active: false,
-        title: 'Client Management',
-        requiredClaims: [ClaimCode.CliMgA, ClaimCode.CliMgD, ClaimCode.CliMgE, ClaimCode.CliMgV],
-      },
-      {
-        path: `client-group-management`,
-        icon: ClientGroupManagementIcon,
-        type: 'link',
-        selected: false,
-        active: false,
-        title: 'Client Group Management',
-        requiredClaims: [ClaimCode.CGMA, ClaimCode.CGMD, ClaimCode.CGME, ClaimCode.CGMV],
       },
       {
         path: `customer-management`,

@@ -1,4 +1,4 @@
-import Logo from './LogisiticLogo.png';
+import Logo from './logisitic-logo.png';
 import Faces_1 from './photo-men.jpeg';
 import Login from './login.png';
 import LogoWhite from './logo-white.png';
