@@ -2,7 +2,7 @@ import { appApi } from '../index';
 import { GenericResponseType } from '../../../../types/common/http-types';
 import { ClientResponse, CreateClientRequest, UpdateClientRequest } from './client-types';
 
-const clientGroupApi = appApi
+const clientApi = appApi
   .injectEndpoints({
     endpoints: (build) => ({
       clientById: build.query<GenericResponseType<ClientResponse>, number | null | undefined>({
@@ -57,4 +57,4 @@ export const {
   useSaveClientMutation,
   useUpdateClientMutation,
   useDeleteClientMutation,
-} = clientGroupApi;
+} = clientApi;

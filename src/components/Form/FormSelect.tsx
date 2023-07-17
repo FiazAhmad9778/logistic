@@ -40,16 +40,23 @@ export const FormSelect = <
 
   const onChange = (e: OptionDefaultFormat | OptionDefaultFormat[]) => {
     if (e && Array.isArray(e)) {
-      setValue(
-        name,
-        e.map((e) => e.value),
-      );
+      if (e.length !== 0) {
+        setValue(
+          name,
+          e.map((e) => e.value),
+        );
+        return;
+      }
 
+      setValue(name, '');
       return;
     }
 
     if (e && typeof e === 'object') {
       setValue(name, e.value);
+    }
+    if (e === null) {
+      setValue(name, '');
     }
   };
   return (

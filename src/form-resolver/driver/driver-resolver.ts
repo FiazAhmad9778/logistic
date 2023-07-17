@@ -1,4 +1,13 @@
 import * as yup from 'yup';
+export interface IDriverSchema {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+  driverId: string;
+  isActive: boolean;
+}
 
 const genericResolver = {
   firstName: yup.string().required('First name is required!'),
@@ -20,6 +29,9 @@ export const addDriverResolver = yup.object().shape({
 });
 
 export const editDriverResolver = yup.object().shape({
+  firstName: genericResolver.firstName,
+  lastName: genericResolver.lastName,
+  phoneNumber: genericResolver.phoneNumber,
   address: genericResolver.address,
   isActive: genericResolver.isActive,
 });

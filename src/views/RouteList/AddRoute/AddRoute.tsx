@@ -1,30 +1,30 @@
 import { Row, Col, Card } from 'react-bootstrap';
+import RouteForm from './RouteForm';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import Button from '@/components/Button';
 import { useNavigate } from 'react-router-dom';
-import { useSaveRouteAssignmentMutation } from '@/infrastructure/store/api/route-assignment/route-assignment';
-import { CreateRouteAssignmentRequest } from '@/infrastructure/store/api/route-assignment/route-assignment-types';
+import { useSaveRouteMutation } from '@/infrastructure/store/api/route/route-api';
 import { HandleNotification } from '@/components/Toast';
-import AssignRouteForm from './AssignRouteForm';
-import { addRouteAssignmentResolver } from 'src/form-resolver/route/route-resolver';
+import { CreateRouteRequest } from '@/infrastructure/store/api/route/route-types';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { addRouteResolver } from 'src/form-resolver/route/route-resolver';
 
-const AssignRoute = () => {
+const AddRoute = () => {
   const navigate = useNavigate();
   const useFormReturn = useForm({
-    resolver: yupResolver(addRouteAssignmentResolver),
+    resolver: yupResolver(addRouteResolver),
   });
-  const [saveRouteAssignment, saveRouteAssignmentState] = useSaveRouteAssignmentMutation();
-  const onSubmitAssignRoute: SubmitHandler<FieldValues> = async (e) => {
-    const res = await saveRouteAssignment(e as CreateRouteAssignmentRequest).unwrap();
+  const [saveRoute, saveRouteState] = useSaveRouteMutation();
+  const onSubmitRoute: SubmitHandler<FieldValues> = async (e) => {
+    const res = await saveRoute(e as CreateRouteRequest).unwrap();
 
     if ('validationErrors' in res && res.isSuccess) {
       res?.validationErrors?.map((error) => useFormReturn.setError(error?.name as never, { message: error.message }));
     }
 
     if (res.success === true) {
-      navigate('/route-assignment-list/', { replace: true });
-      HandleNotification(res.message || 'Route assignment added successfully.', res.success);
+      navigate('/route-list', { replace: true });
+      HandleNotification(res.message || 'Route added successfully.', res.success);
     } else {
       HandleNotification(res.message || res?.errors[0], res.success);
     }
@@ -35,18 +35,14 @@ const AssignRoute = () => {
         <Card className="card-primary">
           <Card.Header>
             <div className="d-flex justify-content-between mb-2">
-              <h4 className="card-title">Assign Route</h4>
+              <h4 className="card-title">Add Route</h4>
               <Button btnType="btn-outline-primary" btnSize="btn-sm" onClick={() => navigate(-1)}>
                 {'Back'}
               </Button>
             </div>
           </Card.Header>
           <Card.Body className="pt-0">
-            <AssignRouteForm
-              useFormReturn={useFormReturn}
-              onSubmit={onSubmitAssignRoute}
-              loadingState={saveRouteAssignmentState.isLoading}
-            />
+            <RouteForm useFormReturn={useFormReturn} onSubmit={onSubmitRoute} loadingState={saveRouteState.isLoading} />
           </Card.Body>
         </Card>
       </Col>
@@ -54,4 +50,4 @@ const AssignRoute = () => {
   );
 };
 
-export default AssignRoute;
+export default AddRoute;

@@ -1,17 +1,24 @@
-import React from 'react';
-import { Card, Col, Form, Row } from 'react-bootstrap';
+import React, { useState } from 'react';
 import Table from '@/components/Table';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import Button from '@/components/Button';
 import { useNavigate } from 'react-router-dom';
-import Pagination from '@/components/Pagination';
 import Dialog from '@/components/Modal';
 import { useDialogState } from '@/hooks/useDialogState';
-import UserData from '../../constant/data/company-user.json';
+import UserData from '../../../constant/data/company-user.json';
+import { useDeleteUserMutation, useUsersListQuery } from '@/infrastructure/store/api/company/company-api';
+import Loader from '@/components/Loader';
+import { HandleNotification } from '@/components/Toast';
 
-const UserList: React.FC = () => {
+const UserList = () => {
+  const [userId, setUserId] = useState<number>();
+
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
   const navigate = useNavigate();
+
+  const { data: userListing, isLoading: IsUserListLoading } = useUsersListQuery(null);
+  const [deleteUser, deleteUserState] = useDeleteUserMutation();
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -42,42 +49,42 @@ const UserList: React.FC = () => {
     columnHelper.display({
       id: 'action',
       header: () => <span>Action</span>,
-      cell: () => (
+      cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fa fa-edit me-1" onClick={() => navigate('/users/create-user/')}></i>
-          <i className="far fa-trash-alt" onClick={setOpenDialog}></i>
+          <i className="fa fa-edit me-1" onClick={() => navigate('/company-users/edit-user/')}></i>
+          <i
+            className="far fa-trash-alt"
+            onClick={() => {
+              setOpenDialog();
+              setUserId(info.row.original.id);
+            }}
+          ></i>
         </span>
       ),
     }),
   ];
 
   const useReactTableReturn = useReactTable({
-    data: UserData || [],
+    data: UserData || userListing,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const handleDeleteUser = async () => {
+    const res = await deleteUser(userId).unwrap();
+    if (res.success === true) {
+      setCloseDialog();
+      HandleNotification(res.message || 'User deleted successfully.', res.success === true);
+    } else {
+      setCloseDialog();
+      HandleNotification(res?.errors[0], res.success === true);
+    }
+  };
+
+  const loading = IsUserListLoading;
   return (
-    <Row>
-      <Col sm={12} className="col-12">
-        <Card className="card-primary">
-          <Card.Header>
-            <div className="d-flex justify-content-between mb-2">
-              <Form.Control className="form-control w-25 mb-0" placeholder="Search..." />
-              <Button
-                btnType="btn-outline-primary"
-                icon={<i className="fa fa fa-plus"></i>}
-                onClick={() => navigate('/users/create-user')}
-              >
-                {'New User'}
-              </Button>
-            </div>
-          </Card.Header>
-          <Card.Body className="pt-0">
-            <Table useReactTableReturn={useReactTableReturn} />
-            <Pagination />
-          </Card.Body>
-        </Card>
-      </Col>
+    <React.Fragment>
+      {loading ? <Loader /> : <Table useReactTableReturn={useReactTableReturn} />}
       <Dialog title="Delete User" show={isOpen} handleClose={setCloseDialog}>
         <div>
           <p className="tx-14 tx-medium mg-b-20">Are you sure you want to delete this item?</p>
@@ -91,13 +98,22 @@ const UserList: React.FC = () => {
             >
               Cancel
             </Button>
-            <Button btnType="btn-primary" btnSize="btn-sm" className="pd-x-25" type="button">
+            <Button
+              type="button"
+              btnType="btn-primary"
+              btnSize="btn-sm"
+              className="pd-x-25"
+              loaderSize={8}
+              onClick={handleDeleteUser}
+              loading={deleteUserState.isLoading}
+              disabled={deleteUserState.isLoading}
+            >
               Confirm
             </Button>
           </div>
         </div>
       </Dialog>
-    </Row>
+    </React.Fragment>
   );
 };
 

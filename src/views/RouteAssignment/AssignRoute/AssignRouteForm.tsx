@@ -1,11 +1,14 @@
+import Button from '@/components/Button';
 import Form from '@/components/Form';
-import { Row, Col, Button } from 'react-bootstrap';
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { Row, Col } from 'react-bootstrap';
+import { FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form';
 interface IRouteAssignForm {
   onSubmit: SubmitHandler<FieldValues>;
+  loadingState: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  useFormReturn: UseFormReturn<any, object>;
 }
-const AssignRouteForm: React.FC<IRouteAssignForm> = ({ onSubmit }) => {
-  const useFormReturn = useForm();
+const AssignRouteForm: React.FC<IRouteAssignForm> = ({ useFormReturn, onSubmit, loadingState }) => {
   return (
     <Row>
       <Col md={{ span: 6, offset: 1 }}>
@@ -21,7 +24,9 @@ const AssignRouteForm: React.FC<IRouteAssignForm> = ({ onSubmit }) => {
               <Form.Select label="Profile" name="profile" options={[]} />
             </Col>
             <Col md={12} className="d-flex justify-content-end mt-2">
-              <Button>Save</Button>
+              <Button type="submit" loading={loadingState} disabled={loadingState}>
+                Save
+              </Button>
             </Col>
           </Row>
         </Form>

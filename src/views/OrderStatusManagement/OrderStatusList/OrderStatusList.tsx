@@ -1,12 +1,14 @@
-import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import OrderStatusListData from '../../../constant/data/orders-status-list.json';
+import { useOrderStatusByIdQuery } from '@/infrastructure/store/api/order-status/order-status-api';
+import Loader from '@/components/Loader';
 
 const OrderStatusList = () => {
   const navigate = useNavigate();
+  const { data: orderStatusListing, isLoading: IsOrderStatusLoading } = useOrderStatusByIdQuery(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -41,25 +43,31 @@ const OrderStatusList = () => {
     columnHelper.display({
       id: 'Create Order Instruction',
       header: () => <span>Action</span>,
-      cell: () => (
+      cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fas fa-eye me-1" onClick={() => navigate('/order-status-management/view-order-status')}></i>
+          <i
+            className="fas fa-eye me-1"
+            onClick={() =>
+              navigate('/order-status-management/view-order-status', {
+                state: {
+                  orderStatusId: info.row.original.id,
+                },
+              })
+            }
+          ></i>
         </span>
       ),
     }),
   ];
 
   const useReactTableReturn = useReactTable({
-    data: OrderStatusListData,
+    data: OrderStatusListData || orderStatusListing,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
-  return (
-    <React.Fragment>
-      <Table useReactTableReturn={useReactTableReturn} />
-      <Pagination />
-    </React.Fragment>
-  );
+
+  const loading = IsOrderStatusLoading;
+  return <React.Fragment>{loading ? <Loader /> : <Table useReactTableReturn={useReactTableReturn} />}</React.Fragment>;
 };
 
 export default OrderStatusList;

@@ -29,7 +29,7 @@ export const MENUITEMS = [
         requiredClaims: [],
       },
       {
-        path: `users`,
+        path: `company-users`,
         icon: UserIcon,
         type: 'link',
         selected: false,

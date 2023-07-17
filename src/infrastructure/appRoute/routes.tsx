@@ -1,10 +1,8 @@
 import React from 'react';
 import Layout from '@/infrastructure/layout/Layout';
 import Login from '@/views/Auth/Login';
-import UserList from '@/views/Company/UserList';
 import Dashboard from '@/views/Dashboard';
 import NotFound from '@/views/ErrorPage/NotFound';
-import CreateUser from '@/views/Company/CreateUser';
 import DriverManagement from '@/views/DriverManagement';
 import AddDriver from '@/views/DriverManagement/AddDriver/AddDriver';
 import OrderManagement from '@/views/OrderManagement';
@@ -17,7 +15,7 @@ import UploadDriver from '@/views/DriverManagement/UploadDriver';
 import RouteList from '@/views/RouteList';
 import RouteAssignment from '@/views/RouteAssignment';
 import AutoRouteAssignment from '@/views/AutoRouteAssignment';
-import AddRoute from '@/views/RouteList/CreateRoute/AddRoute';
+import AddRoute from '@/views/RouteList/AddRoute/AddRoute';
 import AssignRoute from '@/views/RouteAssignment/AssignRoute/AssignRoute';
 import AddAutoRoute from '@/views/AutoRouteAssignment/AddAutoRoute/AddAutoRoute';
 import ClientManagement from '@/views/ClientManagement';
@@ -36,6 +34,9 @@ import AddClientGroup from '@/views/ClientGroupManagement/AddClientGroup/AddClie
 import EditClientGroup from '@/views/ClientGroupManagement/EditClientGroup/EditClientGroup';
 import EditClient from '@/views/ClientManagement/EditClient/EditClient';
 import EditDriver from '@/views/DriverManagement/EditDriver/EditDriver';
+import AddUser from '@/views/Company/AddUser/AddUser';
+import CompanyUsers from '@/views/Company';
+import EditUser from '@/views/Company/EditUser/EditUser';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -65,14 +66,19 @@ export const routes: RoutePathDefinition[] = [
             element: <UserPrivileges />,
           },
           {
-            path: 'users',
+            path: 'company-users',
             title: 'USER LIST',
-            element: <UserList />,
+            element: <CompanyUsers />,
           },
           {
-            path: 'users/create-user',
+            path: 'company-users/add-user',
             title: 'CREATE USER',
-            element: <CreateUser />,
+            element: <AddUser />,
+          },
+          {
+            path: 'company-users/edit-user',
+            title: 'CREATE USER',
+            element: <EditUser />,
           },
           {
             path: 'driver-management',

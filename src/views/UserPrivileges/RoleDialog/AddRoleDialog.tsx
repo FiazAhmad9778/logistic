@@ -26,6 +26,13 @@ const AddRoleDialog: React.FC<IAddRoleDialog> = ({ isOpen, setCloseDialog }) => 
       claims: [],
     };
     const res = await saveRole(payload).unwrap();
+
+    if ('validationErrors' in res && !res.success && res.isSuccess) {
+      return res?.validationErrors?.map((error) =>
+        useFormReturn.setError(error?.name as never, { message: error.message }),
+      );
+    }
+
     if (res.success === true) {
       setCloseDialog();
       useFormReturn.reset({ roleName: '' });

@@ -1,13 +1,16 @@
-import Pagination from '@/components/Pagination';
 import Table from '@/components/Table';
 import { useDialogState } from '@/hooks/useDialogState';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React from 'react';
 import AddOrderInstructionDialog from '../AddOrderInstruction/AddOrderInstructionDialog';
 import OrderListData from '../../../constant/data/orders-list.json';
+import { useOrderListQuery } from '@/infrastructure/store/api/order/order-api';
+import Loader from '@/components/Loader';
 
 const OrderList = () => {
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
+
+  const { data: orderListing, isLoading: IsOrderLoading } = useOrderListQuery(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -55,14 +58,15 @@ const OrderList = () => {
   ];
 
   const useReactTableReturn = useReactTable({
-    data: OrderListData,
+    data: OrderListData || orderListing,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const loading = IsOrderLoading;
   return (
     <React.Fragment>
-      <Table useReactTableReturn={useReactTableReturn} />
-      <Pagination />
+      {loading ? <Loader /> : <Table useReactTableReturn={useReactTableReturn} />}
       <AddOrderInstructionDialog isOpen={isOpen} setCloseDialog={setCloseDialog} />
     </React.Fragment>
   );

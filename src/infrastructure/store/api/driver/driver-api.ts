@@ -1,6 +1,6 @@
 import { appApi } from '../index';
 import { GenericResponseType } from '../../../../types/common/http-types';
-import { CreateDriverRequest, DriverResponse, UpdateDriverRequest } from './driver-types';
+import { CreateDriverRequest, DriverResponse, MileageRequest, UpdateDriverRequest } from './driver-types';
 
 const driverApi = appApi
   .injectEndpoints({
@@ -45,6 +45,21 @@ const driverApi = appApi
         }),
         invalidatesTags: () => [{ type: 'Driver', id: `drivers` }],
       }),
+      updateMileage: build.mutation<GenericResponseType<unknown>, MileageRequest | undefined>({
+        query: (payload) => ({
+          url: `/mileage`,
+          method: 'Put',
+          body: payload,
+        }),
+        invalidatesTags: () => [{ type: 'Driver', id: `drivers` }],
+      }),
+      viewSafetyCheck: build.query<GenericResponseType<unknown>, number | null | undefined>({
+        providesTags: [{ type: 'Driver', id: `view-safety-check` }],
+        query: () => ({
+          url: '/view-safety-check',
+          method: 'Get',
+        }),
+      }),
     }),
   })
   .enhanceEndpoints({
@@ -57,4 +72,6 @@ export const {
   useSaveDriverMutation,
   useUpdateDriverMutation,
   useDeleteDriverMutation,
+  useUpdateMileageMutation,
+  useViewSafetyCheckQuery,
 } = driverApi;

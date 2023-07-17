@@ -1,84 +1,47 @@
 import Form from '@/components/Form';
 import React from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
-import { useForm, FieldValues, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 interface ISafetyCheckForm {
-  onSubmitUser: SubmitHandler<FieldValues>;
+  viewSafetyCheck: unknown;
 }
-const ViewSafetyCheckForm: React.FC<ISafetyCheckForm> = ({ onSubmitUser }) => {
-  const useFormReturn = useForm();
+const ViewSafetyCheckForm: React.FC<ISafetyCheckForm> = ({ viewSafetyCheck }) => {
+  const useFormReturn = useForm({
+    defaultValues: {
+      DriverName: 'Dennis',
+      Brakes: true,
+      Mirrors: true,
+      SeatBelts: true,
+      Lights: true,
+      Fluids: true,
+      BodyWork: true,
+      MIleage: true,
+      WindscreenFunctionality: true,
+    },
+  });
+  console.log(viewSafetyCheck);
   return (
     <Row>
       <Col md={{ span: 6, offset: 1 }}>
-        <Form useFormReturn={useFormReturn} onSubmit={onSubmitUser}>
+        <Form useFormReturn={useFormReturn} onSubmit={() => console.log()}>
           <Row>
-            <Col xl={12} lg={12} md={12} sm={12}>
-              <Form.Input label="Driver Name" name="DriverName" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Brakes" name="Brakes" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Mirrors" name="Mirrors" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Seat Belts" name="SeatBelts" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Seats Position" name="SeatsPosition" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Vehicle refrigerator/inverter" name="VehicleRefrigerator" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Vehicle Cleanliness" name="VehicleCleanliness" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Vehicle Dashboard" name="VehicleDashboard" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Windscreen Functionality" name="WindscreenFunctionality" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Lights" name="Lights" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Fluids" name="Fluids" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Tyres and Wheels" name="TyresAndWheels" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Windscreen Damage" name="WindscreenDamage" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Bodywork" name="Bodywork" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Number Plates" name="NumberPlates" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Vehicle Doors" name="VehicleDoors" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Vehicle Registration Number" name="VehicleRegistrationNumber" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="MIleage" name="active" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox
-                label="Confirming I have completed the vehicle check and I am ready to start work"
-                name="readyToStart"
-              />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="PPE safety equipment" name="PPESafetyEquipment" />
-            </Col>
+            {ViewSafetyCheckList.map((field, index) => (
+              <React.Fragment key={index}>
+                {field.type === 'Input' ? (
+                  <Col xl={12} lg={12} md={12} sm={12}>
+                    <Form.Input label={field.label} name={field.safetyCheckName} disabled />
+                  </Col>
+                ) : (
+                  <Col xl={6} lg={6} md={6} sm={12}>
+                    <Form.Checkbox label={field.label} name={field.safetyCheckName} disabled />
+                  </Col>
+                )}
+              </React.Fragment>
+            ))}
             <Col xl={6} lg={6} md={6} sm={12}>
               <div>
-                <span className="tx-12 tx-gray-600 tx-medium">Updated on Date:</span>
+                <span className="tx-12 tx-gray-600 tx-medium pe-3">Updated on Date:</span>
                 <span>15/6/2023 17:49:48</span>
               </div>
             </Col>
@@ -93,3 +56,106 @@ const ViewSafetyCheckForm: React.FC<ISafetyCheckForm> = ({ onSubmitUser }) => {
 };
 
 export default ViewSafetyCheckForm;
+
+const ViewSafetyCheckList = [
+  {
+    label: 'Driver Name',
+    safetyCheckName: 'DriverName',
+    type: 'Input',
+  },
+  {
+    label: 'Brakes',
+    safetyCheckName: 'Brakes',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Mirrors',
+    safetyCheckName: 'Mirrors',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Seat Belts',
+    safetyCheckName: 'SeatBelts',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Seats Position',
+    safetyCheckName: 'Seats Position',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Vehicle refrigerator/inverter',
+    safetyCheckName: 'VehicleRefrigerator',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Vehicle Cleanliness',
+    safetyCheckName: 'VehicleCleanliness',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Vehicle Dashboard',
+    safetyCheckName: 'VehicleDashboard',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Windscreen Functionality',
+    safetyCheckName: 'WindscreenFunctionality',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Lights',
+    safetyCheckName: 'Lights',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Fluids',
+    safetyCheckName: 'Fluids',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Tyres And Wheels',
+    safetyCheckName: 'TyresAndWheels',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Windscreen Damage',
+    safetyCheckName: 'WindscreenDamage',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Body Work',
+    safetyCheckName: 'BodyWork',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Number Plates',
+    safetyCheckName: 'NumberPlates',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Vehicle Doors',
+    safetyCheckName: 'VehicleDoors',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Vehicle Registration Number',
+    safetyCheckName: 'VehicleRegistrationNumber',
+    type: 'Checkbox',
+  },
+  {
+    label: 'MIleage',
+    safetyCheckName: 'MIleage',
+    type: 'Checkbox',
+  },
+  {
+    label: 'Confirming I have completed the vehicle check and I am ready to start work',
+    safetyCheckName: 'readyToStart',
+    type: 'Checkbox',
+  },
+  {
+    label: 'PPE Safety Equipment',
+    safetyCheckName: 'PPESafetyEquipment',
+    type: 'Checkbox',
+  },
+];

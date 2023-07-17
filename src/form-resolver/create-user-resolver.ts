@@ -14,5 +14,5 @@ export const createUserResolver = yup.object().shape({
   email: yup.string().required('Email is required!'),
   mobile: yup.string().required('Mobile is required!'),
   role: yup.string().required('Role is required!'),
-  to: yup.array().of(yup.string().required('To is required!')).required('To is required!'),
+  to: yup.array().of(yup.string().required('To is required!').nonNullable()).required('To is required!').nullable(),
 });

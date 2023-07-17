@@ -19,6 +19,14 @@ export interface CreateDriverRequest {
 export interface UpdateDriverRequest {
   clientGroupId: number;
   id: number;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  clientIds: string;
   address: string;
   isActive: boolean;
+}
+export interface MileageRequest {
+  vehicleRegistrationNumber: number;
+  mileage: string;
 }

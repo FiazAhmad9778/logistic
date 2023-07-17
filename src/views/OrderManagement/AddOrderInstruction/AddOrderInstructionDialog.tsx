@@ -1,8 +1,10 @@
 import Button from '@/components/Button';
 import Form from '@/components/Form';
 import Dialog from '@/components/Modal';
-import { useForm } from 'react-hook-form';
-
+import { HandleNotification } from '@/components/Toast';
+import { useSaveOrderInstructionsMutation } from '@/infrastructure/store/api/order/order-api';
+import { OrderInstructionsRequest } from '@/infrastructure/store/api/order/order-types';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 interface IAddOrderInstructionProps {
   isOpen: boolean;
   setCloseDialog: () => void;
@@ -10,10 +12,26 @@ interface IAddOrderInstructionProps {
 
 const AddOrderInstructionDialog: React.FC<IAddOrderInstructionProps> = ({ isOpen, setCloseDialog }) => {
   const useFormReturn = useForm();
+  const [saveOrderInstructions, saveOrderInstructionsState] = useSaveOrderInstructionsMutation();
+
+  const onSubmitOrderInstructions: SubmitHandler<FieldValues> = async (data) => {
+    const res = await saveOrderInstructions(data as OrderInstructionsRequest).unwrap();
+
+    if ('validationErrors' in res && res.isSuccess) {
+      res?.validationErrors?.map((error) => useFormReturn.setError(error?.name as never, { message: error.message }));
+    }
+
+    if (res.success === true) {
+      setCloseDialog();
+      HandleNotification(res.message || 'Order instructions added successfully.', res.success);
+    } else {
+      HandleNotification(res.message || res?.errors[0], res.success);
+    }
+  };
   return (
     <div>
       <Dialog title="Add Instructions to Orders" show={isOpen} handleClose={setCloseDialog}>
-        <Form useFormReturn={useFormReturn} onSubmit={(e) => console.log(e)}>
+        <Form useFormReturn={useFormReturn} onSubmit={onSubmitOrderInstructions}>
           <Form.Textarea
             rows={5}
             label="Order Instructions"
@@ -24,7 +42,14 @@ const AddOrderInstructionDialog: React.FC<IAddOrderInstructionProps> = ({ isOpen
             <Button type="button" btnType="btn-outline-danger" btnSize="btn-sm" onClick={setCloseDialog}>
               Cancel
             </Button>
-            <Button btnSize="btn-sm">Save</Button>
+            <Button
+              btnSize="btn-sm"
+              loaderSize={8}
+              loading={saveOrderInstructionsState.isLoading}
+              disabled={saveOrderInstructionsState.isLoading}
+            >
+              Save
+            </Button>
           </div>
         </Form>
       </Dialog>

@@ -3,11 +3,15 @@ import { createColumnHelper, useReactTable, getCoreRowModel } from '@tanstack/re
 import { Row, Col, Card } from 'react-bootstrap';
 import Button from '@/components/Button';
 import Table from '@/components/Table';
-import Pagination from '@/components/Pagination';
 import { useNavigate } from 'react-router-dom';
+import { useAssignedOrderListQuery } from '@/infrastructure/store/api/route-assignment/route-assignment';
+import Loader from '@/components/Loader';
 
 const AssignedOrdersList = () => {
   const navigate = useNavigate();
+
+  const { data: assignedOrderListing, isLoading: IsAssignedOrderLoading } = useAssignedOrderListQuery(null);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
@@ -38,10 +42,12 @@ const AssignedOrdersList = () => {
   ];
 
   const useReactTableReturn = useReactTable({
-    data: RouteAssignmentRecord,
+    data: RouteAssignmentRecord || assignedOrderListing,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
+
+  const loading = IsAssignedOrderLoading;
   return (
     <React.Fragment>
       <Row>
@@ -56,8 +62,7 @@ const AssignedOrdersList = () => {
               </div>
             </Card.Header>
             <Card.Body className="pt-0">
-              <Table useReactTableReturn={useReactTableReturn} />
-              <Pagination />
+              {loading ? <Loader /> : <Table useReactTableReturn={useReactTableReturn} />}
             </Card.Body>
           </Card>
         </Col>
