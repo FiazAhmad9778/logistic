@@ -22,10 +22,10 @@ const genericResolver = {
 export const addDriverResolver = yup.object().shape({
   firstName: genericResolver.firstName,
   lastName: genericResolver.lastName,
+  driverId: genericResolver.driverId,
   email: genericResolver.email,
   phoneNumber: genericResolver.phoneNumber,
   address: genericResolver.address,
-  driverId: genericResolver.driverId,
 });
 
 export const editDriverResolver = yup.object().shape({

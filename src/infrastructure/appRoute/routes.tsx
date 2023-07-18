@@ -38,6 +38,7 @@ import EditDriver from '@/views/DriverManagement/EditDriver/EditDriver';
 import AddUser from '@/views/Company/AddUser/AddUser';
 import CompanyUsers from '@/views/Company';
 import EditUser from '@/views/Company/EditUser/EditUser';
+import EditRoute from '@/views/RouteList/EditRoute/EditRoute';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -103,6 +104,7 @@ export const routes: RoutePathDefinition[] = [
             path: 'driver-management/edit-driver',
             title: 'EDIT DRIVER',
             element: <EditDriver />,
+            requiredClaims: [ClaimCode.DME],
           },
           {
             path: 'drivers/view-safety-check',
@@ -144,6 +146,12 @@ export const routes: RoutePathDefinition[] = [
             path: 'route-list/add-route',
             title: 'ADD ROUTE',
             element: <AddRoute />,
+            requiredClaims: [],
+          },
+          {
+            path: 'route-list/edit-route',
+            title: 'EDIT ROUTE',
+            element: <EditRoute />,
             requiredClaims: [],
           },
           {

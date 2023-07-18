@@ -27,7 +27,7 @@ export interface UpdateDriverRequest {
   firstName: string;
   lastName: string;
   phoneNumber: string;
-  clientIds: string;
+  clientIds: number[];
   address: string;
   isActive: boolean;
 }

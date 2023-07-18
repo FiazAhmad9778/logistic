@@ -1,6 +1,6 @@
 import { appApi } from '../index';
 import { GenericResponseType } from '../../../../types/common/http-types';
-import { CreateRouteRequest, RouteResponse } from './route-types';
+import { CreateRouteRequest, RouteResponse, UpdateRouteRequest } from './route-types';
 
 const routeApi = appApi
   .injectEndpoints({
@@ -21,13 +21,13 @@ const routeApi = appApi
       }),
       saveRoute: build.mutation<GenericResponseType<number>, CreateRouteRequest>({
         query: (payload) => ({
-          url: '/route',
+          url: '/route/save',
           method: 'Post',
           body: payload,
         }),
         invalidatesTags: () => [{ type: 'Route', id: `routes` }],
       }),
-      updateRoute: build.mutation<GenericResponseType<number>, CreateRouteRequest>({
+      updateRoute: build.mutation<GenericResponseType<number>, UpdateRouteRequest>({
         query: (payload) => ({
           url: '/route',
           method: 'Put',

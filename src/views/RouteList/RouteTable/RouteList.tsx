@@ -5,10 +5,10 @@ import { useDialogState } from '@/hooks/useDialogState';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import RoutesListing from '../../../constant/data/routes-list.json';
 import { useDeleteRouteMutation, useRouteListQuery } from '@/infrastructure/store/api/route/route-api';
 import Loader from '@/components/Loader';
 import { HandleNotification } from '@/components/Toast';
+import { getDateFormatMDY } from '@/helpers/function/date-format';
 
 const RouteTable = () => {
   const [routeId, setRouteId] = useState<number>();
@@ -20,24 +20,37 @@ const RouteTable = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
-    columnHelper.accessor('RouteName', {
+    columnHelper.accessor('routeName', {
       header: 'Route Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('RouteStart', {
+    columnHelper.accessor('routeStart', {
       header: 'Route Start',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('RouteDate', {
+    columnHelper.accessor('routeEnd', {
+      header: 'Route Start',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('routeDate', {
       header: 'Route Date',
-      cell: ({ getValue }) => <span>{getValue() || ''}</span>,
+      cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
     }),
     columnHelper.display({
       id: 'Create Order Instruction',
       header: () => <span>Action</span>,
       cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fa fa-edit me-1" onClick={() => navigate('/route-list/add-route')}></i>
+          <i
+            className="fa fa-edit me-1"
+            onClick={() =>
+              navigate('/route-list/edit-route', {
+                state: {
+                  routeId: info.row.original.id,
+                },
+              })
+            }
+          ></i>
           <i
             className="far fa-trash-alt"
             onClick={() => {
@@ -51,7 +64,7 @@ const RouteTable = () => {
   ];
 
   const useReactTableReturn = useReactTable({
-    data: RoutesListing || routeListing,
+    data: routeListing?.data || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });
@@ -59,7 +72,7 @@ const RouteTable = () => {
     const res = await deleteClient(routeId).unwrap();
     if (res.success === true) {
       setCloseDialog();
-      HandleNotification(res.message || 'Client deleted successfully.', res.success === true);
+      HandleNotification(res.message || 'Route deleted successfully.', res.success === true);
     } else {
       setCloseDialog();
       HandleNotification(res?.errors[0], res.success === true);

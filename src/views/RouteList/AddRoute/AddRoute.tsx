@@ -16,7 +16,10 @@ const AddRoute = () => {
   });
   const [saveRoute, saveRouteState] = useSaveRouteMutation();
   const onSubmitRoute: SubmitHandler<FieldValues> = async (e) => {
-    const res = await saveRoute(e as CreateRouteRequest).unwrap();
+    const res = await saveRoute({
+      ...e,
+      routeDate: new Date(e.routeDate),
+    } as CreateRouteRequest).unwrap();
 
     if ('validationErrors' in res && res.isSuccess) {
       res?.validationErrors?.map((error) => useFormReturn.setError(error?.name as never, { message: error.message }));
