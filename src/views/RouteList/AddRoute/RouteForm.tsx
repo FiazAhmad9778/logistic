@@ -25,7 +25,7 @@ const RouteForm: React.FC<IRouteForm> = ({ useFormReturn, onSubmit, loadingState
               <Form.Input label="Route Start" name="routeStart" placeholder="Enter route start" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Route Start" name="routeEnd" placeholder="Enter route end" />
+              <Form.Input label="Route End" name="routeEnd" placeholder="Enter route end" />
             </Col>
             <Col md={12} className="d-flex justify-content-end mt-2">
               <Button type="submit" loading={loadingState} disabled={loadingState}>
