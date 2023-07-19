@@ -1,5 +1,6 @@
 import Button from '@/components/Button';
 import Form from '@/components/Form';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
 import { FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form';
@@ -12,6 +13,7 @@ interface IDriverForm {
 }
 
 const DriverForm: React.FC<IDriverForm> = ({ useFormReturn, onSubmit, loadingState }) => {
+  const { data: clientListing } = useClientListQuery(null);
   return (
     <Row>
       <Col md={{ span: 6, offset: 1 }}>
@@ -31,6 +33,17 @@ const DriverForm: React.FC<IDriverForm> = ({ useFormReturn, onSubmit, loadingSta
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Mobile" name="phoneNumber" placeholder="Enter mobile" />
+            </Col>
+            <Col xl={6} lg={6} md={6} sm={12}>
+              <Form.Select
+                label="Client"
+                name="clientIds"
+                isMulti
+                options={clientListing?.data.map((option: any) => ({
+                  name: option.name,
+                  value: option.id,
+                }))}
+              />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Textarea label="Address" name="address" />
