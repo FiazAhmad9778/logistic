@@ -5,7 +5,6 @@ import Button from '@/components/Button';
 import { useNavigate } from 'react-router-dom';
 import Dialog from '@/components/Modal';
 import { useDialogState } from '@/hooks/useDialogState';
-import UserData from '../../../constant/data/company-user.json';
 import { useDeleteUserMutation, useUsersListQuery } from '@/infrastructure/store/api/company/company-api';
 import Loader from '@/components/Loader';
 import { HandleNotification } from '@/components/Toast';
@@ -26,24 +25,20 @@ const UserList = () => {
       header: 'Name',
       cell: (info) => (
         <span>
-          {info.row.original.FirstName} {info.row.original.LastName}
+          {info.row.original.firstName} {info.row.original.lastName}
         </span>
       ),
     }),
-    columnHelper.accessor('Email', {
+    columnHelper.accessor('email', {
       header: 'Email',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('UserType', {
-      header: 'User Type',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('PhoneNumber', {
+    columnHelper.accessor('phoneNumber', {
       header: 'Phone Number',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('AddDate', {
-      header: 'Add Date',
+    columnHelper.accessor('roleName', {
+      header: 'Role Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.display({
@@ -51,7 +46,16 @@ const UserList = () => {
       header: () => <span>Action</span>,
       cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fa fa-edit me-1" onClick={() => navigate('/company-users/edit-user/')}></i>
+          <i
+            className="fa fa-edit me-1"
+            onClick={() =>
+              navigate('/company-users/edit-user/', {
+                state: {
+                  userId: info.row.original.id,
+                },
+              })
+            }
+          ></i>
           <i
             className="far fa-trash-alt"
             onClick={() => {
@@ -65,7 +69,7 @@ const UserList = () => {
   ];
 
   const useReactTableReturn = useReactTable({
-    data: UserData || userListing,
+    data: userListing?.data || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
   });

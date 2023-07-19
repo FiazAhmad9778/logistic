@@ -1,25 +1,28 @@
 export interface CreateUserRequest {
-  clientGroupId: number;
-  clientName: string;
   firstName: string;
   lastName: string;
   email: string;
   phoneNumber: string;
-  address: string;
+  roleId: number;
+  clientId: number;
 }
 
 export interface UpdateUserRequest {
   id: number;
-  clientGroupId: number;
-  clientName: string;
-  address: string;
-  isActive: boolean;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  roleId: number;
+  clientId: number;
 }
 
 export interface UserResponse {
   id: number;
-  name: string;
-  address: string;
-  isActive: boolean;
-  createdDate: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  roleId: number;
+  clientId: number;
 }

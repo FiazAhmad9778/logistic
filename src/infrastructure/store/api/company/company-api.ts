@@ -1,26 +1,27 @@
 import { appApi } from '../index';
 import { GenericResponseType } from '../../../../types/common/http-types';
+import { UserResponse } from './company-types';
 
 const companyApi = appApi
   .injectEndpoints({
     endpoints: (build) => ({
-      userById: build.query<GenericResponseType<unknown>, number | null | undefined>({
+      userById: build.query<GenericResponseType<UserResponse>, number | null | undefined>({
         providesTags: [{ type: 'Company', id: `user` }],
         query: (id) => ({
           url: `/user/get?Id=${id}`,
           method: 'Get',
         }),
       }),
-      usersList: build.query<GenericResponseType<unknown[]>, null | undefined>({
+      usersList: build.query<GenericResponseType<UserResponse[]>, null | undefined>({
         providesTags: [{ type: 'Company', id: `users` }],
         query: () => ({
-          url: '/users/list',
+          url: '/user/list',
           method: 'Get',
         }),
       }),
       saveUser: build.mutation<GenericResponseType<number>, unknown>({
         query: (payload) => ({
-          url: '/user',
+          url: '/user/save',
           method: 'Post',
           body: payload,
         }),
