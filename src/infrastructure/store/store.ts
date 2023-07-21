@@ -5,6 +5,8 @@ import storage from 'redux-persist/lib/storage';
 import { appApi } from './api';
 import authReducer from './features/auth/auth-slice';
 import userPrivilegeSlice from './features/user-privileges/user-privileges-slice';
+import route from './features/route/route-slice';
+import order from './features/order/order-slice';
 
 /**
  * ### App wide combined Reducers
@@ -21,6 +23,8 @@ export const appReducer = combineReducers({
   // STORE
   auth: authReducer,
   user: userPrivilegeSlice,
+  route: route,
+  order: order,
   // API
   [appApi.reducerPath]: appApi.reducer,
 });

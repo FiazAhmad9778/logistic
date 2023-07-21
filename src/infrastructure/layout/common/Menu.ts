@@ -75,7 +75,7 @@ export const MENUITEMS = [
         requiredClaims: [ClaimCode.UMA, ClaimCode.UMD, ClaimCode.UME, ClaimCode.UMV],
       },
       {
-        path: `order-list`,
+        path: `order-management-list`,
         icon: OrderIcon,
         type: 'link',
         selected: false,

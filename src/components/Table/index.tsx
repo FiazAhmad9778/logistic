@@ -14,7 +14,7 @@ const Table = <T extends Record<any, any>>(props: TableProps<T>) => {
           {getHeaderGroups()?.map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th key={header.id} style={{ width: header.getSize() }}>
                   {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
               ))}

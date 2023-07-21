@@ -1,19 +1,50 @@
 import Table from '@/components/Table';
-import { useDialogState } from '@/hooks/useDialogState';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import React from 'react';
-import AddOrderInstructionDialog from '../AddOrderInstruction/AddOrderInstructionDialog';
+import { RowSelectionState, Updater, createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import React, { useState } from 'react';
 import OrderListData from '../../../constant/data/orders-list.json';
 import { useOrderListQuery } from '@/infrastructure/store/api/order/order-api';
 import Loader from '@/components/Loader';
+import { useNavigate } from 'react-router-dom';
+import TableCheckbox from '@/components/Table/TableCheckbox';
+import { setSelectedOrderIds } from '@/infrastructure/store/features/order/order-slice';
+import { useAppDispatch } from '@/infrastructure/store/store-hooks';
 
 const OrderList = () => {
-  const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
+  const [selected, setSelected] = useState<Record<string, boolean>>({});
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const { data: orderListing, isLoading: IsOrderLoading } = useOrderListQuery(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const columnHelper = createColumnHelper<any>();
   const columns = [
+    columnHelper.display({
+      id: 'id',
+      size: 50,
+      header: ({ table }) => (
+        <span className="d-flex align-items-center gap-2">
+          <TableCheckbox
+            {...{
+              checked: table?.getIsAllRowsSelected(),
+              indeterminate: table.getIsSomeRowsSelected(),
+              onChange: table.getToggleAllRowsSelectedHandler(),
+            }}
+          />
+          <span>Action</span>
+        </span>
+      ),
+      cell: ({ row }) => (
+        <span className="justify-content-center gap-2">
+          <TableCheckbox
+            {...{
+              checked: row.getIsSelected(),
+              indeterminate: row.getIsSomeSelected(),
+              onChange: row.getToggleSelectedHandler(),
+            }}
+          />
+        </span>
+      ),
+    }),
     columnHelper.accessor('START_DEP', {
       header: 'Start Depo',
       cell: ({ getValue }) => <span>{getValue()}</span>,
@@ -51,25 +82,31 @@ const OrderList = () => {
       header: () => <span>Action</span>,
       cell: () => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fa fa-edit me-1" onClick={setOpenDialog}></i>
+          <i className="fa fa-edit me-1" onClick={() => navigate('/order-management-list/edit-order')}></i>
         </span>
       ),
     }),
   ];
 
+  const handleOnChangeRouteRowIds = async (row: Updater<RowSelectionState>) => {
+    await setSelected(row);
+    const ids = useReactTableReturn.getSelectedRowModel();
+    dispatch(setSelectedOrderIds(ids.rows.map((row) => row.original.id)));
+  };
+
   const useReactTableReturn = useReactTable({
     data: OrderListData || orderListing,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
+    state: {
+      rowSelection: selected,
+    },
+    onRowSelectionChange: (row) => handleOnChangeRouteRowIds(row),
+    enableRowSelection: true,
   });
 
   const loading = IsOrderLoading;
-  return (
-    <React.Fragment>
-      {loading ? <Loader /> : <Table useReactTableReturn={useReactTableReturn} />}
-      <AddOrderInstructionDialog isOpen={isOpen} setCloseDialog={setCloseDialog} />
-    </React.Fragment>
-  );
+  return <React.Fragment>{loading ? <Loader /> : <Table useReactTableReturn={useReactTableReturn} />}</React.Fragment>;
 };
 
 export default OrderList;

@@ -39,6 +39,8 @@ import AddUser from '@/views/Company/AddUser/AddUser';
 import CompanyUsers from '@/views/Company';
 import EditUser from '@/views/Company/EditUser/EditUser';
 import EditRoute from '@/views/RouteList/EditRoute/EditRoute';
+import AddOrder from '@/views/OrderManagement/AddOrder/AddOrder';
+import EditOrder from '@/views/OrderManagement/EditOrder/EditOrder';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -119,9 +121,21 @@ export const routes: RoutePathDefinition[] = [
             requiredClaims: [],
           },
           {
-            path: 'order-list',
-            title: 'ORDER LIST',
+            path: 'order-management-list',
+            title: 'ORDER MANAGEMENT LIST',
             element: <OrderManagement />,
+            requiredClaims: [],
+          },
+          {
+            path: 'order-management-list/add-order',
+            title: 'ADD ORDER',
+            element: <AddOrder />,
+            requiredClaims: [],
+          },
+          {
+            path: 'order-management-list/edit-order',
+            title: 'EDIT ORDER',
+            element: <EditOrder />,
             requiredClaims: [],
           },
           {

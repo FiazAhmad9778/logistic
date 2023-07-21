@@ -2,24 +2,56 @@ import Button from '@/components/Button';
 import Dialog from '@/components/Modal';
 import Table from '@/components/Table';
 import { useDialogState } from '@/hooks/useDialogState';
-import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { RowSelectionState, Updater, createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDeleteRouteMutation, useRouteListQuery } from '@/infrastructure/store/api/route/route-api';
 import Loader from '@/components/Loader';
 import { HandleNotification } from '@/components/Toast';
 import { getDateFormatMDY } from '@/helpers/function/date-format';
+import { RouteResponse } from '@/infrastructure/store/api/route/route-types';
+import { useAppDispatch } from '@/infrastructure/store/store-hooks';
+import { setSelectedRouteIds } from '@/infrastructure/store/features/route/route-slice';
+import TableCheckbox from '@/components/Table/TableCheckbox';
 
 const RouteTable = () => {
   const [routeId, setRouteId] = useState<number>();
+  const [selected, setSelected] = useState<Record<string, boolean>>({});
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
 
   const { data: routeListing, isLoading: IsRouteLoading } = useRouteListQuery(null);
   const [deleteClient, deleteRouteState] = useDeleteRouteMutation();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const columnHelper = createColumnHelper<any>();
+  const columnHelper = createColumnHelper<RouteResponse>();
   const columns = [
+    columnHelper.display({
+      id: 'id',
+      size: 50,
+      header: ({ table }) => (
+        <span className="d-flex align-items-center gap-2">
+          <TableCheckbox
+            {...{
+              checked: table?.getIsAllRowsSelected(),
+              indeterminate: table.getIsSomeRowsSelected(),
+              onChange: table.getToggleAllRowsSelectedHandler(),
+            }}
+          />
+          <span>Action</span>
+        </span>
+      ),
+      cell: ({ row }) => (
+        <span className="justify-content-center gap-2">
+          <TableCheckbox
+            {...{
+              checked: row.getIsSelected(),
+              indeterminate: row.getIsSomeSelected(),
+              onChange: row.getToggleSelectedHandler(),
+            }}
+          />
+        </span>
+      ),
+    }),
     columnHelper.accessor('routeName', {
       header: 'Route Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
@@ -63,11 +95,23 @@ const RouteTable = () => {
     }),
   ];
 
+  const handleOnChangeRouteRowIds = async (row: Updater<RowSelectionState>) => {
+    await setSelected(row);
+    const ids = useReactTableReturn.getSelectedRowModel();
+    dispatch(setSelectedRouteIds(ids.rows.map((row) => row.original.id)));
+  };
+
   const useReactTableReturn = useReactTable({
     data: routeListing?.data || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
+    state: {
+      rowSelection: selected,
+    },
+    onRowSelectionChange: (row) => handleOnChangeRouteRowIds(row),
+    enableRowSelection: true,
   });
+
   const handleDeleteRoute = async () => {
     const res = await deleteClient(routeId).unwrap();
     if (res.success === true) {
