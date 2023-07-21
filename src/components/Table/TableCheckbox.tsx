@@ -13,7 +13,7 @@ const TableCheckbox: React.FC<Props> = ({ indeterminate, ...rest }) => {
   }, [ref, indeterminate, rest.checked]);
   return (
     <span className="d-flex justify-content-center">
-      <div className="form-group">
+      <div className="form-group my-4">
         <div className="form-check">
           <input ref={ref} className="form-check-input" type="checkbox" {...rest} />
         </div>
