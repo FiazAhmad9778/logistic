@@ -54,7 +54,16 @@ export const MENUITEMS = [
         selected: false,
         active: false,
         title: 'User Privileges',
-        requiredClaims: [ClaimCode.UPA, ClaimCode.UPD, ClaimCode.UPE, ClaimCode.UPV],
+        requiredClaims: [ClaimCode.UPA, ClaimCode.UPD, ClaimCode.UPE],
+      },
+      {
+        path: `company-users`,
+        icon: UserIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Company User',
+        requiredClaims: [ClaimCode.UMA, ClaimCode.UMD, ClaimCode.UME, ClaimCode.UMV],
       },
       {
         path: `driver-management`,
@@ -66,13 +75,13 @@ export const MENUITEMS = [
         requiredClaims: [ClaimCode.DMA, ClaimCode.DMD, ClaimCode.DME, ClaimCode.DMV],
       },
       {
-        path: `company-users`,
-        icon: UserIcon,
+        path: `route-list`,
+        icon: RouteList,
         type: 'link',
         selected: false,
         active: false,
-        title: 'Company User',
-        requiredClaims: [ClaimCode.UMA, ClaimCode.UMD, ClaimCode.UME, ClaimCode.UMV],
+        title: 'Route List',
+        requiredClaims: [ClaimCode.RMA, ClaimCode.RMD, ClaimCode.RME, ClaimCode.RMV],
       },
       {
         path: `order-management-list`,
@@ -100,15 +109,7 @@ export const MENUITEMS = [
       //   active: false,
       //   title: 'Profile Management',
       // },
-      {
-        path: `route-list`,
-        icon: RouteList,
-        type: 'link',
-        selected: false,
-        active: false,
-        title: 'Route List',
-        requiredClaims: [ClaimCode.RMA, ClaimCode.RMD, ClaimCode.RME, ClaimCode.RMV],
-      },
+
       {
         path: `route-assignment-list`,
         icon: RouteAssignmentIcon,

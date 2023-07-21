@@ -14,7 +14,7 @@ const ClientManagement = () => {
           <Card.Header>
             <div className="d-flex justify-content-between mb-2">
               <Form.Control className="form-control w-25 mb-0" placeholder="Search..." />
-              <PermissionWrapper requiredClaims={[ClaimCode.CMA]}>
+              <PermissionWrapper requiredClaims={[ClaimCode.CliMgA]}>
                 <Button
                   btnType="btn-outline-primary"
                   icon={<i className="fa fa fa-plus"></i>}

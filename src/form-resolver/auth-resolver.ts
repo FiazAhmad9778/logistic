@@ -1,8 +1,8 @@
 import * as yup from 'yup';
-import { emailRegex } from '@/helpers/regex/email-regex';
 
 export const genericResolver = {
-  email: yup.string().required('Email address is required!').matches(emailRegex, { message: 'Invalid email address!' }),
+  // email: yup.string().required('Email address is required!').matches(emailRegex, { message: 'Invalid email address!' }),
+  email: yup.string().required('Email address is required!'),
   password: yup
     .string()
     .min(8, 'Password must be 8 character long')
