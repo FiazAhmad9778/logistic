@@ -24,3 +24,8 @@ export interface RouteResponse {
   routeEnd: string;
   routeDate: string | Date;
 }
+
+export interface CreateRouteDriverAssignmentRequest {
+  driverId: number;
+  routeIds: number[];
+}

@@ -4,7 +4,7 @@ import Button from '@/components/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '@/infrastructure/store/store-hooks';
 import { useDialogState } from '@/hooks/useDialogState';
-import AssignClientDialog from './AssignClientDialog/AssignClientDialog';
+import AssignClientDialog from './AssignDriverDialog/AssignDriverDialog';
 
 const RouteList = () => {
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();

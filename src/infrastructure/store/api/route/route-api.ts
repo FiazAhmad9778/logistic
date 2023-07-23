@@ -1,6 +1,11 @@
 import { appApi } from '../index';
 import { GenericResponseType } from '../../../../types/common/http-types';
-import { CreateRouteRequest, RouteResponse, UpdateRouteRequest } from './route-types';
+import {
+  CreateRouteDriverAssignmentRequest,
+  CreateRouteRequest,
+  RouteResponse,
+  UpdateRouteRequest,
+} from './route-types';
 
 const routeApi = appApi
   .injectEndpoints({
@@ -45,6 +50,13 @@ const routeApi = appApi
         }),
         invalidatesTags: () => [{ type: 'Route', id: `routes` }],
       }),
+      saveRouteDriverAssignment: build.mutation<GenericResponseType<number>, CreateRouteDriverAssignmentRequest>({
+        query: (payload) => ({
+          url: '/route/assign-driver',
+          method: 'Put',
+          body: payload,
+        }),
+      }),
     }),
   })
   .enhanceEndpoints({
@@ -57,4 +69,5 @@ export const {
   useSaveRouteMutation,
   useUpdateRouteMutation,
   useDeleteRouteMutation,
+  useSaveRouteDriverAssignmentMutation,
 } = routeApi;
