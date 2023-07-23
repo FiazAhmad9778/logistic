@@ -13,12 +13,7 @@ const TableCheckbox: React.FC<Props> = ({ indeterminate, ...rest }) => {
   }, [ref, indeterminate, rest.checked]);
   return (
     <span className="d-flex justify-content-center">
-      <div className="form-group mb-0">
-        <div className="form-check">
-          <input ref={ref} className="form-check-input" type="checkbox" {...rest} />
-        </div>
-      </div>
-      {/* <input type="checkbox" ref={ref} className={'rounded custom-checkbox cursor-pointer'} {...rest} /> */}
+      <input type="checkbox" ref={ref} className={'rounded custom-checkbox cursor-pointer'} {...rest} />
     </span>
   );
 };

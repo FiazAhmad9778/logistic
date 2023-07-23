@@ -95,6 +95,9 @@ input::file-selector-button {
   outline: 0;
   box-shadow: none;
 }
+.custom-checkbox[type='checkbox'] {
+  accent-color: var(--primary-bg-color) !important;
+}
 
 .signin-section {
   height: 100vh;
