@@ -1,35 +1,35 @@
 import { appApi } from '../index';
 import { GenericResponseType } from '../../../../types/common/http-types';
-import { OrderInstructionsRequest } from './order-types';
+import { CreateOrderRequest, OrderInstructionsRequest, UpdateOrderRequest } from './order-types';
 
 const orderApi = appApi
   .injectEndpoints({
     endpoints: (build) => ({
-      orderById: build.query<GenericResponseType<unknown>, number | null | undefined>({
+      orderById: build.query<GenericResponseType<OrderInstructionsRequest>, number | null | undefined>({
         providesTags: [{ type: 'Order', id: `order` }],
         query: (id) => ({
           url: `/order/get?Id=${id}`,
           method: 'Get',
         }),
       }),
-      orderList: build.query<GenericResponseType<unknown[]>, null | undefined>({
+      orderList: build.query<GenericResponseType<OrderInstructionsRequest[]>, null | undefined>({
         providesTags: [{ type: 'Order', id: `orders` }],
         query: () => ({
           url: '/order/list',
           method: 'Get',
         }),
       }),
-      saveOrder: build.mutation<GenericResponseType<number>, unknown>({
+      saveOrder: build.mutation<GenericResponseType<number>, CreateOrderRequest>({
         query: (payload) => ({
-          url: '/order',
+          url: '/order/save',
           method: 'Post',
           body: payload,
         }),
         invalidatesTags: () => [{ type: 'Order', id: `orders` }],
       }),
-      updateOrder: build.mutation<GenericResponseType<number>, unknown>({
+      updateOrder: build.mutation<GenericResponseType<number>, UpdateOrderRequest>({
         query: (payload) => ({
-          url: '/order',
+          url: '/order/update',
           method: 'Put',
           body: payload,
         }),

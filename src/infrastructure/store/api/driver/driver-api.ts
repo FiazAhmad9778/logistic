@@ -1,6 +1,12 @@
 import { appApi } from '../index';
 import { GenericResponseType } from '../../../../types/common/http-types';
-import { CreateDriverRequest, DriverResponse, MileageRequest, UpdateDriverRequest } from './driver-types';
+import {
+  CreateDriverRequest,
+  DriverResponse,
+  MileageRequest,
+  SafetyCheckResponse,
+  UpdateDriverRequest,
+} from './driver-types';
 
 const driverApi = appApi
   .injectEndpoints({
@@ -53,10 +59,10 @@ const driverApi = appApi
         }),
         invalidatesTags: () => [{ type: 'Driver', id: `drivers` }],
       }),
-      viewSafetyCheck: build.query<GenericResponseType<unknown>, number | null | undefined>({
-        providesTags: [{ type: 'Driver', id: `view-safety-check` }],
+      viewSafetyCheck: build.query<GenericResponseType<SafetyCheckResponse[]>, number | null | undefined>({
+        providesTags: [{ type: 'Driver', id: `safety-check` }],
         query: () => ({
-          url: '/view-safety-check',
+          url: '/safetycheck/list',
           method: 'Get',
         }),
       }),

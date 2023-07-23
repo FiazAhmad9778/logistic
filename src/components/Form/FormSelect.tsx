@@ -60,7 +60,7 @@ export const FormSelect = <
     }
   };
   return (
-    <Form.Group as={Col} className={classNames('form-group px-0')}>
+    <Form.Group as={Col} className={classNames('form-group mb-2 px-0')}>
       {label && (
         <div>
           <label className="form-label tx-12 tx-gray-600 ps-1">{label}</label>

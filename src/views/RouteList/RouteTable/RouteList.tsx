@@ -28,18 +28,6 @@ const RouteTable = () => {
     columnHelper.display({
       id: 'id',
       size: 50,
-      header: ({ table }) => (
-        <span className="d-flex align-items-center gap-2">
-          <TableCheckbox
-            {...{
-              checked: table?.getIsAllRowsSelected(),
-              indeterminate: table.getIsSomeRowsSelected(),
-              onChange: table.getToggleAllRowsSelectedHandler(),
-            }}
-          />
-          <span>Action</span>
-        </span>
-      ),
       cell: ({ row }) => (
         <span className="justify-content-center gap-2">
           <TableCheckbox

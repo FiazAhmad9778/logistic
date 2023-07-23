@@ -3,10 +3,12 @@ import Button from '@/components/Button';
 import { useNavigate } from 'react-router-dom';
 import ViewSafetyCheckForm from './ViewSafetyCheckForm';
 import { useViewSafetyCheckQuery } from '@/infrastructure/store/api/driver/driver-api';
+import Loader from '@/components/Loader';
 
 const ViewSafetyCheck = () => {
   const navigate = useNavigate();
-  const { data: viewSafetyCheck } = useViewSafetyCheckQuery(null);
+  const { data: viewSafetyCheck, isLoading: IsSafetyCheckLoading } = useViewSafetyCheckQuery(null);
+  const loading = IsSafetyCheckLoading;
   return (
     <Row>
       <Col sm={12} className="col-12">
@@ -18,7 +20,7 @@ const ViewSafetyCheck = () => {
             </Button>
           </Card.Header>
           <Card.Body className="pt-0">
-            <ViewSafetyCheckForm viewSafetyCheck={viewSafetyCheck?.data} />
+            {loading ? <Loader /> : <ViewSafetyCheckForm safetyCheck={viewSafetyCheck?.data} />}
           </Card.Body>
         </Card>
       </Col>

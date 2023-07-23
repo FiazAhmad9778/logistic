@@ -12,6 +12,7 @@ export const appApi = createApi({
     'Company',
     'Driver',
     'Order',
+    'OrderRouteAssignment',
     'OrderStatus',
     'Route',
     'RouteAssignment',

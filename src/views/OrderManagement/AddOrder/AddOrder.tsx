@@ -3,13 +3,36 @@ import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import Button from '@/components/Button';
 import { useNavigate } from 'react-router-dom';
 import AddOrderForm from './AddOrderForm';
+import { useSaveOrderMutation } from '@/infrastructure/store/api/order/order-api';
+import { CreateOrderRequest } from '@/infrastructure/store/api/order/order-types';
+import { HandleNotification } from '@/components/Toast';
+import { useRouteListQuery } from '@/infrastructure/store/api/route/route-api';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { addOrderResolver } from 'src/form-resolver/order/order-resolver';
 
 const AddOrder = () => {
   const navigate = useNavigate();
-  const useFormReturn = useForm();
+  const useFormReturn = useForm({
+    resolver: yupResolver(addOrderResolver),
+  });
 
-  const onSubmitOrder: SubmitHandler<FieldValues> = (order) => {
-    console.log(order);
+  const { data: routeList } = useRouteListQuery(null);
+  const { data: clientList } = useClientListQuery(null);
+  const [saveOrder, saveOrderState] = useSaveOrderMutation();
+  const onSubmitOrder: SubmitHandler<FieldValues> = async (order) => {
+    const res = await saveOrder(order as CreateOrderRequest).unwrap();
+
+    if ('validationErrors' in res && res.isSuccess) {
+      res?.validationErrors?.map((error) => useFormReturn.setError(error?.name as never, { message: error.message }));
+    }
+
+    if (res.success === true) {
+      navigate('/order-management-list', { replace: true });
+      HandleNotification(res.message || 'Order added successfully.', res.success);
+    } else {
+      HandleNotification(res.message || res?.errors[0], res.success);
+    }
   };
 
   return (
@@ -25,7 +48,13 @@ const AddOrder = () => {
             </div>
           </Card.Header>
           <Card.Body className="pt-0">
-            <AddOrderForm useFormReturn={useFormReturn} onSubmit={onSubmitOrder} />
+            <AddOrderForm
+              routes={routeList?.data}
+              clients={clientList?.data}
+              useFormReturn={useFormReturn}
+              onSubmit={onSubmitOrder}
+              loadingState={saveOrderState.isLoading}
+            />
           </Card.Body>
         </Card>
       </Col>

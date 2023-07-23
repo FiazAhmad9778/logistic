@@ -1,13 +1,14 @@
 import Table from '@/components/Table';
 import { RowSelectionState, Updater, createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import React, { useState } from 'react';
-import OrderListData from '../../../constant/data/orders-list.json';
 import { useOrderListQuery } from '@/infrastructure/store/api/order/order-api';
 import Loader from '@/components/Loader';
 import { useNavigate } from 'react-router-dom';
 import TableCheckbox from '@/components/Table/TableCheckbox';
 import { setSelectedOrderIds } from '@/infrastructure/store/features/order/order-slice';
 import { useAppDispatch } from '@/infrastructure/store/store-hooks';
+import IconButton from '@/components/Permission/action-icon';
+import { ClaimCode } from 'src/enums/claim-codes';
 
 const OrderList = () => {
   const [selected, setSelected] = useState<Record<string, boolean>>({});
@@ -21,68 +22,108 @@ const OrderList = () => {
     columnHelper.display({
       id: 'id',
       size: 50,
-      header: ({ table }) => (
-        <span className="d-flex align-items-center gap-2">
-          <TableCheckbox
-            {...{
-              checked: table?.getIsAllRowsSelected(),
-              indeterminate: table.getIsSomeRowsSelected(),
-              onChange: table.getToggleAllRowsSelectedHandler(),
-            }}
-          />
-          <span>Action</span>
-        </span>
-      ),
       cell: ({ row }) => (
         <span className="justify-content-center gap-2">
-          <TableCheckbox
-            {...{
-              checked: row.getIsSelected(),
-              indeterminate: row.getIsSomeSelected(),
-              onChange: row.getToggleSelectedHandler(),
-            }}
-          />
+          {row.original.routeId === null && (
+            <TableCheckbox
+              {...{
+                checked: row.getIsSelected(),
+                indeterminate: row.getIsSomeSelected(),
+                onChange: row.getToggleSelectedHandler(),
+              }}
+            />
+          )}
         </span>
       ),
     }),
-    columnHelper.accessor('START_DEP', {
-      header: 'Start Depo',
+    columnHelper.accessor('orderStatusName', {
+      header: 'Start Depot',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('ORDER', {
-      header: 'Order',
+    columnHelper.accessor('routeName', {
+      header: 'Route Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('CUST_NAME', {
-      header: 'Customer Name',
+    columnHelper.accessor('uniqueReferenceCode', {
+      header: 'Unique Reference Code',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('ClientName', {
-      header: 'Client Name',
+    columnHelper.accessor('townCity', {
+      header: 'Town City',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('ARR_DAY', {
-      header: 'Arrival Day',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('DEP_TIME', {
-      header: 'Departure Time',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('ADDRESS_1', {
-      header: 'Address',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('ZIPCODE', {
+    columnHelper.accessor('postCode', {
       header: 'Post Code',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
+    columnHelper.accessor('country', {
+      header: 'Country',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('loadingUnit', {
+      header: 'Loading Unit',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('orderWindowOpen', {
+      header: 'Order Window Open',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('orderWindowClose', {
+      header: 'Order Window Close',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('productWeight', {
+      header: 'product Weight',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('vehicleType', {
+      header: 'vehicle Type',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('typeOfOrder', {
+      header: 'Type Of Order',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('temperature', {
+      header: 'Temperature',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('orderName', {
+      header: 'Order Name',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('customerName', {
+      header: 'Customer Name',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('customerEmail', {
+      header: 'Customer Email',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('customerMobile', {
+      header: 'Customer Mobile',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('address', {
+      header: 'Address',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
     columnHelper.display({
-      id: 'Create Order Instruction',
+      id: 'Create Order',
       header: () => <span>Action</span>,
-      cell: () => (
+      cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fa fa-edit me-1" onClick={() => navigate('/order-management-list/edit-order')}></i>
+          <IconButton
+            requiredClaims={[ClaimCode.OME]}
+            className="fa fa-edit me-1"
+            onClick={() =>
+              navigate('/order-management-list/edit-order', {
+                state: {
+                  orderId: info.row.original.id,
+                },
+              })
+            }
+          />
         </span>
       ),
     }),
@@ -95,7 +136,7 @@ const OrderList = () => {
   };
 
   const useReactTableReturn = useReactTable({
-    data: OrderListData || orderListing,
+    data: orderListing?.data || [],
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     state: {

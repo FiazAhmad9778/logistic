@@ -35,3 +35,15 @@ export interface MileageRequest {
   vehicleRegistrationNumber: number;
   mileage: string;
 }
+
+export interface SafetyCheckResponse {
+  id: number;
+  checkName: string;
+  checkDescription: string;
+  checkLogo: string;
+  checkActive: boolean;
+  fieldType: string;
+  isMajorFault: boolean;
+  defaultValue: boolean;
+  isNumberOnly: number | null;
+}

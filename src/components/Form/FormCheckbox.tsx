@@ -27,7 +27,7 @@ const FormCheckbox: React.FC<CheckboxProps> = ({ id, label, name, onChange, ...r
   const { ref, ...reg } = register(name);
 
   return (
-    <fieldset className="my-2">
+    <fieldset className="d-flex align-items-center my-2">
       <FormGroup className="form-group mb-0 justify-content-end">
         <div className="d-flex align-items-center">
           <div className="checkbox">
