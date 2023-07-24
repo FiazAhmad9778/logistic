@@ -13,6 +13,7 @@ import { RouteResponse } from '@/infrastructure/store/api/route/route-types';
 import { useAppDispatch } from '@/infrastructure/store/store-hooks';
 import { setSelectedRouteIds } from '@/infrastructure/store/features/route/route-slice';
 import TableCheckbox from '@/components/Table/TableCheckbox';
+import { isNull } from 'lodash';
 
 const RouteTable = () => {
   const [routeId, setRouteId] = useState<number>();
@@ -35,6 +36,7 @@ const RouteTable = () => {
               checked: row.getIsSelected(),
               indeterminate: row.getIsSomeSelected(),
               onChange: row.getToggleSelectedHandler(),
+              disabled: row.original.driverId === null ? false : true,
             }}
           />
         </span>
@@ -49,15 +51,23 @@ const RouteTable = () => {
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.accessor('routeEnd', {
-      header: 'Route Start',
+      header: 'Route End',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('routeDate', {
-      header: 'Route Date',
+    columnHelper.accessor('routeStartDate', {
+      header: 'Start Date',
       cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
     }),
+    columnHelper.accessor('routeEndDate', {
+      header: 'End Date',
+      cell: ({ getValue }) => <span>{!isNull(getValue()) ? getDateFormatMDY(getValue()) : 'N/A'}</span>,
+    }),
+    columnHelper.accessor('driverName', {
+      header: 'Driver Name',
+      cell: ({ getValue }) => <span>{getValue() || 'N/A'}</span>,
+    }),
     columnHelper.display({
-      id: 'Create Order Instruction',
+      id: 'Route Listing',
       header: () => <span>Action</span>,
       cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">

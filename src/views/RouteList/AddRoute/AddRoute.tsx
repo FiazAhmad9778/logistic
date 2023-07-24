@@ -18,7 +18,8 @@ const AddRoute = () => {
   const onSubmitRoute: SubmitHandler<FieldValues> = async (e) => {
     const res = await saveRoute({
       ...e,
-      routeDate: new Date(e.routeDate),
+      routeStartDate: new Date(e.routeStartDate),
+      routeEndDate: new Date(e.routeEndDate),
     } as CreateRouteRequest).unwrap();
 
     if ('validationErrors' in res && res.isSuccess) {
