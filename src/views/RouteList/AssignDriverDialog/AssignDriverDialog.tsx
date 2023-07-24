@@ -2,10 +2,11 @@ import Button from '@/components/Button';
 import Form from '@/components/Form';
 import Dialog from '@/components/Modal';
 import { HandleNotification } from '@/components/Toast';
+import { appApi } from '@/infrastructure/store/api';
 import { useDriversListQuery } from '@/infrastructure/store/api/driver/driver-api';
 import { useSaveRouteDriverAssignmentMutation } from '@/infrastructure/store/api/route/route-api';
 import { CreateRouteDriverAssignmentRequest } from '@/infrastructure/store/api/route/route-types';
-import { useAppSelector } from '@/infrastructure/store/store-hooks';
+import { useAppDispatch, useAppSelector } from '@/infrastructure/store/store-hooks';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 interface IAssignDriverDialogProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface IAssignDriverDialogProps {
 const AssignDriverDialog: React.FC<IAssignDriverDialogProps> = ({ isOpen, setCloseDialog }) => {
   const { selectedRouteIds } = useAppSelector((state) => state['route']);
   const useFormReturn = useForm();
+  const dispatch = useAppDispatch();
   const { data: drivers } = useDriversListQuery(null);
   const [saveRouteDriverAssign, saveRouteDriverAssignState] = useSaveRouteDriverAssignmentMutation();
 
@@ -31,6 +33,7 @@ const AssignDriverDialog: React.FC<IAssignDriverDialogProps> = ({ isOpen, setClo
 
     if (res.success === true) {
       setCloseDialog();
+      dispatch(appApi.util.invalidateTags([{ type: 'Route', id: `routes` }]));
       HandleNotification(res.message || 'Driver assigned successfully.', res.success);
     } else {
       HandleNotification(res.message || res?.errors[0], res.success);

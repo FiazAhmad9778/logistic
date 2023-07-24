@@ -2,10 +2,11 @@ import Button from '@/components/Button';
 import Form from '@/components/Form';
 import Dialog from '@/components/Modal';
 import { HandleNotification } from '@/components/Toast';
+import { appApi } from '@/infrastructure/store/api';
 import { useSaveOrderRouteAssignmentMutation } from '@/infrastructure/store/api/order-route-assignment/order-route-assignment-api';
 import { CreateOrderRouteAssignmentRequest } from '@/infrastructure/store/api/order-route-assignment/order-route-assignment-types';
 import { useRouteListQuery } from '@/infrastructure/store/api/route/route-api';
-import { useAppSelector } from '@/infrastructure/store/store-hooks';
+import { useAppDispatch, useAppSelector } from '@/infrastructure/store/store-hooks';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 interface IAssignRouteDialogProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface IAssignRouteDialogProps {
 const AssignRouteDialog: React.FC<IAssignRouteDialogProps> = ({ isOpen, setCloseDialog }) => {
   const { selectedOrderIds } = useAppSelector((state) => state['order']);
   const useFormReturn = useForm();
+  const dispatch = useAppDispatch();
   const { data: routes } = useRouteListQuery(null);
   const [saveOrderRouteAssign, saveOrderRouteAssignState] = useSaveOrderRouteAssignmentMutation();
 
@@ -31,6 +33,7 @@ const AssignRouteDialog: React.FC<IAssignRouteDialogProps> = ({ isOpen, setClose
 
     if (res.success === true) {
       setCloseDialog();
+      dispatch(appApi.util.invalidateTags([{ type: 'Order', id: `orders` }]));
       HandleNotification(res.message || 'Route assigned successfully.', res.success);
     } else {
       HandleNotification(res.message || res?.errors[0], res.success);

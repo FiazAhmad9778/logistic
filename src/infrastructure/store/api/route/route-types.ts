@@ -22,7 +22,11 @@ export interface RouteResponse {
   routeName: string;
   routeStart: string;
   routeEnd: string;
-  routeDate: string | Date;
+  routeStartDate: string;
+  routeEndDate: string;
+  isMannualRoute: boolean;
+  driverId: number;
+  driverName: string;
 }
 
 export interface CreateRouteDriverAssignmentRequest {
