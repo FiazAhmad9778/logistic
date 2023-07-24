@@ -21,14 +21,16 @@ const EditRoute = () => {
     resolver: yupResolver(addRouteResolver),
     defaultValues: {
       ...route?.data,
-      routeDate: route?.data && getDateFormatMDY(route.data.routeDate),
+      routeStartDate: route?.data && getDateFormatMDY(route.data.routeStartDate),
+      routeEndDate: route?.data && getDateFormatMDY(route.data.routeEndDate),
     },
   });
   const [updateRoute, updateRouteState] = useUpdateRouteMutation();
   const onSubmitRoute: SubmitHandler<FieldValues> = async (e) => {
     const res = await updateRoute({
       ...e,
-      routeDate: new Date(e.routeDate),
+      routeStartDate: new Date(e.routeStartDate),
+      routeEndDate: new Date(e.routeEndDate),
     } as UpdateRouteRequest).unwrap();
 
     if ('validationErrors' in res && res.isSuccess) {
@@ -47,7 +49,8 @@ const EditRoute = () => {
     if (route) {
       useFormReturn.reset({
         ...route.data,
-        routeDate: route?.data && getDateFormatMDY(route.data.routeDate),
+        routeStartDate: route?.data && getDateFormatMDY(route.data.routeStartDate),
+        routeEndDate: route?.data && getDateFormatMDY(route.data.routeEndDate),
       });
     }
   }, [route, useFormReturn]);

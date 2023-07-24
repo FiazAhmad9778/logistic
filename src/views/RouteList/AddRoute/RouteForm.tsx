@@ -19,10 +19,10 @@ const RouteForm: React.FC<IRouteForm> = ({ useFormReturn, onSubmit, loadingState
               <Form.Input label="Route Name" name="routeName" placeholder="Enter Route Name" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Start Date" name="routeDate" type="date" />
+              <Form.Input label="Start Date" name="routeStartDate" type="date" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="End Date" name="endDate" type="date" />
+              <Form.Input label="End Date" name="routeEndDate" type="date" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Route Start" name="routeStart" placeholder="Enter route start" />

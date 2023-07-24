@@ -4,7 +4,8 @@ export interface CreateRouteRequest {
   routeName: string;
   routeStart: string;
   routeEnd: string;
-  routeDate: string | Date;
+  routeStartDate: string | Date;
+  routeEndDate: string | Date;
   isMannualRoute: boolean;
 }
 export interface UpdateRouteRequest {
@@ -14,7 +15,8 @@ export interface UpdateRouteRequest {
   routeName: string;
   routeStart: string;
   routeEnd: string;
-  routeDate: string | Date;
+  routeStartDate: string | Date;
+  routeEndDate: string | Date;
   isMannualRoute: boolean;
 }
 export interface RouteResponse {
