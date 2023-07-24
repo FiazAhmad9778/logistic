@@ -36,32 +36,20 @@ const OrderList = () => {
         </span>
       ),
     }),
-    columnHelper.accessor('orderStatusName', {
-      header: 'Start Depot',
+    columnHelper.accessor('uniqueReferenceCode', {
+      header: 'Reference Code',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.accessor('routeName', {
       header: 'Route Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('uniqueReferenceCode', {
-      header: 'Unique Reference Code',
+    columnHelper.accessor('orderName', {
+      header: 'Order Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('townCity', {
-      header: 'Town City',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('postCode', {
-      header: 'Post Code',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('country', {
-      header: 'Country',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('loadingUnit', {
-      header: 'Loading Unit',
+    columnHelper.accessor('orderStatusName', {
+      header: 'Order Status',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.accessor('orderWindowOpen', {
@@ -74,22 +62,6 @@ const OrderList = () => {
     }),
     columnHelper.accessor('productWeight', {
       header: 'product Weight',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('vehicleType', {
-      header: 'vehicle Type',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('typeOfOrder', {
-      header: 'Type Of Order',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('temperature', {
-      header: 'Temperature',
-      cell: ({ getValue }) => <span>{getValue()}</span>,
-    }),
-    columnHelper.accessor('orderName', {
-      header: 'Order Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.accessor('customerName', {
@@ -106,6 +78,14 @@ const OrderList = () => {
     }),
     columnHelper.accessor('address', {
       header: 'Address',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('townCity', {
+      header: 'Town City',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('postCode', {
+      header: 'Post Code',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
     columnHelper.display({

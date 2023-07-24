@@ -47,6 +47,9 @@ const AddOrderForm: React.FC<IAddOrderForm> = ({ useFormReturn, onSubmit, routes
               />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
+              <Form.Input label="Order Name" name="orderName" placeholder="Enter order name" />
+            </Col>
+            <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Customer Name" name="customerName" placeholder="Enter customer name" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
@@ -59,19 +62,19 @@ const AddOrderForm: React.FC<IAddOrderForm> = ({ useFormReturn, onSubmit, routes
               <Form.Input label="Town/City" name="townCity" placeholder="Enter town/city" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
+              <Form.Input label="Post Code" name="postCode" placeholder="Enter post code" />
+            </Col>
+            <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Country" name="country" placeholder="Enter country" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Order Name" name="orderName" placeholder="Enter order name" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Type Of Order" name="typeOfOrder" placeholder="Enter type of order" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Order Window Open" name="orderWindowOpen" type="time" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Order Window Close" name="orderWindowClose" type="time" />
+            </Col>
+            <Col xl={6} lg={6} md={6} sm={12}>
+              <Form.Input label="Type Of Order" name="typeOfOrder" placeholder="Enter type of order" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Loading Depot/Unit" name="loadingUnit" placeholder="Enter loading depot" />
@@ -83,33 +86,17 @@ const AddOrderForm: React.FC<IAddOrderForm> = ({ useFormReturn, onSubmit, routes
               <Form.Input label="Vehicle Type" name="vehicleType" placeholder="Enter vehicle type" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input
-                label="Driver Delivery Instruction"
-                name="deliveryInstruction"
-                placeholder="Enter delivery instruction"
-              />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Post Code" name="postCode" placeholder="Enter post code" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input
-                label="Missing Item Remark"
-                name="missingItemRemark"
-                placeholder="Enter missing item remark"
-              />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Reasons" name="reasons" placeholder="Enter reasons" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Temperature" name="temperature" placeholder="Enter temperature" />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Textarea label="Address" name="address" placeholder="Enter address" />
             </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Checkbox label="Is Item Missing?" name="isItemMissing" />
+            <Col xl={12} lg={12} md={12} sm={12}>
+              <Form.Textarea
+                label="Driver Delivery Instruction"
+                name="deliveryInstruction"
+                placeholder="Enter delivery instruction"
+              />
             </Col>
             <Col md={12} className="d-flex justify-content-end mt-2">
               <Button type="submit" loading={loadingState} disabled={loadingState}>
