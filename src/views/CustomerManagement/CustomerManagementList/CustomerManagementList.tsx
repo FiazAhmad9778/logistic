@@ -7,6 +7,7 @@ import Table from '@/components/Table';
 import Pagination from '@/components/Pagination';
 import Button from '@/components/Button';
 import CustomerListing from '../../../constant/data/customer-list.json';
+import { getDateFormatMDY } from '@/helpers/function/date-format';
 
 const CustomerManagementList = () => {
   const navigate = useNavigate();
@@ -39,8 +40,8 @@ const CustomerManagementList = () => {
       cell: ({ getValue }) => <span>{getValue() || ''}</span>,
     }),
     columnHelper.accessor('CreatedOnUtc', {
-      header: 'Created On',
-      cell: ({ getValue }) => <span>{getValue() || ''}</span>,
+      header: 'Date Added',
+      cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
     }),
     columnHelper.display({
       id: 'Create Order Instruction',

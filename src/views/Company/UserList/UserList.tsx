@@ -8,6 +8,7 @@ import { useDialogState } from '@/hooks/useDialogState';
 import { useDeleteUserMutation, useUsersListQuery } from '@/infrastructure/store/api/company/company-api';
 import Loader from '@/components/Loader';
 import { HandleNotification } from '@/components/Toast';
+import { getDateFormatMDY } from '@/helpers/function/date-format';
 
 const UserList = () => {
   const [userId, setUserId] = useState<number>();
@@ -40,6 +41,10 @@ const UserList = () => {
     columnHelper.accessor('roleName', {
       header: 'Role Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('createdDate', {
+      header: 'Date Added',
+      cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
     }),
     columnHelper.display({
       id: 'action',

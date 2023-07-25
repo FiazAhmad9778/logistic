@@ -12,6 +12,7 @@ import Loader from '@/components/Loader';
 import { DriverResponse } from '@/infrastructure/store/api/driver/driver-types';
 import IconButton from '@/components/Permission/action-icon';
 import { ClaimCode } from 'src/enums/claim-codes';
+import { getDateFormatMDY } from '@/helpers/function/date-format';
 
 const DriverList = () => {
   const [driverId, setDriverId] = useState<number>();
@@ -24,7 +25,7 @@ const DriverList = () => {
 
   const columnHelper = createColumnHelper<DriverResponse>();
   const columns = [
-    columnHelper.accessor('id', {
+    columnHelper.accessor('driverId', {
       header: 'Driver Id',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
@@ -39,6 +40,10 @@ const DriverList = () => {
     columnHelper.accessor('address', {
       header: 'Address',
       cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
+    columnHelper.accessor('createdDate', {
+      header: 'Date Added',
+      cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
     }),
     columnHelper.accessor('isActive', {
       header: 'Active',

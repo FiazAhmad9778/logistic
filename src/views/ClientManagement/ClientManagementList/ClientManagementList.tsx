@@ -32,13 +32,13 @@ const ClientManagementList = () => {
         <span className={`${getValue() ? 'text-success' : 'text-danger'}`}>{getValue() ? 'Yes' : 'No'}</span>
       ),
     }),
-    columnHelper.accessor('createdDate', {
-      header: 'Date Created',
-      cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
-    }),
     columnHelper.accessor('address', {
       header: 'Address',
       cell: ({ getValue }) => <span>{getValue() || ''}</span>,
+    }),
+    columnHelper.accessor('createdDate', {
+      header: 'Date Added',
+      cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
     }),
     columnHelper.display({
       id: 'Client Listing',
