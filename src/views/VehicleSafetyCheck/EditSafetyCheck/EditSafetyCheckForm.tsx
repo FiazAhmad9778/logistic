@@ -10,8 +10,7 @@ interface ISafetyCheckForm {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   useFormReturn: UseFormReturn<any, object>;
 }
-
-const SafetyCheckForm: React.FC<ISafetyCheckForm> = ({ onSubmit, useFormReturn, loadingState }) => {
+const EditSafetyCheckForm: React.FC<ISafetyCheckForm> = ({ onSubmit, useFormReturn, loadingState }) => {
   return (
     <Row>
       <Col md={{ span: 6, offset: 1 }}>
@@ -32,7 +31,7 @@ const SafetyCheckForm: React.FC<ISafetyCheckForm> = ({ onSubmit, useFormReturn, 
               <Form.Input label="Field" name="fieldType" placeholder="Enter field type" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Check Icon" name="file" type="file" />
+              <Form.Input label="Check Icon" name="checkIcon" type="file" />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Checkbox label="Mark as Active" name="checkActive" />
@@ -41,7 +40,7 @@ const SafetyCheckForm: React.FC<ISafetyCheckForm> = ({ onSubmit, useFormReturn, 
             </Col>
             <Col md={12} className="d-flex justify-content-end mt-2">
               <Button type="submit" loading={loadingState} disabled={loadingState}>
-                Save
+                Update
               </Button>
             </Col>
           </Row>
@@ -51,4 +50,4 @@ const SafetyCheckForm: React.FC<ISafetyCheckForm> = ({ onSubmit, useFormReturn, 
   );
 };
 
-export default SafetyCheckForm;
+export default EditSafetyCheckForm;

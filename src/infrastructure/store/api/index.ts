@@ -18,6 +18,7 @@ export const appApi = createApi({
     'RouteAssignment',
     'Client',
     'ClientGroup',
+    'SafetyCheck',
   ],
   endpoints: () => ({}),
 });

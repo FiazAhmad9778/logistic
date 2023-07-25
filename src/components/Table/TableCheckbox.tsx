@@ -11,6 +11,7 @@ const TableCheckbox: React.FC<Props> = ({ indeterminate, disabled, ...rest }) =>
       ref.current.indeterminate = !rest.checked && indeterminate;
     }
   }, [ref, indeterminate, rest.checked]);
+
   return (
     <span className="d-flex justify-content-center">
       <input

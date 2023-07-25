@@ -41,6 +41,7 @@ import EditUser from '@/views/Company/EditUser/EditUser';
 import EditRoute from '@/views/RouteList/EditRoute/EditRoute';
 import AddOrder from '@/views/OrderManagement/AddOrder/AddOrder';
 import EditOrder from '@/views/OrderManagement/EditOrder/EditOrder';
+import EditSafetyCheck from '@/views/VehicleSafetyCheck/EditSafetyCheck/EditSafetyCheck';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -208,6 +209,12 @@ export const routes: RoutePathDefinition[] = [
             path: 'vehicle-safety-check-list/add-safety-check',
             title: 'ADD SAFETY CHECK',
             element: <AddSafetyCheck />,
+            requiredClaims: [],
+          },
+          {
+            path: 'vehicle-safety-check-list/edit-safety-check',
+            title: 'EDIT SAFETY CHECK',
+            element: <EditSafetyCheck />,
             requiredClaims: [],
           },
           {

@@ -24,15 +24,14 @@ const OrderList = () => {
       size: 50,
       cell: ({ row }) => (
         <span className="justify-content-center gap-2">
-          {row.original.routeId === null && (
-            <TableCheckbox
-              {...{
-                checked: row.getIsSelected(),
-                indeterminate: row.getIsSomeSelected(),
-                onChange: row.getToggleSelectedHandler(),
-              }}
-            />
-          )}
+          <TableCheckbox
+            {...{
+              checked: row.original.driverId !== null ? true : row.getIsSelected(),
+              indeterminate: row.getIsSomeSelected(),
+              onChange: row.getToggleSelectedHandler(),
+              disabled: row.original.routeId === null ? false : true,
+            }}
+          />
         </span>
       ),
     }),

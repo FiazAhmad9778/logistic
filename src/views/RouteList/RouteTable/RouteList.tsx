@@ -23,7 +23,7 @@ const RouteTable = () => {
   const { isOpen, setCloseDialog, setOpenDialog } = useDialogState();
 
   const { data: routeListing, isLoading: IsRouteLoading } = useRouteListQuery(null);
-  const [deleteClient, deleteRouteState] = useDeleteRouteMutation();
+  const [deleteRoute, deleteRouteState] = useDeleteRouteMutation();
   const columnHelper = createColumnHelper<RouteResponse>();
   const columns = [
     columnHelper.display({
@@ -33,7 +33,7 @@ const RouteTable = () => {
         <span className="justify-content-center gap-2">
           <TableCheckbox
             {...{
-              checked: row.getIsSelected(),
+              checked: row.original.driverId !== null ? true : row.getIsSelected(),
               indeterminate: row.getIsSomeSelected(),
               onChange: row.getToggleSelectedHandler(),
               disabled: row.original.driverId === null ? false : true,
@@ -111,7 +111,7 @@ const RouteTable = () => {
   });
 
   const handleDeleteRoute = async () => {
-    const res = await deleteClient(routeId).unwrap();
+    const res = await deleteRoute(routeId).unwrap();
     if (res.success === true) {
       setCloseDialog();
       HandleNotification(res.message || 'Route deleted successfully.', res.success === true);

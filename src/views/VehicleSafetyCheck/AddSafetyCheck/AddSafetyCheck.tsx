@@ -1,13 +1,34 @@
 import { Row, Col, Card } from 'react-bootstrap';
-import { SubmitHandler, FieldValues } from 'react-hook-form';
 import SafetyCheckForm from './SafetyCheckForm';
 import Button from '@/components/Button';
 import { useNavigate } from 'react-router-dom';
+import { useSaveSafetyCheckMutation } from '@/infrastructure/store/api/safety-check/safety-check-api';
+import { CreateSafetyCheckRequest } from '@/infrastructure/store/api/safety-check/safety-check-types';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { HandleNotification } from '@/components/Toast';
+import { addSafetyCheckResolver } from 'src/form-resolver/safety-check/safety-check-resolver';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const AddSafetyCheck = () => {
+  const useFormReturn = useForm({
+    resolver: yupResolver(addSafetyCheckResolver),
+  });
   const navigate = useNavigate();
-  const onSubmitSafetyCheck: SubmitHandler<FieldValues> = (e) => {
-    console.log(e);
+
+  const [saveSafetyCheck, saveSafetyCheckState] = useSaveSafetyCheckMutation();
+  const onSubmitSafetyCheck: SubmitHandler<FieldValues> = async (data) => {
+    const res = await saveSafetyCheck(data as CreateSafetyCheckRequest).unwrap();
+
+    if ('validationErrors' in res && res.isSuccess) {
+      res?.validationErrors?.map((error) => useFormReturn.setError(error?.name as never, { message: error.message }));
+    }
+
+    if (res.success === true) {
+      navigate('/vehicle-safety-check-list', { replace: true });
+      HandleNotification(res.message || 'Safety check added successfully.', res.success);
+    } else {
+      HandleNotification(res.message || res?.errors[0], res.success);
+    }
   };
   return (
     <Row>
@@ -22,7 +43,11 @@ const AddSafetyCheck = () => {
             </div>
           </Card.Header>
           <Card.Body className="pt-0">
-            <SafetyCheckForm onSubmit={onSubmitSafetyCheck} />
+            <SafetyCheckForm
+              useFormReturn={useFormReturn}
+              onSubmit={onSubmitSafetyCheck}
+              loadingState={saveSafetyCheckState.isLoading}
+            />
           </Card.Body>
         </Card>
       </Col>
