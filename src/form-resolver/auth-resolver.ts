@@ -9,7 +9,7 @@ export const genericResolver = {
     .matches(/[0-9]/, 'Password requires a number')
     .matches(/[a-z]/, 'Password requires a lowercase letter')
     .matches(/[A-Z]/, 'Password requires a uppercase letter')
-    .matches(/[^\w]/, 'Password requires a symbol')
+    // .matches(/[^\w]/, 'Password requires a symbol')
     .required('Password is required!'),
   confirmPassword: yup
     .string()

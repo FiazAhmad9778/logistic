@@ -8,12 +8,14 @@ import { HandleNotification } from '@/components/Toast';
 import { CreateRouteRequest } from '@/infrastructure/store/api/route/route-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addRouteResolver } from 'src/form-resolver/route/route-resolver';
+import { useDriversListQuery } from '@/infrastructure/store/api/driver/driver-api';
 
 const AddRoute = () => {
   const navigate = useNavigate();
   const useFormReturn = useForm({
     resolver: yupResolver(addRouteResolver),
   });
+  const { data: drivers } = useDriversListQuery(null);
   const [saveRoute, saveRouteState] = useSaveRouteMutation();
   const onSubmitRoute: SubmitHandler<FieldValues> = async (e) => {
     const res = await saveRoute({
@@ -46,7 +48,12 @@ const AddRoute = () => {
             </div>
           </Card.Header>
           <Card.Body className="pt-0">
-            <RouteForm useFormReturn={useFormReturn} onSubmit={onSubmitRoute} loadingState={saveRouteState.isLoading} />
+            <RouteForm
+              useFormReturn={useFormReturn}
+              onSubmit={onSubmitRoute}
+              loadingState={saveRouteState.isLoading}
+              drivers={drivers?.data}
+            />
           </Card.Body>
         </Card>
       </Col>

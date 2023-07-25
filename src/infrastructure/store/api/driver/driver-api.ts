@@ -27,7 +27,7 @@ const driverApi = appApi
       }),
       saveDriver: build.mutation<GenericResponseType<number>, CreateDriverRequest>({
         query: (payload) => ({
-          url: '/driver/save',
+          url: '/driver',
           method: 'Post',
           body: payload,
         }),

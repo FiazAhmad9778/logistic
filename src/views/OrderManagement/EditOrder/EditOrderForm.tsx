@@ -21,16 +21,6 @@ const EditOrderForm: React.FC<IEditOrderForm> = ({ useFormReturn, onSubmit, rout
       <Col md={{ span: 6, offset: 1 }}>
         <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
           <Row>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Select
-                label="Route"
-                name="routeId"
-                options={routes?.map((option) => ({
-                  value: option.id,
-                  name: option.routeName,
-                }))}
-              />
-            </Col>
             <PermissionWrapper requiredClaims={[ClaimCode.CliMgA]}>
               <Col xl={6} lg={6} md={6} sm={12}>
                 <Form.Select
@@ -43,6 +33,16 @@ const EditOrderForm: React.FC<IEditOrderForm> = ({ useFormReturn, onSubmit, rout
                 />
               </Col>
             </PermissionWrapper>
+            <Col xl={6} lg={6} md={6} sm={12}>
+              <Form.Select
+                label="Route"
+                name="routeId"
+                options={routes?.map((option) => ({
+                  value: option.id,
+                  name: option.routeName,
+                }))}
+              />
+            </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input
                 label="Unique Reference Code"

@@ -26,7 +26,7 @@ const routeApi = appApi
       }),
       saveRoute: build.mutation<GenericResponseType<number>, CreateRouteRequest>({
         query: (payload) => ({
-          url: '/route/save',
+          url: '/route',
           method: 'Post',
           body: payload,
         }),

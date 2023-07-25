@@ -12,10 +12,12 @@ import Loader from '@/components/Loader';
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useEffect } from 'react';
 import { getDateFormatMDY } from '@/helpers/function/date-format';
+import { useDriversListQuery } from '@/infrastructure/store/api/driver/driver-api';
 
 const EditRoute = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { data: drivers } = useDriversListQuery(null);
   const { data: route, isLoading: IsRouteLoading } = useRouteByIdQuery(location.state.routeId ?? skipToken);
   const useFormReturn = useForm({
     resolver: yupResolver(addRouteResolver),
@@ -76,6 +78,7 @@ const EditRoute = () => {
                 useFormReturn={useFormReturn}
                 onSubmit={onSubmitRoute}
                 loadingState={updateRouteState.isLoading}
+                drivers={drivers?.data}
               />
             )}
           </Card.Body>
