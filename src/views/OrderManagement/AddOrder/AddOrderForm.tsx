@@ -84,6 +84,12 @@ const AddOrderForm: React.FC<IAddOrderForm> = ({ useFormReturn, onSubmit, routes
               <Form.Input label="Loading Depot/Unit" name="loadingUnit" placeholder="Enter loading depot" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
+              <Form.Input label="Depot Latitude" name="latitude" placeholder="Enter loading depot latitude" />
+            </Col>
+            <Col xl={6} lg={6} md={6} sm={12}>
+              <Form.Input label="Depot Longitude" name="longitude" placeholder="Enter depot longitude" />
+            </Col>
+            <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Product Weight (Kg)" name="productWeight" placeholder="Enter product weight" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
