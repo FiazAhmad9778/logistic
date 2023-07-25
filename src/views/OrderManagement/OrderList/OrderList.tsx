@@ -93,6 +93,17 @@ const OrderList = () => {
       cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
           <IconButton
+            requiredClaims={[ClaimCode.OMV]}
+            className="fas fa-eye me-1"
+            onClick={() =>
+              navigate('/order-management-list/view-order', {
+                state: {
+                  orderId: info.row.original.id,
+                },
+              })
+            }
+          />
+          <IconButton
             requiredClaims={[ClaimCode.OME]}
             className="fa fa-edit me-1"
             onClick={() =>

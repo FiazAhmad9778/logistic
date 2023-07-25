@@ -42,6 +42,7 @@ import EditRoute from '@/views/RouteList/EditRoute/EditRoute';
 import AddOrder from '@/views/OrderManagement/AddOrder/AddOrder';
 import EditOrder from '@/views/OrderManagement/EditOrder/EditOrder';
 import EditSafetyCheck from '@/views/VehicleSafetyCheck/EditSafetyCheck/EditSafetyCheck';
+import ViewOrder from '@/views/OrderManagement/ViewOrder/ViewOrder';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -137,6 +138,12 @@ export const routes: RoutePathDefinition[] = [
             path: 'order-management-list/edit-order',
             title: 'EDIT ORDER',
             element: <EditOrder />,
+            requiredClaims: [],
+          },
+          {
+            path: 'order-management-list/view-order',
+            title: 'VIEW ORDER',
+            element: <ViewOrder />,
             requiredClaims: [],
           },
           {
