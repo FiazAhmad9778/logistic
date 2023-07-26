@@ -299,7 +299,7 @@ const Sidebar = () => {
                               ) : (
                                 ''
                               )}
-                              <i className="angle fe fe-chevron-right"></i>
+                              <i className="text-white fa fa-angle-right"></i>
                             </a>
                           ) : (
                             ''
@@ -332,7 +332,7 @@ const Sidebar = () => {
                                           {childrenItem.active}
                                         </span>
 
-                                        <i className="sub-angle fe fe-chevron-right"></i>
+                                        <i className="sub-angle fa fa-angle-right"></i>
                                       </a>
                                     ) : (
                                       ''

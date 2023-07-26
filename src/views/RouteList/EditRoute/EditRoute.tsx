@@ -13,10 +13,12 @@ import { skipToken } from '@reduxjs/toolkit/dist/query';
 import { useEffect } from 'react';
 import { getDateFormatMDY } from '@/helpers/function/date-format';
 import { useDriversListQuery } from '@/infrastructure/store/api/driver/driver-api';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const EditRoute = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { data: clientList } = useClientListQuery(null);
   const { data: drivers } = useDriversListQuery(null);
   const { data: route, isLoading: IsRouteLoading } = useRouteByIdQuery(location.state.routeId ?? skipToken);
   const useFormReturn = useForm({
@@ -78,6 +80,7 @@ const EditRoute = () => {
                 useFormReturn={useFormReturn}
                 onSubmit={onSubmitRoute}
                 loadingState={updateRouteState.isLoading}
+                clients={clientList?.data}
                 drivers={drivers?.data}
               />
             )}

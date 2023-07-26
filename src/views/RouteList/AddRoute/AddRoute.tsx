@@ -9,6 +9,7 @@ import { CreateRouteRequest } from '@/infrastructure/store/api/route/route-types
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addRouteResolver } from 'src/form-resolver/route/route-resolver';
 import { useDriversListQuery } from '@/infrastructure/store/api/driver/driver-api';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const AddRoute = () => {
   const navigate = useNavigate();
@@ -16,6 +17,7 @@ const AddRoute = () => {
     resolver: yupResolver(addRouteResolver),
   });
   const { data: drivers } = useDriversListQuery(null);
+  const { data: clientList } = useClientListQuery(null);
   const [saveRoute, saveRouteState] = useSaveRouteMutation();
   const onSubmitRoute: SubmitHandler<FieldValues> = async (e) => {
     const res = await saveRoute({
@@ -52,6 +54,7 @@ const AddRoute = () => {
               useFormReturn={useFormReturn}
               onSubmit={onSubmitRoute}
               loadingState={saveRouteState.isLoading}
+              clients={clientList?.data}
               drivers={drivers?.data}
             />
           </Card.Body>

@@ -13,6 +13,7 @@ import {
   AutoRouteAssignmentIcon,
   CustomerManagement,
   CustomerReviewIcon,
+  InteractiveControlIcon,
 } from '@/components/Icon';
 import { ClaimCode } from 'src/enums/claim-codes';
 
@@ -154,6 +155,32 @@ export const MENUITEMS = [
         active: false,
         title: 'Customer Review and Rating',
         requiredClaims: [ClaimCode.CRV],
+      },
+      {
+        icon: InteractiveControlIcon,
+        type: 'sub',
+        selected: false,
+        active: false,
+        title: 'Interactive Controls',
+        requiredClaims: [],
+        children: [
+          {
+            path: `automated-emails`,
+            type: 'link',
+            selected: false,
+            active: false,
+            title: 'Automated Emails',
+            requiredClaims: [],
+          },
+          {
+            path: `delivery-recipient-list`,
+            type: 'link',
+            selected: false,
+            active: false,
+            title: 'Delivery Recipient List',
+            requiredClaims: [],
+          },
+        ],
       },
     ],
   },
