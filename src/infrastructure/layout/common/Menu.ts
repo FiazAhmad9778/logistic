@@ -157,15 +157,15 @@ export const MENUITEMS = [
         requiredClaims: [ClaimCode.CRV],
       },
       {
+        title: 'Interactive Controls',
         icon: InteractiveControlIcon,
         type: 'sub',
         selected: false,
         active: false,
-        title: 'Interactive Controls',
         requiredClaims: [],
         children: [
           {
-            path: `automated-emails`,
+            path: `automated-email-list`,
             type: 'link',
             selected: false,
             active: false,
@@ -178,6 +178,14 @@ export const MENUITEMS = [
             selected: false,
             active: false,
             title: 'Delivery Recipient List',
+            requiredClaims: [],
+          },
+          {
+            path: `temperature-range-list`,
+            type: 'link',
+            selected: false,
+            active: false,
+            title: 'Temperature Range List',
             requiredClaims: [],
           },
         ],

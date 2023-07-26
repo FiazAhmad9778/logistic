@@ -7,6 +7,7 @@ import { ExtendedErrorResponse } from '../../../types/common/http-types';
 export const appApi = createApi({
   baseQuery: baseQueryWithRefreshToken as unknown as BaseQueryFn<string | FetchArgs, unknown, ExtendedErrorResponse>,
   tagTypes: [
+    'Lookup',
     'companyUsers',
     'Privileges',
     'Company',
@@ -19,6 +20,9 @@ export const appApi = createApi({
     'Client',
     'ClientGroup',
     'SafetyCheck',
+    'AutomatedEmail',
+    'DeliveryRecipient',
+    'TemperatureRange',
   ],
   endpoints: () => ({}),
 });
