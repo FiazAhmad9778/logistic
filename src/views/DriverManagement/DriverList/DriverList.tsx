@@ -29,7 +29,7 @@ const DriverList = () => {
       header: 'Driver Id',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
-    columnHelper.accessor('name', {
+    columnHelper.accessor('firstName', {
       header: 'Name',
       cell: (info) => (
         <span>
