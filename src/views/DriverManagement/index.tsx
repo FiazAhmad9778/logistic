@@ -21,7 +21,7 @@ const DriverManagement = () => {
                     className="me-2"
                     btnType="btn-outline-primary"
                     icon={<i className="fa fa fa-plus"></i>}
-                    onClick={() => navigate('/drivers/bulk-upload-driver')}
+                    onClick={() => navigate('/driver-management/bulk-upload-driver')}
                   >
                     {'Bulk Upload Driver'}
                   </Button>

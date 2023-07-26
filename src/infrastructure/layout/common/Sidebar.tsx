@@ -109,7 +109,7 @@ const Sidebar = () => {
                 items.children.map((submenu: any) => {
                   submenu.active = false;
                   submenu.selected = false;
-                  if (location.pathname === submenu.path + '/') {
+                  if (location.pathname === '/' + submenu.path + '/') {
                     items.active = true;
                     items.selected = true;
                     submenu.active = true;
@@ -289,7 +289,7 @@ const Sidebar = () => {
                               }}
                               className={`side-menu__item ${menuItem.selected ? 'active is-expanded' : ''}`}
                             >
-                              {menuItem.icon}
+                              <menuItem.icon />
                               <span className="side-menu__label">
                                 {menuItem.title}
                                 {menuItem.active}
@@ -299,7 +299,9 @@ const Sidebar = () => {
                               ) : (
                                 ''
                               )}
-                              <i className="text-white fa fa-angle-right"></i>
+                              <i
+                                className={`text-white ${menuItem.active ? 'fa fa-angle-up' : 'fa fa-angle-right'}`}
+                              ></i>
                             </a>
                           ) : (
                             ''
@@ -332,7 +334,7 @@ const Sidebar = () => {
                                           {childrenItem.active}
                                         </span>
 
-                                        <i className="sub-angle fa fa-angle-right"></i>
+                                        <i className="sub-angle fe fe-chevron-right"></i>
                                       </a>
                                     ) : (
                                       ''

@@ -212,6 +212,38 @@ input::file-selector-button {
   font-weight: 600 !important;
 }
 
+.slide.is-expanded a {
+  color: #fff !important;
+  text-decoration: none;
+}
+
+.slide-item.active,
+.slide-item:hover,
+.slide-item:focus {
+  text-decoration: none;
+  color: #b5c1d2;
+}
+
+.slide-item.active,
+.slide-item:hover,
+.slide-item:focus {
+  text-decoration: none;
+  color: #fff !important;
+}
+
+.slide.is-expanded .slide-item:before {
+  color: #fff !important;
+}
+
+.slide-item .app-sidebar .slide-menu .slide-item:before:hover {
+  color: #fff !important;
+}
+.slide.is-expanded .slide-menu a:hover:before {
+  color: #fff !important;
+  fill: #fff !important;
+  font-weight: 600 !important;
+}
+
 @media (max-width: 1134px) {
   .main-header-left.breadcrumb {
     width: 175px;

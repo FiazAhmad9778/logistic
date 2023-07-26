@@ -43,6 +43,15 @@ import AddOrder from '@/views/OrderManagement/AddOrder/AddOrder';
 import EditOrder from '@/views/OrderManagement/EditOrder/EditOrder';
 import EditSafetyCheck from '@/views/VehicleSafetyCheck/EditSafetyCheck/EditSafetyCheck';
 import ViewOrder from '@/views/OrderManagement/ViewOrder/ViewOrder';
+import AutomatedEmails from '@/views/InteractiveControls/AutomatedEmails';
+import AddEmail from '@/views/InteractiveControls/AutomatedEmails/AddEmail/AddEmail';
+import EditEmail from '@/views/InteractiveControls/AutomatedEmails/EditEmail/EditEmail';
+import AddDeliveryRecipient from '@/views/InteractiveControls/DeliveryRecipient/AddDeliveryRecipient/AddDeliveryRecipient';
+import EditDeliveryRecipient from '@/views/InteractiveControls/DeliveryRecipient/EditDeliveryRecipient/EditDeliveryRecipient';
+import DeliveryRecipient from '@/views/InteractiveControls/DeliveryRecipient';
+import TemperatureRange from '@/views/InteractiveControls/TemperatureRange';
+import AddTemperature from '@/views/InteractiveControls/TemperatureRange/AddTemperature/AddTemperature';
+import EditTemperature from '@/views/InteractiveControls/TemperatureRange/EditTemperature/EditTemperature';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -111,13 +120,13 @@ export const routes: RoutePathDefinition[] = [
             requiredClaims: [ClaimCode.DME],
           },
           {
-            path: 'drivers/view-safety-check',
+            path: 'driver-management/view-safety-check',
             title: 'VIEW SAFETY CHECK',
             element: <ViewSafetyCheck />,
             requiredClaims: [],
           },
           {
-            path: 'drivers/bulk-upload-driver',
+            path: 'driver-management/bulk-upload-driver',
             title: 'UPLOAD DRIVER',
             element: <UploadDriver />,
             requiredClaims: [],
@@ -282,6 +291,60 @@ export const routes: RoutePathDefinition[] = [
             path: 'customer-review-and-rating/driver-route-review',
             title: 'DRIVER ROUTE REVIEW',
             element: <DriverRouteReview />,
+            requiredClaims: [],
+          },
+          {
+            path: 'automated-email-list',
+            title: 'AUTOMATED EMAILS',
+            element: <AutomatedEmails />,
+            requiredClaims: [],
+          },
+          {
+            path: 'automated-email-list/add-automated-email',
+            title: 'ADD AUTOMATED EMAIL',
+            element: <AddEmail />,
+            requiredClaims: [],
+          },
+          {
+            path: 'automated-email-list/edit-automated-email',
+            title: 'EDIT AUTOMATED EMAIL',
+            element: <EditEmail />,
+            requiredClaims: [],
+          },
+          {
+            path: 'delivery-recipient-list',
+            title: 'DELIVERY RECIPIENT',
+            element: <DeliveryRecipient />,
+            requiredClaims: [],
+          },
+          {
+            path: 'delivery-recipient-list/add-delivery-recipient',
+            title: 'ADD DELIVERY RECIPIENT',
+            element: <AddDeliveryRecipient />,
+            requiredClaims: [],
+          },
+          {
+            path: 'delivery-recipient-list/edit-delivery-recipient',
+            title: 'EDIT DELIVERY RECIPIENT',
+            element: <EditDeliveryRecipient />,
+            requiredClaims: [],
+          },
+          {
+            path: 'temperature-range-list',
+            title: 'TEMPERATURE RANGE LIST',
+            element: <TemperatureRange />,
+            requiredClaims: [],
+          },
+          {
+            path: 'temperature-range-list/add-temperature-range',
+            title: 'ADD TEMPERATURE RANGE',
+            element: <AddTemperature />,
+            requiredClaims: [],
+          },
+          {
+            path: 'temperature-range-list/edit-temperature-range',
+            title: 'EDIT TEMPERATURE RANGE',
+            element: <EditTemperature />,
             requiredClaims: [],
           },
           {

@@ -56,7 +56,7 @@ const DriverList = () => {
       header: () => <span>Action</span>,
       cell: (info) => (
         <span className="d-block text-center cursor-pointer text-primary">
-          <i className="fas fa-eye me-1" onClick={() => navigate('/drivers/view-safety-check')}></i>
+          <i className="fas fa-eye me-1" onClick={() => navigate('/driver-management/view-safety-check')}></i>
           <IconButton
             requiredClaims={[ClaimCode.DME]}
             className="fa fa-edit me-1"
