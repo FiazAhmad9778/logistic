@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const genericResolver = {
-  clientId: yup.number(),
+  clientId: yup.number().typeError('Client is required!'),
   name: yup.string().required('Name is required!'),
   min: yup.number().typeError('Min temperature is required!').required('Min temperature is required!'),
   max: yup.number().typeError('Min temperature is required!').required('Max temperature is required!'),

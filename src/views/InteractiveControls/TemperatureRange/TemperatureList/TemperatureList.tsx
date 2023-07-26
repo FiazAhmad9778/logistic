@@ -11,7 +11,6 @@ import {
 } from '@/infrastructure/store/api/temperature-range/temperature-range-api';
 import { TemperatureRangeResponse } from '@/infrastructure/store/api/temperature-range/temperature-range-types';
 import { createColumnHelper, getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { isNull } from 'lodash';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -44,8 +43,8 @@ const TemperatureList = () => {
       ),
     }),
     columnHelper.accessor('createdDate', {
-      header: 'Created At',
-      cell: ({ getValue }) => <span>{!isNull(getValue()) ? getDateFormatMDY(getValue()) : 'N/A'}</span>,
+      header: 'Date Added',
+      cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
     }),
     columnHelper.display({
       id: 'Temperature Range',
@@ -95,7 +94,7 @@ const TemperatureList = () => {
   return (
     <React.Fragment>
       {loading ? <Loader /> : <Table useReactTableReturn={useReactTableReturn} />}
-      <Dialog title="Delete Automated Email" show={isOpen} handleClose={setCloseDialog}>
+      <Dialog title="Delete Temperature Range" show={isOpen} handleClose={setCloseDialog}>
         <div>
           <p className="tx-14 tx-medium mg-b-20">Are you sure you want to delete this item?</p>
           <div className="d-flex justify-content-end">

@@ -49,6 +49,9 @@ const EditEmailForm: React.FC<IEditEmailForm> = ({ useFormReturn, onSubmit, sect
                 />
               </Col>
             </PermissionWrapper>
+            <Col xl={12} lg={12} md={12} sm={12}>
+              <Form.Checkbox label="Mark as Active" name="isActive" />
+            </Col>
             <Col md={12} className="d-flex justify-content-end mt-2">
               <Button type="submit" loading={loadingState} disabled={loadingState}>
                 Save

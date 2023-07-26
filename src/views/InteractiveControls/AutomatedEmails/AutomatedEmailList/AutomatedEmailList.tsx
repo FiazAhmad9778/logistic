@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import Loader from '@/components/Loader';
 import { HandleNotification } from '@/components/Toast';
 import { getDateFormatMDY } from '@/helpers/function/date-format';
-import { isNull } from 'lodash';
 import {
   useAutomatedEmailListQuery,
   useDeleteAutomatedEmailMutation,
@@ -33,9 +32,15 @@ const AutomatedEmailList = () => {
       header: 'Section Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
+    columnHelper.accessor('isActive', {
+      header: 'Active',
+      cell: ({ getValue }) => (
+        <span className={`${getValue() ? 'text-success' : 'text-danger'}`}>{getValue() ? 'Yes' : 'No'}</span>
+      ),
+    }),
     columnHelper.accessor('createdDate', {
-      header: 'Created At',
-      cell: ({ getValue }) => <span>{!isNull(getValue()) ? getDateFormatMDY(getValue()) : 'N/A'}</span>,
+      header: 'Date Added',
+      cell: ({ getValue }) => <span>{getDateFormatMDY(getValue()) || ''}</span>,
     }),
     columnHelper.display({
       id: 'Automated Email Listing',

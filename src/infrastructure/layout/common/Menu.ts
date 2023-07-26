@@ -162,7 +162,7 @@ export const MENUITEMS = [
         type: 'sub',
         selected: false,
         active: false,
-        requiredClaims: [],
+        requiredClaims: [ClaimCode.AEMV],
         children: [
           {
             path: `automated-email-list`,
