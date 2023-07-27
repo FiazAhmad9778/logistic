@@ -185,6 +185,14 @@ input::file-selector-button {
   border-radius: 6px;
 }
 
+.side-menu .slide .sub-slide .side-menu__item.active {
+  background-color: #fff !important;
+  border-right: 0px solid var(--primary-bg-color) !important;
+  margin: 0px 5px;
+  border-radius: 6px;
+  color: var(--primary-bg-color);
+}
+
 .side-menu .slide .side-menu__item.active .side-menu__icon {
   color: var(--primary-bg-color) !important;
 }
@@ -217,30 +225,40 @@ input::file-selector-button {
   text-decoration: none;
 }
 
-.slide-item.active,
-.slide-item:hover,
-.slide-item:focus {
+.slide.is-expanded a.active {
+  color: var(--primary-bg-color) !important;
   text-decoration: none;
-  color: #b5c1d2;
+  color: var(--primary-bg-color) !important;
+  font-weight: 600;
 }
 
-.slide-item.active,
-.slide-item:hover,
-.slide-item:focus {
-  text-decoration: none;
-  color: #fff !important;
+.slide-menu .sub-slide .slide-item.active {
+  background-color: #fff !important;
+  border-right: 0px solid var(--primary-bg-color) !important;
+  margin: 0px 5px;
+  border-radius: 6px;
 }
 
 .slide.is-expanded .slide-item:before {
   color: #fff !important;
 }
 
+.slide.is-expanded .slide-item.active:before {
+  color: var(--primary-bg-color) !important;
+}
+
 .slide-item .app-sidebar .slide-menu .slide-item:before:hover {
   color: #fff !important;
 }
+
 .slide.is-expanded .slide-menu a:hover:before {
   color: #fff !important;
   fill: #fff !important;
+  font-weight: 600 !important;
+}
+.slide.is-expanded .slide-menu a.active:hover:before {
+  color: var(--primary-bg-color) !important;
+  fill: var(--primary-bg-color) !important;
   font-weight: 600 !important;
 }
 

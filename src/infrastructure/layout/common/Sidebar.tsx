@@ -270,7 +270,7 @@ const Sidebar = () => {
                             <NavLink
                               to={menuItem.path + '/'}
                               className={`side-menu__item ${
-                                menuItem.selected || activePath[0] === menuItem.path ? ' active' : ''
+                                menuItem.selected || activePath[0] === menuItem.path ? 'active' : ''
                               }`}
                             >
                               <menuItem.icon />
@@ -287,7 +287,7 @@ const Sidebar = () => {
                                 event.preventDefault();
                                 toggleSideMenu(menuItem);
                               }}
-                              className={`side-menu__item ${menuItem.selected ? 'active is-expanded' : ''}`}
+                              className={`side-menu__item ${menuItem.selected ? 'is-expanded' : ''}`}
                             >
                               <menuItem.icon />
                               <span className="side-menu__label">
@@ -317,7 +317,7 @@ const Sidebar = () => {
                                   <li
                                     key={index}
                                     className={`sub-slide ${childrenItem.selected ? 'is-expanded' : ''} ${
-                                      childrenItem.active ? 'is-expanded' : ''
+                                      childrenItem.active ? 'is-expanded active' : ''
                                     }`}
                                   >
                                     {childrenItem.type === 'sub' ? (
@@ -341,7 +341,10 @@ const Sidebar = () => {
                                     )}
                                     {childrenItem.type === 'link' ? (
                                       <span>
-                                        <NavLink to={childrenItem.path + '/'} className="slide-item">
+                                        <NavLink
+                                          to={childrenItem.path + '/'}
+                                          className={`slide-item ${childrenItem.active ? 'active' : ''}`}
+                                        >
                                           {childrenItem.title}
                                           {childrenItem.active}
                                         </NavLink>

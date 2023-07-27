@@ -26420,7 +26420,7 @@ a.option-dots {
   position: relative;
 }
 
-.slide.is-expanded a {
+.slide.is-expanded {
   color: #7b8191;
   text-decoration: none;
 }
