@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const genericResolver = {
-  clientId: yup.number(),
+  clientId: yup.number().typeError('Client is required!'),
   email: yup.string().required('Email is required!'),
   sectionId: yup.number().typeError('Section is required!').required('Section is required!'),
 };

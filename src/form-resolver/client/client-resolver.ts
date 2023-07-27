@@ -27,7 +27,6 @@ export const editClientResolver = yup.object().shape({
 });
 
 export const addClientGroupResolver = yup.object().shape({
-  clientName: genericResolver.clientName,
   clientGroupName: genericResolver.clientGroupName,
   firstName: genericResolver.firstName,
   lastName: genericResolver.lastName,
