@@ -26,7 +26,7 @@ const OrderList = () => {
         <span className="justify-content-center gap-2">
           <TableCheckbox
             {...{
-              checked: row.original.driverId !== null ? true : row.getIsSelected(),
+              checked: row.original.routeId !== null ? true : row.getIsSelected(),
               indeterminate: row.getIsSomeSelected(),
               onChange: row.getToggleSelectedHandler(),
               disabled: row.original.routeId === null ? false : true,

@@ -22,19 +22,6 @@ const AddEmailForm: React.FC<IAddEmailForm> = ({ useFormReturn, onSubmit, sectio
       <Col md={{ span: 6, offset: 1 }}>
         <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
           <Row>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Email" name="email" placeholder="Enter email" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Select
-                label="Section"
-                name="sectionId"
-                options={sections?.map((option) => ({
-                  value: option.id,
-                  name: option.name,
-                }))}
-              />
-            </Col>
             <PermissionWrapper requiredClaims={[ClaimCode.CliMgA]}>
               <Col xl={6} lg={6} md={6} sm={12}>
                 <Form.Select
@@ -47,6 +34,23 @@ const AddEmailForm: React.FC<IAddEmailForm> = ({ useFormReturn, onSubmit, sectio
                 />
               </Col>
             </PermissionWrapper>
+            <Col xl={6} lg={6} md={6} sm={12}>
+              <Form.Select
+                label="Section"
+                name="sectionId"
+                options={sections?.map((option) => ({
+                  value: option.id,
+                  name: option.name,
+                }))}
+              />
+            </Col>
+            <Col xl={6} lg={6} md={6} sm={12}>
+              <Form.Input label="Email" name="email" placeholder="Enter email" />
+            </Col>
+
+            <Col xl={12} lg={12} md={12} sm={12}>
+              <Form.Checkbox label="Mark as Active" name="isActive" />
+            </Col>
             <Col md={12} className="d-flex justify-content-end mt-2">
               <Button type="submit" loading={loadingState} disabled={loadingState}>
                 Save

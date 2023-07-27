@@ -33,10 +33,9 @@ const VehicleSafetyCheckList = () => {
       cell: ({ getValue }) => <span>{`${getValue()}`}</span>,
     }),
     columnHelper.accessor('checkActive', {
-      header: 'Status',
-      size: 20,
+      header: 'Active',
       cell: ({ getValue }) => (
-        <span className={`${getValue() ? 'text-success' : 'text-danger'}`}>{getValue() ? 'Active' : ''}</span>
+        <span className={`${getValue() ? 'text-success' : 'text-danger'}`}>{getValue() ? 'Yes' : 'No'}</span>
       ),
     }),
     columnHelper.accessor('checkDescription', {

@@ -5,6 +5,7 @@ export interface TemperatureRangeRequest {
   name: string;
   min: number;
   max: number;
+  isActive: boolean;
 }
 
 export interface TemperatureRangeResponse {

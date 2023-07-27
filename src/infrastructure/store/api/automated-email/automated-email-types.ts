@@ -4,6 +4,7 @@ export interface AutomatedEmailRequest {
   clientId: number;
   email: string;
   sectionId: number;
+  isActive: boolean;
 }
 
 export interface AutomatedEmailResponse {

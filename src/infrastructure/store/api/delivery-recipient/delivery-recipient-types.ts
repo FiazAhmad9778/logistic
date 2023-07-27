@@ -3,6 +3,7 @@ export interface DeliveryRecipientRequest {
   clientGroupId: number;
   clientId: number;
   name: string;
+  isActive: boolean;
 }
 
 export interface DeliveryRecipientResponse {

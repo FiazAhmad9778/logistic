@@ -37,6 +37,7 @@ const EditOrderForm: React.FC<IEditOrderForm> = ({ useFormReturn, onSubmit, rout
               <Form.Select
                 label="Route"
                 name="routeId"
+                isClearable={true}
                 options={routes?.map((option) => ({
                   value: option.id,
                   name: option.routeName,

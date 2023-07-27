@@ -20,7 +20,7 @@ const EditTemperatureForm: React.FC<IEditTemperatureForm> = ({ useFormReturn, on
       <Col md={{ span: 6, offset: 1 }}>
         <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
           <Row>
-            <PermissionWrapper requiredClaims={[ClaimCode.CliMgE]}>
+            <PermissionWrapper requiredClaims={[ClaimCode.CliMgA]}>
               <Col xl={6} lg={6} md={6} sm={12}>
                 <Form.Select
                   label="Client"
@@ -40,6 +40,9 @@ const EditTemperatureForm: React.FC<IEditTemperatureForm> = ({ useFormReturn, on
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Max Temperature" name="max" placeholder="Enter min temperature" />
+            </Col>
+            <Col xl={12} lg={12} md={12} sm={12}>
+              <Form.Checkbox label="Mark as Active" name="isActive" />
             </Col>
             <Col md={12} className="d-flex justify-content-end mt-2">
               <Button type="submit" loading={loadingState} disabled={loadingState}>
