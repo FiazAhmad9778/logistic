@@ -15,6 +15,7 @@ import { HandleNotification } from '@/components/Toast';
 import { useEffect } from 'react';
 import Loader from '@/components/Loader';
 import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
+import { ValidationError } from 'src/types/common/http-types';
 
 const EditTemperature = () => {
   const navigate = useNavigate();
@@ -35,7 +36,9 @@ const EditTemperature = () => {
     const res = await updateTemperatureRange(data as TemperatureRangeRequest).unwrap();
 
     if ('validationErrors' in res && res.isSuccess) {
-      res?.validationErrors?.map((error) => useFormReturn.setError(error?.name as never, { message: error.message }));
+      res?.validationErrors?.map((error: ValidationError) =>
+        useFormReturn.setError(error?.name as never, { message: error.message }),
+      );
     }
 
     if (res.success === true) {

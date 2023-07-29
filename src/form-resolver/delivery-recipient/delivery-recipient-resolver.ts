@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 export const genericResolver = {
   name: yup.string().required('Name is required!'),
-  clientId: yup.number(),
+  clientId: yup.number().typeError('Client is required!'),
 };
 
 export const addDeliveryRecipientResolver = yup.object().shape({

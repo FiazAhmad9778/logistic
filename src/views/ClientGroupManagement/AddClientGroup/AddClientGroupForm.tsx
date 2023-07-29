@@ -20,9 +20,6 @@ const AddClientGroupForm: React.FC<IClientGroupForm> = ({ useFormReturn, onSubmi
               <Form.Input label="Client Group Name" name="clientGroupName" placeholder="Enter client group name" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Client Name" name="clientName" placeholder="Enter client name" />
-            </Col>
-            <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Contact First Name" name="firstName" placeholder="Enter contact first name" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
