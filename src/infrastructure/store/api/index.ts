@@ -23,6 +23,11 @@ export const appApi = createApi({
     'AutomatedEmail',
     'DeliveryRecipient',
     'TemperatureRange',
+    'OrderQuestion',
+    'OrderLateReason',
+    'MobileNotification',
+    'SurveyQuestion',
+    'CustomerMailshot',
   ],
   endpoints: () => ({}),
 });

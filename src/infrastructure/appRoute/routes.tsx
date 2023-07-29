@@ -52,6 +52,21 @@ import DeliveryRecipient from '@/views/InteractiveControls/DeliveryRecipient';
 import TemperatureRange from '@/views/InteractiveControls/TemperatureRange';
 import AddTemperature from '@/views/InteractiveControls/TemperatureRange/AddTemperature/AddTemperature';
 import EditTemperature from '@/views/InteractiveControls/TemperatureRange/EditTemperature/EditTemperature';
+import OrderRelatedQuestions from '@/views/InteractiveControls/OrderRelatedQuestions';
+import AddQuestion from '@/views/InteractiveControls/OrderRelatedQuestions/AddQuestion/AddQuestion';
+import EditQuestion from '@/views/InteractiveControls/OrderRelatedQuestions/EditQuestion/EditQuestion';
+import MobileNotifications from '@/views/InteractiveControls/MobileNotifications';
+import AddNotification from '@/views/InteractiveControls/MobileNotifications/AddNotification/AddNotification';
+import EditNotification from '@/views/InteractiveControls/MobileNotifications/EditNotification/EditNotification';
+import CustomerMailshot from '@/views/InteractiveControls/CustomerMailshot';
+import AddCustomerMail from '@/views/InteractiveControls/CustomerMailshot/AddCustomerMail/AddCustomerMail';
+import EditCustomerMail from '@/views/InteractiveControls/CustomerMailshot/EditCustomerMail/EditCustomerMail';
+import CustomerSatisfactionSurvey from '@/views/InteractiveControls/CustomerSatisfactionSurvey';
+import AddSurveyQuestion from '@/views/InteractiveControls/CustomerSatisfactionSurvey/AddSurveyQuestion/AddSurveyQuestion';
+import EditSurveyQuestion from '@/views/InteractiveControls/CustomerSatisfactionSurvey/EditSurveyQuestion/EditSurveyQuestion';
+import LateDeliveryReason from '@/views/InteractiveControls/LateDeliveryReason';
+import AddReason from '@/views/InteractiveControls/LateDeliveryReason/AddReason/AddReason';
+import EditReason from '@/views/InteractiveControls/LateDeliveryReason/EditReason/EditReason';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -345,6 +360,96 @@ export const routes: RoutePathDefinition[] = [
             path: 'temperature-range-list/edit-temperature-range',
             title: 'EDIT TEMPERATURE RANGE',
             element: <EditTemperature />,
+            requiredClaims: [],
+          },
+          {
+            path: 'order-related-questions-list',
+            title: 'ORDER RELATED QUESTIONS LIST',
+            element: <OrderRelatedQuestions />,
+            requiredClaims: [],
+          },
+          {
+            path: 'order-related-questions-list/add-question',
+            title: 'ADD QUESTIONS LIST',
+            element: <AddQuestion />,
+            requiredClaims: [],
+          },
+          {
+            path: 'order-related-questions-list/edit-question',
+            title: 'EDIT QUESTIONS LIST',
+            element: <EditQuestion />,
+            requiredClaims: [],
+          },
+          {
+            path: 'mobile-app-notification-list',
+            title: 'MOBILE APP NOTIFICATION LIST',
+            element: <MobileNotifications />,
+            requiredClaims: [],
+          },
+          {
+            path: 'mobile-app-notification-list/add-notification',
+            title: 'ADD NOTIFICATION',
+            element: <AddNotification />,
+            requiredClaims: [],
+          },
+          {
+            path: 'mobile-app-notification-list/edit-notification',
+            title: 'EDIT NOTIFICATION',
+            element: <EditNotification />,
+            requiredClaims: [],
+          },
+          {
+            path: 'customer-mailshot-list',
+            title: 'CUSTOMER MAILSHOT LIST',
+            element: <CustomerMailshot />,
+            requiredClaims: [],
+          },
+          {
+            path: 'customer-mailshot-list/add-customer-mail',
+            title: 'ADD CUSTOMER MAIL',
+            element: <AddCustomerMail />,
+            requiredClaims: [],
+          },
+          {
+            path: 'customer-mailshot-list/edit-customer-mail',
+            title: 'EDIT CUSTOMER MAIL',
+            element: <EditCustomerMail />,
+            requiredClaims: [],
+          },
+          {
+            path: 'customer-satisfaction-survey-questions-list',
+            title: 'CUSTOMER SATISFACTION SURVEY QUESTIONS LIST',
+            element: <CustomerSatisfactionSurvey />,
+            requiredClaims: [],
+          },
+          {
+            path: 'customer-satisfaction-survey-questions-list/add-survey-question',
+            title: 'ADD SURVEY QUESTION',
+            element: <AddSurveyQuestion />,
+            requiredClaims: [],
+          },
+          {
+            path: 'customer-satisfaction-survey-questions-list/edit-survey-question',
+            title: 'EDIT SURVEY QUESTION',
+            element: <EditSurveyQuestion />,
+            requiredClaims: [],
+          },
+          {
+            path: 'late-delivery-reason-list',
+            title: 'LATE DELIVERY REASON LIST',
+            element: <LateDeliveryReason />,
+            requiredClaims: [],
+          },
+          {
+            path: 'late-delivery-reason-list/add-reason',
+            title: 'ADD REASON',
+            element: <AddReason />,
+            requiredClaims: [],
+          },
+          {
+            path: 'late-delivery-reason-list/edit-reason',
+            title: 'EDIT REASON',
+            element: <EditReason />,
             requiredClaims: [],
           },
           {

@@ -310,7 +310,11 @@ const Sidebar = () => {
                           {menuItem.children ? (
                             <ul
                               className={`slide-menu ${menuItem.active ? 'open' : ''}`}
-                              style={menuItem.active ? { display: 'block' } : { display: 'none' }}
+                              style={
+                                menuItem.active || menuItem.children.find((n: any) => n.path === activePath[0])
+                                  ? { display: 'block' }
+                                  : { display: 'none' }
+                              }
                             >
                               {menuItem.children.map((childrenItem: any, index: any) => {
                                 return (
@@ -343,7 +347,9 @@ const Sidebar = () => {
                                       <span>
                                         <NavLink
                                           to={childrenItem.path + '/'}
-                                          className={`slide-item ${childrenItem.active ? 'active' : ''}`}
+                                          className={`slide-item ${
+                                            childrenItem.active || activePath[0] === childrenItem.path ? 'active' : ''
+                                          }`}
                                         >
                                           {childrenItem.title}
                                           {childrenItem.active}
