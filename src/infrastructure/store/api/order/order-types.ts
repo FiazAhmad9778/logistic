@@ -49,7 +49,11 @@ export interface CreateOrderRequest {
 export interface UpdateOrderRequest extends CreateOrderRequest {
   id: number;
 }
+
 export interface OrderInstructionsRequest {
+  instruction: string;
+}
+export interface OrderResponse {
   orderStatusId: number;
   orderStatusName: string;
   routeId: number;

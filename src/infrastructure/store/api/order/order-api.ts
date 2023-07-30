@@ -1,18 +1,18 @@
 import { appApi } from '../index';
 import { GenericResponseType } from '../../../../types/common/http-types';
-import { CreateOrderRequest, OrderInstructionsRequest, UpdateOrderRequest } from './order-types';
+import { CreateOrderRequest, OrderInstructionsRequest, OrderResponse, UpdateOrderRequest } from './order-types';
 
 const orderApi = appApi
   .injectEndpoints({
     endpoints: (build) => ({
-      orderById: build.query<GenericResponseType<OrderInstructionsRequest>, number | null | undefined>({
+      orderById: build.query<GenericResponseType<OrderResponse>, number | null | undefined>({
         providesTags: [{ type: 'Order', id: `order` }],
         query: (id) => ({
           url: `/order/get?Id=${id}`,
           method: 'Get',
         }),
       }),
-      orderList: build.query<GenericResponseType<OrderInstructionsRequest[]>, null | undefined>({
+      orderList: build.query<GenericResponseType<OrderResponse[]>, null | undefined>({
         providesTags: [{ type: 'Order', id: `orders` }],
         query: () => ({
           url: '/order/list',

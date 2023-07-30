@@ -9,6 +9,7 @@ import { CreateOrderRouteAssignmentRequest } from '@/infrastructure/store/api/or
 import { useRouteListQuery } from '@/infrastructure/store/api/route/route-api';
 import { useAppDispatch, useAppSelector } from '@/infrastructure/store/store-hooks';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { SingleValue } from 'react-select';
 interface IAssignRouteDialogProps {
   isOpen: boolean;
   setCloseDialog: () => void;
@@ -17,14 +18,21 @@ interface IAssignRouteDialogProps {
 const AssignRouteDialog: React.FC<IAssignRouteDialogProps> = ({ isOpen, setCloseDialog }) => {
   const { selectedOrderIds } = useAppSelector((state) => state['order']);
   const useFormReturn = useForm();
+  const { setValue } = useFormReturn;
   const dispatch = useAppDispatch();
   const { data: routes } = useRouteListQuery(null);
   const { data: drivers } = useDriversListQuery(null);
   const [saveOrderRouteAssign, saveOrderRouteAssignState] = useSaveOrderRouteAssignmentMutation();
 
+  function handleRoute(e: SingleValue<{ value: number; name: string }>) {
+    setValue('routeId', e?.value);
+    setValue('driverId', routes?.data.find((n) => n.id === e?.value)?.driverId);
+  }
+
   const onSubmitOrderInstructions: SubmitHandler<FieldValues> = async (data) => {
     const payload = {
       routeId: data.routeId,
+      driverId: data.driverId,
       orderIds: selectedOrderIds,
     };
     const res = await saveOrderRouteAssign(payload as CreateOrderRouteAssignmentRequest).unwrap();
@@ -53,6 +61,7 @@ const AssignRouteDialog: React.FC<IAssignRouteDialogProps> = ({ isOpen, setClose
               name: option.routeName,
               value: option.id,
             }))}
+            onChange={(e) => handleRoute(e)}
           />
           <Form.Select
             label="Driver"

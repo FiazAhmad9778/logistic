@@ -3,4 +3,5 @@ export interface CreateOrderRouteAssignmentRequest {
   clientId: number;
   orderIds: number[];
   routeId: number;
+  driverId: number;
 }
