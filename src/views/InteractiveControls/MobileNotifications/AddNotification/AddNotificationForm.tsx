@@ -39,10 +39,10 @@ const AddNotificationForm: React.FC<IAddNotificationForm> = ({ useFormReturn, on
               <Form.Input label="Type" name="type" placeholder="Enter type" />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
-              <Form.Textarea label="Description" name="description" placeholder="Enter description" />
+              <Form.Textarea label="Message" name="message" placeholder="Enter message" />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
-              <Form.Textarea label="Message" name="message" placeholder="Enter message" />
+              <Form.Textarea label="Description" name="description" placeholder="Enter description" />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Checkbox label="Mark as Active" name="isActive" />

@@ -4,6 +4,7 @@ import PermissionWrapper from '@/components/Permission/permission-helper';
 import { ClientResponse } from '@/infrastructure/store/api/client/client-types';
 import { Row, Col } from 'react-bootstrap';
 import { FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form';
+import { DropdownOption } from 'src/constant/dropdown-options';
 import { ClaimCode } from 'src/enums/claim-codes';
 
 interface IEditSurveyQuestionForm {
@@ -41,7 +42,7 @@ const EditSurveyQuestionForm: React.FC<IEditSurveyQuestionForm> = ({
               <Form.Input label="Question" name="question" placeholder="Enter question" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Select label="Field Type" name="fieldType" options={[]} />
+              <Form.Select label="Field Type" name="fieldTypeId" options={DropdownOption.FieldType} />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Checkbox label="Mark as Active" name="isActive" />

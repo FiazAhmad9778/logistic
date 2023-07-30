@@ -6,7 +6,7 @@ export class DropdownOption {
     },
     {
       value: 2,
-      name: 'YesNo',
+      name: 'Yes/No',
     },
     {
       value: 3,
@@ -21,6 +21,16 @@ export class DropdownOption {
     {
       value: 2,
       name: 'Collection',
+    },
+  ];
+  public static FieldType = [
+    {
+      value: 1,
+      name: 'Text',
+    },
+    {
+      value: 2,
+      name: 'Yes/No',
     },
   ];
 }

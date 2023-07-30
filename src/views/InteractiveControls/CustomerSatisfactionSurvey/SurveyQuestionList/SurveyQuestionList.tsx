@@ -28,6 +28,10 @@ const SurveyQuestionList = () => {
       header: 'Question',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
+    columnHelper.accessor('fieldType', {
+      header: 'Field Type',
+      cell: ({ getValue }) => <span>{getValue() === 'YesNo' ? 'Yes/No' : 'No'}</span>,
+    }),
     columnHelper.accessor('isActive', {
       header: 'Active',
       cell: ({ getValue }) => (
