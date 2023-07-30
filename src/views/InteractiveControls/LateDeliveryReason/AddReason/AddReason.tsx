@@ -8,6 +8,7 @@ import { useSaveOrderLateReasonMutation } from '@/infrastructure/store/api/order
 import { CreateLateReasonRequest } from '@/infrastructure/store/api/order-late-reason/order-late-reason-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addReasonResolver } from 'src/form-resolver/interactive-control/late-reason/late-reason-resolver';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const AddReason = () => {
   const useFormReturn = useForm({
@@ -15,6 +16,7 @@ const AddReason = () => {
   });
   const navigate = useNavigate();
 
+  const { data: clientsList } = useClientListQuery(null);
   const [saveLateReason, saveLateReasonState] = useSaveOrderLateReasonMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -43,6 +45,7 @@ const AddReason = () => {
           </Card.Header>
           <Card.Body className="pt-0">
             <AddReasonForm
+              clients={clientsList?.data}
               useFormReturn={useFormReturn}
               onSubmit={onSubmit}
               loadingState={saveLateReasonState.isLoading}

@@ -8,6 +8,7 @@ import { useSaveMobileNotificationMutation } from '@/infrastructure/store/api/mo
 import { CreateMobileNotificationRequest } from '@/infrastructure/store/api/mobile-notification/mobile-notification-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addNotificationResolver } from 'src/form-resolver/interactive-control/mobile-notification/mobile-notification-resolver';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const AddNotification = () => {
   const useFormReturn = useForm({
@@ -15,6 +16,7 @@ const AddNotification = () => {
   });
   const navigate = useNavigate();
 
+  const { data: clientsList } = useClientListQuery(null);
   const [saveMobileNotification, saveMobileNotificationState] = useSaveMobileNotificationMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -43,6 +45,7 @@ const AddNotification = () => {
           </Card.Header>
           <Card.Body className="pt-0">
             <AddNotificationForm
+              clients={clientsList?.data}
               useFormReturn={useFormReturn}
               onSubmit={onSubmit}
               loadingState={saveMobileNotificationState.isLoading}

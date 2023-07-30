@@ -8,6 +8,7 @@ import { useSaveSurveyQuestionMutation } from '@/infrastructure/store/api/custom
 import { CreateSurveyQuestionRequest } from '@/infrastructure/store/api/customer-survey-question/customer-survey-question-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addSurveyQuestionResolver } from 'src/form-resolver/interactive-control/survey-question/survey-question-resolver';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const AddSurveyQuestion = () => {
   const useFormReturn = useForm({
@@ -15,6 +16,7 @@ const AddSurveyQuestion = () => {
   });
   const navigate = useNavigate();
 
+  const { data: clientsList } = useClientListQuery(null);
   const [saveSurveyQuestion, saveSurveyQuestionState] = useSaveSurveyQuestionMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -43,6 +45,7 @@ const AddSurveyQuestion = () => {
           </Card.Header>
           <Card.Body className="pt-0">
             <AddSurveyQuestionForm
+              clients={clientsList?.data}
               useFormReturn={useFormReturn}
               onSubmit={onSubmit}
               loadingState={saveSurveyQuestionState.isLoading}

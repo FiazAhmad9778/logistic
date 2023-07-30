@@ -15,6 +15,8 @@ export interface UpdateClientGroupRequest {
 export interface ClientGroupResponse {
   id: number;
   name: string;
+  adminName: string;
+  adminEmail: string;
   isActive: boolean;
   createdDate: string;
 }

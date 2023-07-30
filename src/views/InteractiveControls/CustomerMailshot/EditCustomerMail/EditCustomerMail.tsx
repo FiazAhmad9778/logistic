@@ -14,6 +14,7 @@ import {
 import { UpdateCustomerMailshotRequest } from '@/infrastructure/store/api/customer-mailshot/customer-mailshot-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addCustomerMailResolver } from 'src/form-resolver/interactive-control/cutomer-mail/cutomer-mail-resolver';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const EditCustomerMail = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const EditCustomerMail = () => {
     defaultValues: customerMailshot?.data,
   });
 
+  const { data: clientsList } = useClientListQuery(null);
   const [updateCustomerMailshot, updateCustomerMailshotState] = useUpdateCustomerMailshotMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -65,6 +67,7 @@ const EditCustomerMail = () => {
               <Loader />
             ) : (
               <EditCustomerMailForm
+                clients={clientsList?.data}
                 useFormReturn={useFormReturn}
                 onSubmit={onSubmit}
                 loadingState={updateCustomerMailshotState.isLoading}

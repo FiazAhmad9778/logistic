@@ -18,6 +18,8 @@ export interface UpdateClientRequest {
 
 export interface ClientResponse {
   id: number;
+  adminName: string;
+  adminEmail: string;
   name: string;
   address: string;
   isActive: boolean;

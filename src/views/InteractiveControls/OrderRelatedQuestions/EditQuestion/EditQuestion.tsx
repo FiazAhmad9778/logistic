@@ -12,6 +12,7 @@ import {
   useUpdateOrderQuestionMutation,
 } from '@/infrastructure/store/api/order-question/order-question-api';
 import { UpdateOrderQuestionRequest } from '@/infrastructure/store/api/order-question/order-question-types';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const EditQuestion = () => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const EditQuestion = () => {
     defaultValues: orderQuestion?.data,
   });
 
+  const { data: clientsList } = useClientListQuery(null);
   const [updateOrderQuestion, updateOrderQuestionState] = useUpdateOrderQuestionMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -63,6 +65,7 @@ const EditQuestion = () => {
               <Loader />
             ) : (
               <EditQuestionForm
+                clients={clientsList?.data}
                 useFormReturn={useFormReturn}
                 onSubmit={onSubmit}
                 loadingState={updateOrderQuestionState.isLoading}

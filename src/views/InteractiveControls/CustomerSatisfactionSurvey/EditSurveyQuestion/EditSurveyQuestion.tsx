@@ -14,6 +14,7 @@ import {
 import { UpdateSurveyQuestionRequest } from '@/infrastructure/store/api/customer-survey-question/customer-survey-question-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addSurveyQuestionResolver } from 'src/form-resolver/interactive-control/survey-question/survey-question-resolver';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const EditSurveyQuestion = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const EditSurveyQuestion = () => {
     defaultValues: surveyQuestion?.data,
   });
 
+  const { data: clientsList } = useClientListQuery(null);
   const [updateSurveyQuestion, updateSurveyQuestionState] = useUpdateSurveyQuestionMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -65,6 +67,7 @@ const EditSurveyQuestion = () => {
               <Loader />
             ) : (
               <EditSurveyQuestionForm
+                clients={clientsList?.data}
                 useFormReturn={useFormReturn}
                 onSubmit={onSubmit}
                 loadingState={updateSurveyQuestionState.isLoading}

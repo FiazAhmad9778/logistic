@@ -14,6 +14,7 @@ import {
 import { UpdateMobileNotificationRequest } from '@/infrastructure/store/api/mobile-notification/mobile-notification-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addNotificationResolver } from 'src/form-resolver/interactive-control/mobile-notification/mobile-notification-resolver';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const EditNotification = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const EditNotification = () => {
     defaultValues: MobileNotification?.data,
   });
 
+  const { data: clientsList } = useClientListQuery(null);
   const [updateMobileNotification, updateMobileNotificationState] = useUpdateMobileNotificationMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -65,6 +67,7 @@ const EditNotification = () => {
               <Loader />
             ) : (
               <EditNotificationForm
+                clients={clientsList?.data}
                 useFormReturn={useFormReturn}
                 onSubmit={onSubmit}
                 loadingState={updateMobileNotificationState.isLoading}

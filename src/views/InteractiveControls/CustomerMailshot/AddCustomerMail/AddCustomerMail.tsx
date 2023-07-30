@@ -8,6 +8,7 @@ import { useSaveCustomerMailshotMutation } from '@/infrastructure/store/api/cust
 import { CreateCustomerMailshotRequest } from '@/infrastructure/store/api/customer-mailshot/customer-mailshot-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addCustomerMailResolver } from 'src/form-resolver/interactive-control/cutomer-mail/cutomer-mail-resolver';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const AddCustomerMail = () => {
   const useFormReturn = useForm({
@@ -15,6 +16,7 @@ const AddCustomerMail = () => {
   });
   const navigate = useNavigate();
 
+  const { data: clientsList } = useClientListQuery(null);
   const [saveCustomerMailshot, saveCustomerMailshotState] = useSaveCustomerMailshotMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -43,6 +45,7 @@ const AddCustomerMail = () => {
           </Card.Header>
           <Card.Body className="pt-0">
             <AddCustomerMailForm
+              clients={clientsList?.data}
               useFormReturn={useFormReturn}
               onSubmit={onSubmit}
               loadingState={saveCustomerMailshotState.isLoading}

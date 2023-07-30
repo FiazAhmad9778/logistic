@@ -14,6 +14,7 @@ import {
 import { UpdateLateReasonRequest } from '@/infrastructure/store/api/order-late-reason/order-late-reason-types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addReasonResolver } from 'src/form-resolver/interactive-control/late-reason/late-reason-resolver';
+import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 
 const EditReason = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const EditReason = () => {
     defaultValues: lateReason?.data,
   });
 
+  const { data: clientsList } = useClientListQuery(null);
   const [updateLateReason, updateLateReasonState] = useUpdateOrderLateReasonMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -65,6 +67,7 @@ const EditReason = () => {
               <Loader />
             ) : (
               <EditReasonForm
+                clients={clientsList?.data}
                 useFormReturn={useFormReturn}
                 onSubmit={onSubmit}
                 loadingState={updateLateReasonState.isLoading}

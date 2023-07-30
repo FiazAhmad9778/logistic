@@ -1,21 +1,37 @@
 import Button from '@/components/Button';
 import Form from '@/components/Form';
+import PermissionWrapper from '@/components/Permission/permission-helper';
+import { ClientResponse } from '@/infrastructure/store/api/client/client-types';
 import { Row, Col } from 'react-bootstrap';
 import { FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form';
+import { ClaimCode } from 'src/enums/claim-codes';
 
 interface IAddCustomerMailForm {
   onSubmit: SubmitHandler<FieldValues>;
   loadingState: boolean;
+  clients?: ClientResponse[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   useFormReturn: UseFormReturn<any, object>;
 }
 
-const AddCustomerMailForm: React.FC<IAddCustomerMailForm> = ({ useFormReturn, onSubmit, loadingState }) => {
+const AddCustomerMailForm: React.FC<IAddCustomerMailForm> = ({ useFormReturn, onSubmit, clients, loadingState }) => {
   return (
     <Row>
       <Col md={{ span: 6, offset: 1 }}>
         <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
           <Row>
+            <PermissionWrapper requiredClaims={[ClaimCode.CliMgA]}>
+              <Col xl={12} lg={12} md={12} sm={12}>
+                <Form.Select
+                  label="Client"
+                  name="clientId"
+                  options={clients?.map((option) => ({
+                    value: option.id,
+                    name: option.name,
+                  }))}
+                />
+              </Col>
+            </PermissionWrapper>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Input label="Subject" name="subject" placeholder="Enter subject" />
             </Col>
