@@ -29,7 +29,7 @@ const AssignRouteDialog: React.FC<IAssignRouteDialogProps> = ({ isOpen, setClose
     setValue('driverId', routes?.data.find((n) => n.id === e?.value)?.driverId);
   }
 
-  const onSubmitOrderInstructions: SubmitHandler<FieldValues> = async (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const payload = {
       routeId: data.routeId,
       driverId: data.driverId,
@@ -43,6 +43,7 @@ const AssignRouteDialog: React.FC<IAssignRouteDialogProps> = ({ isOpen, setClose
 
     if (res.success === true) {
       setCloseDialog();
+      dispatch(appApi.util.invalidateTags([{ type: 'Route', id: 'routes' }]));
       dispatch(appApi.util.invalidateTags([{ type: 'Order', id: `orders` }]));
       HandleNotification(res.message || 'Route assigned successfully.', res.success);
     } else {
@@ -53,7 +54,7 @@ const AssignRouteDialog: React.FC<IAssignRouteDialogProps> = ({ isOpen, setClose
   return (
     <div>
       <Dialog title="Assign Route" show={isOpen} handleClose={setCloseDialog}>
-        <Form useFormReturn={useFormReturn} onSubmit={onSubmitOrderInstructions}>
+        <Form useFormReturn={useFormReturn} onSubmit={onSubmit}>
           <Form.Select
             label="Assign Route"
             name="routeId"

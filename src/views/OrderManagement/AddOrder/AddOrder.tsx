@@ -1,15 +1,18 @@
 import { Row, Col, Card } from 'react-bootstrap';
-import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
+import { SubmitHandler, FieldValues, useForm, UseFormGetValues } from 'react-hook-form';
 import Button from '@/components/Button';
 import { useNavigate } from 'react-router-dom';
 import AddOrderForm from './AddOrderForm';
 import { useSaveOrderMutation } from '@/infrastructure/store/api/order/order-api';
-import { CreateOrderRequest } from '@/infrastructure/store/api/order/order-types';
+import { CreateOrderRequest, OrderResponse } from '@/infrastructure/store/api/order/order-types';
 import { HandleNotification } from '@/components/Toast';
 import { useRouteListQuery } from '@/infrastructure/store/api/route/route-api';
 import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { addOrderResolver } from 'src/form-resolver/order/order-resolver';
+import { Feature } from '@/infrastructure/store/api/mapbox/mapbox-types';
+import { useRef, useState } from 'react';
+import { MapRef } from 'react-map-gl';
 
 const AddOrder = () => {
   const navigate = useNavigate();
@@ -20,6 +23,10 @@ const AddOrder = () => {
   const { data: routeList } = useRouteListQuery(null);
   const { data: clientList } = useClientListQuery(null);
   const [saveOrder, saveOrderState] = useSaveOrderMutation();
+
+  const mapRef = useRef<MapRef>(null);
+  const [locationData, setLocationData] = useState<OrderResponse | CreateOrderRequest | undefined>();
+
   const onSubmitOrder: SubmitHandler<FieldValues> = async (order) => {
     const res = await saveOrder(order as CreateOrderRequest).unwrap();
 
@@ -33,6 +40,17 @@ const AddOrder = () => {
     } else {
       HandleNotification(res.message || res?.errors[0], res.success);
     }
+  };
+
+  const handleSelectAddress = (data: Feature, getValues: UseFormGetValues<CreateOrderRequest>) => {
+    const location = data && (data.center || (data.geometry?.type === 'Point' && data.geometry.coordinates));
+    if (getValues())
+      setLocationData({ ...getValues(), address1: data.place_name, latitude: location[1], longitude: location[0] });
+    mapRef.current?.flyTo({
+      center: [location[0], location[1]],
+      zoom: 7,
+      speed: 1.3,
+    });
   };
 
   return (
@@ -49,11 +67,13 @@ const AddOrder = () => {
           </Card.Header>
           <Card.Body className="pt-0">
             <AddOrderForm
+              initialValue={locationData}
               routes={routeList?.data}
               clients={clientList?.data}
               useFormReturn={useFormReturn}
               onSubmit={onSubmitOrder}
               loadingState={saveOrderState.isLoading}
+              handleSelectAddress={handleSelectAddress}
             />
           </Card.Body>
         </Card>

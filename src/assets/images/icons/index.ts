@@ -2,6 +2,7 @@ import Home from './dashboard.png';
 import Privileges from './userprivileges.png';
 import Companyuser from './companyuser.png';
 import ManageDriver from './drivermanage.png';
+import Driver from './driver.png';
 import Order from './orders.png';
 import OrderStatus from './orderstatus.png';
 import Projectandprofile from './profile.png';
@@ -23,6 +24,7 @@ export const ICONS_IMAGES = {
   HOME: Home,
   PRIVILEGES: Privileges,
   COMPANYUSER: Companyuser,
+  DRIVER: Driver,
   MANAGEDRIVER: ManageDriver,
   AUTOROUTEASSIGNMENT: AutoRouteAssignment,
   ORDER: Order,

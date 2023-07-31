@@ -29,10 +29,11 @@ export interface CreateOrderRequest {
   customerName: string;
   customerEmail: string;
   customerMobile: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   driverPerformance: string;
   review: string;
+  address1: string;
   address: string;
   rating: number;
   time: string;
