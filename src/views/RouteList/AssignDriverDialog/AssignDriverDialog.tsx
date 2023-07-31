@@ -26,7 +26,6 @@ const AssignDriverDialog: React.FC<IAssignDriverDialogProps> = ({ isOpen, setClo
       routeIds: selectedRouteIds,
     };
     const res = await saveRouteDriverAssign(payload as CreateRouteDriverAssignmentRequest).unwrap();
-
     if ('validationErrors' in res && res.isSuccess) {
       res?.validationErrors?.map((error) => useFormReturn.setError(error?.name as never, { message: error.message }));
     }

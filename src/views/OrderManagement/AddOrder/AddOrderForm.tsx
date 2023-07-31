@@ -100,7 +100,7 @@ const AddOrderForm: React.FC<IAddOrderForm> = ({ useFormReturn, onSubmit, routes
               <Form.Input label="Temperature" name="temperature" placeholder="Enter temperature" />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
-              <Form.Textarea label="Address" name="address" placeholder="Enter address" />
+              <Form.Textarea label="Customer Address" name="address" placeholder="Enter address" />
             </Col>
             <Col xl={12} lg={12} md={12} sm={12}>
               <Form.Textarea

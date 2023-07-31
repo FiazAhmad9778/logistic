@@ -17,7 +17,7 @@ const OrderRelatedQuestions = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/order-related-questions-list/add-question')}
               >
-                {'New Question'}
+                {'New Order Question'}
               </Button>
             </div>
           </Card.Header>

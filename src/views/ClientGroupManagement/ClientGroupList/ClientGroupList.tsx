@@ -33,6 +33,10 @@ const ClientGroupList = () => {
       header: 'Admin Name',
       cell: ({ getValue }) => <span>{getValue()}</span>,
     }),
+    columnHelper.accessor('adminEmail', {
+      header: 'Admin Email',
+      cell: ({ getValue }) => <span>{getValue()}</span>,
+    }),
     columnHelper.accessor('isActive', {
       header: 'Active',
       cell: ({ getValue }) => (

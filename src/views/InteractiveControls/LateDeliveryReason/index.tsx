@@ -17,7 +17,7 @@ const LateDeliveryReason = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/late-delivery-reason-list/add-reason')}
               >
-                {'New Reason'}
+                {'New Late Reason'}
               </Button>
             </div>
           </Card.Header>

@@ -17,7 +17,7 @@ const AutomatedEmails = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/automated-email-list/add-automated-email')}
               >
-                {'New Email'}
+                {'New Automated Email'}
               </Button>
             </div>
           </Card.Header>

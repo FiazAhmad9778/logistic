@@ -17,7 +17,7 @@ const MobileNotifications = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/mobile-app-notification-list/add-notification')}
               >
-                {'New Notification'}
+                {'New Mobile App Notification'}
               </Button>
             </div>
           </Card.Header>

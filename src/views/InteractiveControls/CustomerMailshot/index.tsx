@@ -17,7 +17,7 @@ const CustomerMailshot = () => {
                 icon={<i className="fa fa fa-plus"></i>}
                 onClick={() => navigate('/customer-mailshot-list/add-customer-mail')}
               >
-                {'New Customer Mail'}
+                {'New Customer Mailshot'}
               </Button>
             </div>
           </Card.Header>
