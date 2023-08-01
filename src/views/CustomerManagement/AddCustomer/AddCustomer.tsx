@@ -1,13 +1,35 @@
 import Button from '@/components/Button';
 import { Row, Col, Card } from 'react-bootstrap';
-import { SubmitHandler, FieldValues } from 'react-hook-form';
+import { SubmitHandler, FieldValues, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import CustomerForm from './CustomerForm';
+import { useSaveCustomerMutation } from '@/infrastructure/store/api/customer/customer-api';
+import { HandleNotification } from '@/components/Toast';
+import AddCustomerForm from './CustomerForm';
+import { CreateCustomerRequest } from '@/infrastructure/store/api/customer/customer-types';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { addCustomerResolver } from 'src/form-resolver/customer/customer-resolver';
 
 const AddCustomer = () => {
+  const useFormReturn = useForm({
+    resolver: yupResolver(addCustomerResolver),
+  });
   const navigate = useNavigate();
-  const onSubmitCustomer: SubmitHandler<FieldValues> = (e) => {
-    console.log(e);
+
+  const [saveCustomer, saveCustomerState] = useSaveCustomerMutation();
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const res = await saveCustomer(data as CreateCustomerRequest).unwrap();
+
+    if ('validationErrors' in res && res.isSuccess) {
+      res?.validationErrors?.map((error) => useFormReturn.setError(error?.name as never, { message: error.message }));
+    }
+
+    if (res.success === true) {
+      navigate('/customer-management/', { replace: true });
+      HandleNotification(res.message || 'Customer added successfully.', res.success);
+    } else {
+      HandleNotification(res.message || res?.errors[0], res.success);
+    }
   };
   return (
     <Row>
@@ -22,7 +44,11 @@ const AddCustomer = () => {
             </div>
           </Card.Header>
           <Card.Body className="pt-0">
-            <CustomerForm onSubmit={onSubmitCustomer} />
+            <AddCustomerForm
+              useFormReturn={useFormReturn}
+              onSubmit={onSubmit}
+              loadingState={saveCustomerState.isLoading}
+            />
           </Card.Body>
         </Card>
       </Col>

@@ -67,6 +67,7 @@ import EditSurveyQuestion from '@/views/InteractiveControls/CustomerSatisfaction
 import LateDeliveryReason from '@/views/InteractiveControls/LateDeliveryReason';
 import AddReason from '@/views/InteractiveControls/LateDeliveryReason/AddReason/AddReason';
 import EditReason from '@/views/InteractiveControls/LateDeliveryReason/EditReason/EditReason';
+import EditCustomer from '@/views/CustomerManagement/EditCustomer/EditCustomer';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -294,6 +295,12 @@ export const routes: RoutePathDefinition[] = [
             path: 'customer-management/add-customer',
             title: 'ADD CUSTOMER',
             element: <AddCustomer />,
+            requiredClaims: [],
+          },
+          {
+            path: 'customer-management/edit-customer',
+            title: 'EDIT CUSTOMER',
+            element: <EditCustomer />,
             requiredClaims: [],
           },
           {

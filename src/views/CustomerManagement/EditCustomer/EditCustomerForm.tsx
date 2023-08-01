@@ -2,13 +2,13 @@ import Button from '@/components/Button';
 import Form from '@/components/Form';
 import { Row, Col } from 'react-bootstrap';
 import { FieldValues, SubmitHandler, UseFormReturn } from 'react-hook-form';
-interface IAddCustomerForm {
+interface IEditCustomerForm {
   onSubmit: SubmitHandler<FieldValues>;
   loadingState: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   useFormReturn: UseFormReturn<any, object>;
 }
-const AddCustomerForm: React.FC<IAddCustomerForm> = ({ useFormReturn, onSubmit, loadingState }) => {
+const EditCustomerForm: React.FC<IEditCustomerForm> = ({ useFormReturn, onSubmit, loadingState }) => {
   return (
     <Row>
       <Col md={{ span: 6, offset: 1 }}>
@@ -49,4 +49,4 @@ const AddCustomerForm: React.FC<IAddCustomerForm> = ({ useFormReturn, onSubmit, 
     </Row>
   );
 };
-export default AddCustomerForm;
+export default EditCustomerForm;

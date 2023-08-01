@@ -15,6 +15,7 @@ export const appApi = createApi({
     'Order',
     'OrderRouteAssignment',
     'OrderStatus',
+    'Customer',
     'Route',
     'RouteAssignment',
     'Client',
