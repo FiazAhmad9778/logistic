@@ -4,9 +4,8 @@ export interface CreateRouteRequest {
   routeName: string;
   routeStart: string;
   routeEnd: string;
-  routeStartDate: string | Date;
-  routeEndDate: string | Date;
-  isMannualRoute: boolean;
+  routeStartDate: Date | string;
+  routeEndDate: Date | string | undefined;
 }
 export interface UpdateRouteRequest {
   clientGroupId: number;
@@ -15,18 +14,16 @@ export interface UpdateRouteRequest {
   routeName: string;
   routeStart: string;
   routeEnd: string;
-  routeStartDate: string | Date;
-  routeEndDate: string | Date;
-  isMannualRoute: boolean;
+  routeStartDate: Date | string;
+  routeEndDate: Date | string | undefined;
 }
 export interface RouteResponse {
   id: number;
   routeName: string;
   routeStart: string;
   routeEnd: string;
-  routeStartDate: string;
-  routeEndDate: string;
-  isMannualRoute: boolean;
+  routeStartDate: Date | string;
+  routeEndDate: Date | string | undefined;
   driverId: number;
   driverName: string;
 }
