@@ -21,7 +21,16 @@ export const MENUITEMS = [
   {
     Items: [
       {
-        path: ``,
+        path: `home`,
+        icon: HomeIcon,
+        type: 'link',
+        selected: false,
+        active: false,
+        title: 'Home',
+        requiredClaims: [],
+      },
+      {
+        path: `dashboard`,
         icon: HomeIcon,
         type: 'link',
         selected: false,
@@ -29,7 +38,6 @@ export const MENUITEMS = [
         title: 'Dashboard',
         requiredClaims: [],
       },
-
       {
         path: `client-group-management`,
         icon: ClientGroupManagementIcon,

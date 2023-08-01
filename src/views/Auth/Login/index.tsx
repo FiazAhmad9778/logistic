@@ -27,7 +27,7 @@ const Login = () => {
 
     if (!('error' in res) && res.success === true) {
       dispatch(setAuth(res.data));
-      navigate('/', { replace: true });
+      navigate('/dashboard', { replace: true });
     } else {
       setError('Email or Password is incorrect!');
       return;

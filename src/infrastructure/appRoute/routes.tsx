@@ -67,6 +67,7 @@ import EditSurveyQuestion from '@/views/InteractiveControls/CustomerSatisfaction
 import LateDeliveryReason from '@/views/InteractiveControls/LateDeliveryReason';
 import AddReason from '@/views/InteractiveControls/LateDeliveryReason/AddReason/AddReason';
 import EditReason from '@/views/InteractiveControls/LateDeliveryReason/EditReason/EditReason';
+import Home from '@/views/Home';
 
 export interface RoutePathDefinition {
   title?: string;
@@ -87,7 +88,13 @@ export const routes: RoutePathDefinition[] = [
         element: <Layout />,
         children: [
           {
-            path: '',
+            path: 'home',
+            title: 'Home',
+            element: <Home />,
+            requiredClaims: [],
+          },
+          {
+            path: 'dashboard',
             title: 'Dashboard',
             element: <Dashboard />,
             requiredClaims: [],
