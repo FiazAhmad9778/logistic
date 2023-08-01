@@ -13,6 +13,8 @@ import {
 } from '@/infrastructure/store/api/order-question/order-question-api';
 import { UpdateOrderQuestionRequest } from '@/infrastructure/store/api/order-question/order-question-types';
 import { useClientListQuery } from '@/infrastructure/store/api/client/client-api';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { addQuestionResolver } from 'src/form-resolver/interactive-control/order-related-question/related-question-resolver';
 
 const EditQuestion = () => {
   const navigate = useNavigate();
@@ -21,7 +23,7 @@ const EditQuestion = () => {
     location.state.questionId ?? skipToken,
   );
   const useFormReturn = useForm({
-    // resolver: yupResolver(addQuestionResolver),
+    resolver: yupResolver(addQuestionResolver),
     defaultValues: orderQuestion?.data,
   });
 
