@@ -9,6 +9,7 @@ interface InputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<H
   trailing?: string | undefined | JSX.Element;
   name: string;
   label?: string;
+  min?: string;
   className?: string;
   placeholder?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,6 +23,7 @@ interface InputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<H
 const FormInput: FCC<InputProps> = ({
   label,
   name,
+  min,
   leading,
   defaultValue,
   className,
@@ -50,6 +52,7 @@ const FormInput: FCC<InputProps> = ({
         <input
           ref={ref}
           id={name}
+          min={min}
           defaultValue={defaultValue ? defaultValue : getValues(name)}
           className={classNames(
             'input-control tx-12',
