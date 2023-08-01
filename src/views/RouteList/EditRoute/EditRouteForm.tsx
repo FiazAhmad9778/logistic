@@ -1,6 +1,7 @@
 import Button from '@/components/Button';
 import Form from '@/components/Form';
 import PermissionWrapper from '@/components/Permission/permission-helper';
+import { getDateFormatMDY } from '@/helpers/function/date-format';
 import { ClientResponse } from '@/infrastructure/store/api/client/client-types';
 import { DriverResponse } from '@/infrastructure/store/api/driver/driver-types';
 import { Row, Col } from 'react-bootstrap';
@@ -49,10 +50,10 @@ const EditRouteForm: React.FC<IRouteForm> = ({ useFormReturn, onSubmit, loadingS
               <Form.Input label="Route Name" name="routeName" placeholder="Enter Route Name" />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="Start Date" name="routeStartDate" type="date" />
+              <Form.Input label="Start Date" name="routeStartDate" type="date" min={getDateFormatMDY(new Date())} />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
-              <Form.Input label="End Date" name="routeEndDate" type="date" />
+              <Form.Input label="End Date" name="routeEndDate" type="date" min={getDateFormatMDY(new Date())} />
             </Col>
             <Col xl={6} lg={6} md={6} sm={12}>
               <Form.Input label="Route Start" name="routeStart" placeholder="Enter route start" />

@@ -13,6 +13,7 @@ export interface SurveyQuestionResponse {
   clientId: number;
   question: string;
   fieldType: string;
+  fieldTypeId: number;
   isActive: boolean;
   createdDate: string;
 }

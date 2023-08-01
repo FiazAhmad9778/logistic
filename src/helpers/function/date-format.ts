@@ -1,4 +1,6 @@
-export function getDateFormatMDY(date: Date | number | string) {
+export function getDateFormatMDY(date: Date | string | undefined) {
+  if (!date) return '';
+
   const dateToChange = new Date(date);
   let month: string | number = dateToChange.getMonth() + 1;
   let date_: string | number = dateToChange.getDate();

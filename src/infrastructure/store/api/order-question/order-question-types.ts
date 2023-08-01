@@ -18,7 +18,9 @@ export interface OrderQuestionResponse {
   question: string;
   description: string;
   questionType: string;
+  questionTypeId: number;
   orderType: string;
+  orderTypeId: number;
   isActive: boolean;
   createdDate: string;
 }
