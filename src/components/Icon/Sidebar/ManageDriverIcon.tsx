@@ -1,5 +1,12 @@
+import { classNames } from '@/helpers/classNames';
 import { ICONS_IMAGES } from '../../../assets/images/icons';
 
-export const ManageDriverIcon = () => {
-  return <img className="side-menu__icon bg-primary" src={ICONS_IMAGES.MANAGEDRIVER} alt="Driver" />;
+export const ManageDriverIcon: React.FC<{ className: string }> = ({ className }) => {
+  return (
+    <img
+      className={classNames('side-menu__icon rounded-circle bg-primary', className)}
+      src={ICONS_IMAGES.MANAGEDRIVER}
+      alt="Driver"
+    />
+  );
 };
