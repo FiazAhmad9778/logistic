@@ -21,7 +21,7 @@ const Dashboard = () => {
               <div className="col-11 ps-0">
                 <div className="row">
                   <div className="col-3">
-                    <Form.Input label="Date" name="date" type="date" />
+                    <Form.Input label="Date" name="date" type="datetime-local" />
                   </div>
                   <div className="col-3">
                     <Form.Select label="Route" name="route" options={[]} />
@@ -138,18 +138,109 @@ const Dashboard = () => {
         </Col>
       </Row>
       <Row>
+        <Col xl={12} lg={12} md={12} sm={12}>
+          <Card className=" px-3 ps-4">
+            <Row className="index1">
+              <Col xl={6} lg={6} md={6} sm={6} xxl={3}>
+                <Row className=" border-end bd-xs-e-0 p-3">
+                  <div className="col-3 d-flex align-items-center justify-content-center">
+                    <div className="circle-icon bg-primary d-flex justify-content-center align-items-center overflow-hidden shadow">
+                      <ClientManagementIcon />
+                    </div>
+                  </div>
+                  <div className="col-9 py-0">
+                    <div className="pt-4 pb-3">
+                      <div className="d-flex">
+                        <h4 className="tx-14 font-weight-semibold mb-2">Number of Deliveries</h4>
+                      </div>
+                      <div className="pb-0 mt-0">
+                        <div className="d-flex">
+                          <h4 className="tx-18 tx-primary font-weight-semibold mb-0">5,472</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Row>
+              </Col>
+              <Col xl={6} lg={6} md={6} sm={6} xxl={3}>
+                <Row className=" border-end bd-xs-e-0 p-3">
+                  <div className="col-3 d-flex align-items-center justify-content-center">
+                    <div className="circle-icon bg-primary d-flex justify-content-center align-items-center overflow-hidden shadow">
+                      <ClientManagementIcon />
+                    </div>
+                  </div>
+                  <div className="col-9 py-0">
+                    <div className="pt-4 pb-3">
+                      <div className="d-flex">
+                        <h4 className="tx-14 font-weight-semibold mb-2">Number of Collections</h4>
+                      </div>
+                      <div className="pb-0 mt-0">
+                        <div className="d-flex">
+                          <h4 className="tx-18 tx-primary font-weight-semibold mb-0">5,472</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Row>
+              </Col>
+              <Col xl={6} lg={6} md={6} sm={6} xxl={3}>
+                <Row className=" border-end bd-xs-e-0 p-3">
+                  <div className="col-3 d-flex align-items-center justify-content-center">
+                    <div className="circle-icon bg-primary d-flex justify-content-center align-items-center overflow-hidden shadow">
+                      <ClientManagementIcon />
+                    </div>
+                  </div>
+                  <div className="col-9 py-0">
+                    <div className="pt-4 pb-3">
+                      <div className="d-flex">
+                        <h4 className="tx-14 font-weight-semibold mb-2">Number of Customers</h4>
+                      </div>
+                      <div className="pb-0 mt-0">
+                        <div className="d-flex">
+                          <h4 className="tx-18 tx-primary font-weight-semibold mb-0">1425</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Row>
+              </Col>
+              <Col xl={6} lg={6} md={6} sm={6} xxl={3}>
+                <Row className=" border-end bd-xs-e-0 p-3">
+                  <div className="col-3 d-flex align-items-center justify-content-center">
+                    <div className="circle-icon bg-primary d-flex justify-content-center align-items-center overflow-hidden shadow">
+                      <ClientManagementIcon />
+                    </div>
+                  </div>
+                  <div className="col-9 py-0">
+                    <div className="pt-4 pb-3">
+                      <div className="d-flex">
+                        <h4 className="tx-14 font-weight-semibold mb-2">No. of Complete Orders</h4>
+                      </div>
+                      <div className="pb-0 mt-0">
+                        <div className="d-flex">
+                          <h4 className="tx-18 tx-primary font-weight-semibold mb-0">1154</h4>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Row>
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+      </Row>
+      <Row className="index1">
         <Col xs={12} lg={3} xl={3} md={12}>
           <Card className="shadow-base">
             <Row>
               <div className="col-9">
                 <div className="ps-4 pt-4 pe-3 pb-4">
                   <div className="">
-                    <h6 className="mb-2 tx-20 tx-primary medium">125</h6>
+                    <h4 className="tx-14 font-weight-semibold mb-2">Number of Deliveries</h4>
                   </div>
                   <div className="pb-0 mt-0">
-                    <div className="d-flex">
-                      <h4 className="tx-14 font-weight-semibold mb-2">Number of Deliveries</h4>
-                    </div>
+                    <h6 className="mb-2 tx-20 tx-primary medium">125</h6>
+                    <div className="d-flex"></div>
                   </div>
                 </div>
               </div>
